@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/login.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/solid.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+</head>
+<body>
+    <div class="container">
+        <div class="img">
+            <img src="/images/LoginPage-image.png" alt="image here">
+        </div>
+        <div class="login-container">
+            <form action="/user__otp" method="post">
+                {{!-- <img class="avatar" src="undraw_profile_pic_ic-5-t.svg" alt="profile image"> --}}
+                <p style=" font-size:20px;color:rgb(20, 216, 29)">Forgot your password?, dont worry login with otp!!</p>
+                
+                <div class="input-div one focus">
+                    <div class="i">
+                    <i class="uil uil-at"></i>
+                    </div>
+                </div>
+                <div class="input-div two">
+                    <div class="i">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="">
+                        <h5 class="text"> &nbsp; </h5>
+                        <input type="password" name="otp" placeholder="otp" class="input" required>
+                    </div>
+                </div>
+                <input class="btn" type="submit" value="Login">
+                
+                <p> <a href="/otp">Go back to login Page</a></p>
+                
+            </form>         
+        </div>
+    </div>
+    <script>
+    </script>
+</body>
+</html>

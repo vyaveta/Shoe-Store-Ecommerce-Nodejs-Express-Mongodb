@@ -1,0 +1,29 @@
+{
+  "name": "e-commerce",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^16.0.2",
+    "express": "~4.16.1",
+    "express-fileupload": "^1.4.0",
+    "fileupload": "^0.2.2",
+    "hbs": "^4.2.0",
+    "http-errors": "~1.6.3",
+    "jade": "^0.29.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^4.9.0",
+    "morgan": "~1.9.1",
+    "promise": "^8.1.0",
+    "Promise": "^1.0.5",
+    "twilio": "^3.81.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}

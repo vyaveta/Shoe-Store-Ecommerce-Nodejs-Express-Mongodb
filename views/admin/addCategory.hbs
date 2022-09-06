@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+        <link rel="stylesheet" href="/stylesheets/admin/form.css">
+</head>
+<body>
+    <div class="container">
+        <div class="box__1">
+             <button><a href="/admin">Dashboard / Home</a></button>
+            <div class="available__categories">
+                {{# if data}}
+                <h1>Already available Categories</h1>
+                <ol>
+                    {{#each data}}
+                    <li>{{this.name}}</li>
+                    {{/each}}
+                </ol>
+                {{else}}
+                <h1>There is no Categories , be the one to enter the first category!!</h1>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+        <div class="contact__form">
+            <h1>Add Category</h1>
+            <form action="/admin/addCategory" method="post">
+               <div class="content">
+                <p>Category name</p>
+                <input type="text" name="name" id="name" placeholder=" Category name" required>
+            </div> 
+            <div class="content">
+            <center> <button type="submit">Add Category</button></center>
+            {{!-- <input type="submit" value="add"> --}}
+           </div> 
+            </form>
+        </div>
+    
+</body>
+</html>

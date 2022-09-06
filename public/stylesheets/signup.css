@@ -1,0 +1,95 @@
+body{
+    margin: 0%;
+    padding: 0%;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(120deg,#2980b9,#8e44ad);
+    height: 100vh;
+    overflow: hidden;
+}
+.center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 400px;
+    background: white;
+    border-radius: 10px;
+}
+.center h1{
+    margin-top: 10px;
+    text-align: center;
+    padding:0 0 20px 0;
+    border-bottom: 1px solid silver;
+}
+.center form{
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+form .text-field{
+   position: relative;
+   border-bottom: 2px solid rebeccapurple;
+   margin:30px 0;
+}
+.text-field input{
+    width:100%;
+    padding:0 5px;
+    height: 40px;
+    font-size: 1rem;
+    border:none;
+    background: none;
+    outline:none;
+    color: #270f32;
+    letter-spacing: 1.7px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+}
+.text-field label{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    color: rgb(110, 110, 110);
+    transform: translateY(-50%);
+    font-size: 1rem;
+    pointer-events: none;
+    transition: .5s
+}
+.text-field span::before{
+    content: '';
+    position:absolute;
+    top: 40px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: #2980b9;
+    transition: .5s;
+}
+.text-field input:focus ~ label,
+.text-field input:valid ~ label{
+    top: -5px;
+    color:#2980b9 ;
+}
+.text-field input:focus ~ span::before,
+.text-field input:valid ~ span::before{
+    width: 100%;
+}
+.pass{
+    margin:-5px 0 20px 5px;
+    color:#a6a6a6;
+    cursor: pointer;
+}
+.pass:hover{
+    text-decoration: underline;
+}
+input[type="submit"]{
+    width: 100%;
+    border: 1px solid;
+    height: 50px;
+    background: #2691d9;
+    border-radius: 25px;
+    font-size: 1.2rem;
+    color: #e9f4fb;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+    margin-bottom: 4vh;
+}

@@ -1,0 +1,38 @@
+  <link rel="stylesheet" href="/stylesheets/signup.css">
+    <div class="center">
+        <h1>Sign Up</h1>
+        <form action="/users/signup" method="post" id="form" >
+            <div class="text-field">
+                <input type="number" name="phone__number" id="phone__number" required>
+                <span></span>
+                <label for="">Phone Number</label>
+            </div>
+            <div class="text-field">
+                <input type="tel" name="otp" id="password" required>
+                <span></span>
+                <label for="">OTP code</label>
+            </div>
+            <div id="error" style="color:red;font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;text-align:center;"></div>
+            <p style="color:red;font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;text-align:center;"></p>
+            <input type="submit" value="Create Account">
+        </form>
+    </div>
+    <script>
+        const name = document.getElementById('name')
+        const password = document.getElementById('password')
+        const form = document.getElementById('form')
+        const errorElement = document.getElementById('error')
+
+        form.addEventListener('submit',(e)=>{
+            let messages = []
+            if(password.value.length<=2) messages.push('Passwords must atleast contain 3 characters ') 
+            if(password.value.length>=20) messages.push('password cant be longer than 19 characters')  
+            if(name.value==null) messages.push('null value cant be considered as a valid username')
+            if(name.value.trim()=="") messages.push('This kind of Usernames are not allowed')
+            if(password.value.trim()=="") messages.push('Blank passwords are not allowed')
+            if(messages.length>0){
+                 e.preventDefault()
+                 errorElement.innerText = messages.join('+')
+            }  
+        })
+    </script>

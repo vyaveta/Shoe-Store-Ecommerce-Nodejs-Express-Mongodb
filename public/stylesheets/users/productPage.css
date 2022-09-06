@@ -1,0 +1,91 @@
+.sproduct select{
+    display: block;
+    padding: 5px 10px;
+}
+.sproduct input{
+    width: 50px;
+    height: 40px;
+    padding-left: 10px;
+    font-size: 16px;
+    margin-right: 10px;
+}
+.image__box{
+    position: relative;
+    padding: 10px;
+    background-color: green;
+    box-shadow: inset 10px 10px 10px 10px rgba(0,0,0,.7);
+}
+.sproduct input:focus{
+    outline: none;
+}
+.reviews{
+    margin-top: 20px;
+    padding: 10px;
+    width: 100%;
+    border-radius: 14px;
+    background: green;
+    box-shadow:  5px 5px 11px #dcdcdc,-5px -5px 11px #ffffff;
+    color:white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.box{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+   
+}
+.content{
+    display: flex;
+    justify-content: space-between;
+}
+.profile__pic{
+    margin-right: 5%;
+}
+.profile__pic img{
+    border-radius: 50%; 
+}
+.magnifier-lens{
+    position: absolute;
+    width: 150px;
+    height: 100px;
+    background-color: rgba(13, 160, 15,.3);
+    /* top: 0;
+    left: 0; */
+    border: 1px solid yellow;
+    opacity: 0;
+}
+.magnifier-lens.active{
+   opacity: 1;
+}
+.parent__of__magnifier{
+    position: relative;
+}
+.magnified__image {
+    /* top: 0; */
+    position: absolute;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    border: 1px solid green;
+    box-shadow: inset 10px 10px 10px 10px rgba(0,0,0,.7);
+    background-repeat: no-repeat;
+    z-index: 1;
+    transform: scale(0.5);
+    opacity: 0;
+    transition: opacity -5s, transform .5s;
+}
+.magnified__image.active {
+   opacity: 1;
+   transform: scale(1);
+}
+.add__to__cart{
+    border-radius: 15px;
+    background: #fafafa;
+    box-shadow:  -5px 5px 9px #ebebeb,5px -5px 9px #ffffff;
+    border: 1px solid green;
+    color: green;
+}

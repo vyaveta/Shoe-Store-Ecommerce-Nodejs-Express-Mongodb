@@ -1,0 +1,276 @@
+{{!-- {{ sidemenenu}} --}}
+{{!-- {{#> sidemenu}} --}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/stylesheets/admin/admin__dashboard.css">
+</head>
+
+<body>
+   <div class="side__menu">
+        <div class="brand__name">
+            <h1>Shoe Store</h1>
+        </div>
+        <ul>
+            <li>
+                <a href="/admin/showProducts">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-menu-button-wide" viewBox="0 0 16 16">
+                        <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0h13A1.5 1.5 0 0 1 16 1.5v2A1.5 1.5 0 0 1 14.5 5h-13A1.5 1.5 0 0 1 0 3.5v-2zM1.5 1a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-13z"/>
+                        <path d="M2 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm10.823.323-.396-.396A.25.25 0 0 1 12.604 2h.792a.25.25 0 0 1 .177.427l-.396.396a.25.25 0 0 1-.354 0zM0 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8zm1 3v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2H1zm14-1V8a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2h14zM2 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
+                    </svg> &nbsp;<span> Products</span>
+                </a>
+            </li>
+            <li>
+                <a href="/admin/showUsers">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                        <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
+                        <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+                    </svg>&nbsp; <span>Customers</span> 
+                 </a> 
+            </li>
+             <li>
+                <a href="/admin/showCategory">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-ticket-perforated-fill" viewBox="0 0 16 16">
+                       <path d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5V6a.5.5 0 0 1-.5.5 1.5 1.5 0 0 0 0 3 .5.5 0 0 1 .5.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5V10a.5.5 0 0 1 .5-.5 1.5 1.5 0 1 0 0-3A.5.5 0 0 1 0 6V4.5Zm4-1v1h1v-1H4Zm1 3v-1H4v1h1Zm7 0v-1h-1v1h1Zm-1-2h1v-1h-1v1Zm-6 3H4v1h1v-1Zm7 1v-1h-1v1h1Zm-7 1H4v1h1v-1Zm7 1v-1h-1v1h1Zm-8 1v1h1v-1H4Zm7 1h1v-1h-1v1Z"/>
+                    </svg>&nbsp; <span>Catogery</span> 
+                </a> 
+            </li>
+            <li>
+                <a href="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-ticket-perforated-fill" viewBox="0 0 16 16">
+                       <path d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5V6a.5.5 0 0 1-.5.5 1.5 1.5 0 0 0 0 3 .5.5 0 0 1 .5.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5V10a.5.5 0 0 1 .5-.5 1.5 1.5 0 1 0 0-3A.5.5 0 0 1 0 6V4.5Zm4-1v1h1v-1H4Zm1 3v-1H4v1h1Zm7 0v-1h-1v1h1Zm-1-2h1v-1h-1v1Zm-6 3H4v1h1v-1Zm7 1v-1h-1v1h1Zm-7 1H4v1h1v-1Zm7 1v-1h-1v1h1Zm-8 1v1h1v-1H4Zm7 1h1v-1h-1v1Z"/>
+                    </svg>&nbsp; <span>Coupons</span> 
+                </a> 
+            </li>
+            <li>
+                <a href="/admin/showPrimeUsers">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-check-fill" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                        <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                      </svg>&nbsp; <span>Prime users</span>
+                </a> 
+            </li>
+            <li>
+                <a href="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-workspace" viewBox="0 0 16 16">
+                        <path d="M4 16s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H4Zm4-5.95a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+                        <path d="M2 1a2 2 0 0 0-2 2v9.5A1.5 1.5 0 0 0 1.5 14h.653a5.373 5.373 0 0 1 1.066-2H1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v9h-2.219c.554.654.89 1.373 1.066 2h.653a1.5 1.5 0 0 0 1.5-1.5V3a2 2 0 0 0-2-2H2Z"/>
+                      </svg>&nbsp; <span>Staffs</span>
+                </a> 
+            </li>
+            <li>
+                <a href="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase-fill" viewBox="0 0 16 16">
+                        <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v1.384l7.614 2.03a1.5 1.5 0 0 0 .772 0L16 5.884V4.5A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5z"/>
+                        <path d="M0 12.5A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5V6.85L8.129 8.947a.5.5 0 0 1-.258 0L0 6.85v5.65z"/>
+                      </svg>&nbsp; <span>Vacancy</span>
+                </a> 
+            </li>
+            <li>
+                <a href="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+                        <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z"/>
+                      </svg>&nbsp; <span>Resumes</span>
+                </a> 
+            </li>
+            <li>
+                <a href="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-graph-up-arrow" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0Zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5Z"/>
+                    </svg>&nbsp; <span>Sales Graph</span>
+                </a> 
+            </li>
+            <li>
+                <a href="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-octagon-fill" viewBox="0 0 16 16">
+                        <path d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zM5.496 6.033a.237.237 0 0 1-.24-.247C5.35 4.091 6.737 3.5 8.005 3.5c1.396 0 2.672.73 2.672 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.105a.25.25 0 0 1-.25.25h-.81a.25.25 0 0 1-.25-.246l-.004-.217c-.038-.927.495-1.498 1.168-1.987.59-.444.965-.736.965-1.371 0-.825-.628-1.168-1.314-1.168-.803 0-1.253.478-1.342 1.134-.018.137-.128.25-.266.25h-.825zm2.325 6.443c-.584 0-1.009-.394-1.009-.927 0-.552.425-.94 1.01-.94.609 0 1.028.388 1.028.94 0 .533-.42.927-1.029.927z"/>
+                      </svg> &nbsp; <span>Help</span>
+                </a> 
+            </li>
+            <li>
+                <a href="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
+                        <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+                      </svg>&nbsp; <span>Settings</span>
+                </a> 
+            </li>
+        </ul>
+    </div>
+    <!--The End of the fixed side menu container-->
+
+    <!--The start of the content container-->
+    <div class="content">
+        <div class="header">
+            <div class="nav">
+                <!--The start of the searc div-->
+                <div class="search">
+                    <input type="text" placeholder="search...">
+                    <!--Just a code for the search button-->
+                    <button type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                      </svg>
+                    </button>
+                </div>
+                    <!--The code for the search button ends here-->
+                    <div class="admin">
+                        <div class="admin__profile"><img src="/firstpage.jpg" alt="" width="40" height="40"></div>
+                        <div class="admin__name"><p>{{adminname}}</p></div>
+                        <div class="admin__logout">
+                            <button><a href="/admin/logout">Logout</a></button>
+                        </div>
+                       </div>
+                </div>
+                <!--The end of the search div-->
+        </div>
+        {{!-- {{/sidemenu}} --}}
+        <div class="swift__content">
+            <div class="section__1">
+                <div class="card__like">
+                    <!--The Customer Card start-->
+                    <a href="/admin/showUsers">
+                        <div class="the__card">
+                        <div class="box">
+                            <h1>{{response.user__count}}</h1>
+                            <h3>Customers</h3>
+                        </div>
+                        <div class="icon__case">
+                            <img src="https://img.icons8.com/external-basicons-line-edtgraphics/50/000000/external-Users-users-basicons-line-edtgraphics-2.png"/>
+                        </div>
+                     </div>
+                    </a>
+                    
+                    <!--The Customer Card ends here-->
+                    <!--The Prime customers-->
+                    <a href="/admin/showPrimeUsers">
+                        <div class="the__card">
+                        <div class="box">
+                            <h1>{{response.prime__users__count}}</h1>
+                            <h3>Premium Users</h3>
+                        </div>
+                        <div class="icon__case">
+                            <img src="https://img.icons8.com/external-sbts2018-solid-sbts2018/58/000000/external-08-premium-membership-ecommerce-3-sbts2018-solid-sbts2018-2.png"/>
+                        </div>
+                    </div>
+                    </a>
+                    
+                    <!--the prime customers ends-->
+                    <!--The Product Card begins here-->
+                    <a href="admin/showProducts">
+                        <div class="the__card">
+                        <div class="box">
+                            <h1>{{response.products__count}}</h1>
+                            <h3>Products</h3>
+                        </div>
+                        <div class="icon__case">
+                            <img src="https://img.icons8.com/external-line-lima-studio/64/000000/external-shoes-sale-line-lima-studio-2.png"/>
+                        </div>
+                    </div>
+                    </a>
+                    <!--The Product Card ends here-->
+                    <!--The workers Card begin here-->
+                    <div class="the__card">
+                        <div class="box">
+                            <h1>6768</h1>
+                            <h3>Workers</h3>
+                        </div>
+                        <div class="icon__case">
+                            <img src="https://img.icons8.com/glyph-neue/64/000000/workers-male.png"/>
+                        </div>
+                    </div>
+                    <!--The Workers Card ends here-->
+                    <!--The Coupon Card begins here-->
+                    <div class="the__card">
+                        <div class="box">
+                            <h1>5</h1>
+                            <h3>Coupons</h3>
+                        </div>
+                        <div class="icon__case">
+                            <img src="https://img.icons8.com/external-tanah-basah-glyph-tanah-basah/48/000000/external-voucher-ecommerce-tanah-basah-glyph-tanah-basah.png"/>
+                        </div>
+                    </div>
+                    <!--The Coupon Card ends here-->
+                    <!--The vacancy Card start here-->
+                    <div class="the__card">
+                        <div class="box">
+                            <h1>30</h1>
+                            <h3>Job Vacancy</h3>
+                        </div>
+                        <div class="icon__case">
+                            <img src="https://img.icons8.com/external-creatype-outline-colourcreatype/64/000000/external-job-web-application-1-creatype-outline-colourcreatype.png"/>
+                        </div>
+                    </div>
+                    <!--The vacancy Card Ends here-->
+                    <!--The job application card start here-->
+                    <div class="the__card">
+                        <div class="box">
+                            <h1>301</h1>
+                            <h3>Job Applications</h3>
+                        </div>
+                        <div class="icon__case">
+                            <img src="https://img.icons8.com/external-outline-berkahicon/64/000000/external-Resume-interview-outline-berkahicon.png"/>
+                        </div>
+                    </div>
+                    <!--The job application card ends here-->
+                </div>
+                <div class="section__1_2">
+                    <div class="recent__payments">
+                       <div class="title">
+                        <h2>Recent Payments</h2>
+                        <a href=""><button>View all</button></a>
+                       </div>
+                       <center>
+                        <table class="content__table">
+                            <tr>
+                              <th>Table h</th>
+                              <th>Table h</th>
+                              <th>Table h</th>
+                              <th>Table h</th>
+                            </tr>
+                            <tr>
+                                <td>table d</td>
+                                <td>table d</td>
+                                <td>table d</td>
+                                <td>table d</td>
+                            </tr>
+                           </table>
+                       </center>
+                    </div>
+                    <div class="new__users">
+                        <div class="title">
+                            <h2>New Users</h2>
+                            <a href=""><button>View all</button></a>
+                        </div>
+                        <center>
+                            <table class="content__table">
+                                <tr>
+                                  <th>Name</th>
+                                  <th>Phone number</th>
+                                  <th>E-mail</th>
+                                  
+                                </tr>
+                                {{#each newUsers}}
+                                <tr>
+                                    <td>{{this.name}}</td>
+                                    <td>{{this.phone__number}}</td>
+                                    <td>{{this.email}}</td>
+                                    
+                                </tr>
+                                {{/each}}
+                               </table>
+                           </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</body>
+
+</html>
