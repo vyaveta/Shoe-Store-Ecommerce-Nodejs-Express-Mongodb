@@ -39,7 +39,12 @@ module.exports={
         return new Promise(async(resolve,reject)=>{{
             var is__valid = null;
             var account = await db.get().collection(collection.USER__COLLECTIONS).findOne({email:user.email})
-            if(account.is__blocked){
+
+            if(!account){
+                is__valid = false;
+                resolve(is__valid);
+            }
+            else if(account.is__blocked){
                 is__valid = 'user__blocked';
                 resolve(is__valid)
                 console.log('the user__login says that the user is blocked!!')

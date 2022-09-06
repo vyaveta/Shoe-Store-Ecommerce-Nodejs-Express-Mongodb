@@ -35,9 +35,7 @@ router.get('/login',auth.userLoggedIn,(req,res)=>{
 /////////////////////////////////////////// USER LOGIN  ////////////////////////////////////////////////////////////////////
 router.post('/login',(req,res)=>{
   console.log(req.body)
-  user__helper.get__user__name(req.body.email).then((response)=>{
-    username = response.name
-  })
+  
   console.log(` message from  post ${username}`);
   user__helper.user__login(req.body).then((response)=>{
     console.log(response)
