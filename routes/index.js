@@ -1,11 +1,10 @@
 var express = require('express');
 var router = express.Router();
-const serviceSID = 'VAebe82699c233a3f590e1f6352f4047f8'
-const accountSID = 'ACd46a1fd080f422c4c435aa2edc44cd28'
-const authTOKEN ='32f8b175ebf4cb0e650056c2317cd3cd'
-const client = require('twilio')(accountSID,authTOKEN)
+
+require('dotenv').config()
+const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID ,process.env.TWILIO_AUTH_TOKEN)
 const jwt = require('jsonwebtoken')
-require('dotenv')
+
 const auth = require('../helpers/user__auth');
 
 let phone__number;
@@ -38,7 +37,7 @@ router.post('/otp',(req,res)=>{
   // console.log('get jfsa;d')
   phone__number = req.body.phone__number;
   client.verify
-  .services(serviceSID)
+  .services(process.env.TWILIO_SERVICE_ID)
   .verifications.create({
     to:`+91${req.body.phone__number}`,
     channel:'sms'
@@ -50,7 +49,7 @@ router.post('/user__otp',(req,res)=>{
   const otp = req.body.otp
   console.log('otp ',otp)
   client.verify
-  .services(serviceSID)
+  .services(process.env.TWILIO_SERVICE_ID)
   .verificationChecks.create({
     to: `+91${phone__number}`,
     code:otp
