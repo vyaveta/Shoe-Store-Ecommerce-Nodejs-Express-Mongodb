@@ -3,7 +3,7 @@
         font-family: 'Roboto Mono', monospace;
         margin: 0;
         padding: 0;
-        background-color: #fafafa !important;
+        background-color: #fafafa ;
         display: flex;
         flex-direction:row ;
         justify-content: flex-start !important;
@@ -65,4 +65,29 @@
     .des textarea{
         height: 100px;
         padding: 10px;
+    }
+    /* css for the dark mode */
+    .darkmode {
+        background-color: #333;
+        color: white;
+    }
+    .darkmode  .content p{
+        color: rgb(255, 255, 255);
+        font-weight:500 ;
+        font-size: 20px;
+        margin: 10px;
+    }
+    .darkmode .content input,.content select, .content textarea{
+        /* margin: -20px; */
+        color: rebeccapurple;
+        box-shadow: inset  1px 1px 1px 1px rgba(255, 255, 255, 0.9);
+    }
+    .darkmode .contact__form{
+      
+        background: #333;
+        box-shadow:  -5px 5px 9px #544d4d,
+                     5px -5px 9px #393434;
+    }
+    .darkmode h1{
+        color: #ebebeb;
     }

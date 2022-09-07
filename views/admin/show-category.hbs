@@ -59,6 +59,7 @@
 
 <body>
     <div class="side__menu">
+          <button id="dark" style="display: none;"> dark mode</button>
         <div class="brand__name">
             <h1>Shoe Store</h1>
         </div>
@@ -194,7 +195,7 @@
 {{# each data}}
             <tr>
                 <td>{{this.name}}</td>
-                <td><a href=""><button class="btn btn-danger">Delete</button></a></td>
+                <td><a href="/admin/deleteCategory/{{this._id}}"><button class="btn btn-danger">Delete</button></a></td>
             </tr>
  {{/each}}
             </tbody>
@@ -205,6 +206,7 @@
             
         </div>
     </div>
+     <script src="/javascripts/darkMode.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
     crossorigin="anonymous"></script>

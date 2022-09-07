@@ -22,7 +22,8 @@
     transition: all .2 ease-out;
 }
 .content__table tr:nth-of-type(even){
-    background-color:#f3f3f3;
+    background-color:#585656;
+    color: white;
 }
 .content__table tr:last-of-type{
     border-bottom: 2px solid rebeccapurple;
@@ -31,4 +32,26 @@
     color: rebeccapurple;
     background-color: #f5f5f5;
     transform: scale(1.01);
+}
+/* for dark mode */
+.darkmode .content__table tr:hover{
+    color: rgb(255, 255, 255);
+    background-color: #333;
+    transform: scale(1.02);
+}
+.darkmode .content__table tr:last-of-type{
+    border-bottom: 2px solid #333;
+}
+.darkmode .section__1 .section__1_2 .new__users{
+    min-height: 50vh;
+    flex: 5;
+    background: rgb(197, 196, 196);
+    color: rgb(0, 0, 0);
+    margin: 0 25px 25px 25px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0, 0.2), 0 6px 20px 0 rgba(0,0,0, 0.19);
+}
+.darkmode .content__table th {
+    background-color: #333 !important;
+    color: #f1f1f1 !important;
+   
 }

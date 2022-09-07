@@ -6,6 +6,7 @@ var logger = require('morgan');
 var fileupload = require('express-fileupload')
 var hbs = require('hbs')
 
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
@@ -38,6 +39,7 @@ app.use(fileupload())
 // });
 
 // hbs.registerPartials(__dirname+'/views/admin/partials/')
+hbs.registerPartials('partials',path.join(__dirname,'partials'))
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

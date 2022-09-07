@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="/stylesheets/admin/admin__dashboard.css">
 </head>
 
-<body>
-   <div class="side__menu">
+<body class="">
+   <div class="side__menu ">
         <div class="brand__name">
             <h1>Shoe Store</h1>
         </div>
@@ -105,9 +105,13 @@
     <!--The End of the fixed side menu container-->
 
     <!--The start of the content container-->
-    <div class="content">
-        <div class="header">
+    <div class="content ">
+        <div class="header ">
             <div class="nav">
+                 <div class="admin__logout">
+                    <button id="dark"> dark mode</button>
+                           
+                        </div>
                 <!--The start of the searc div-->
                 <div class="search">
                     <input type="text" placeholder="search...">
@@ -130,7 +134,7 @@
                 <!--The end of the search div-->
         </div>
         {{!-- {{/sidemenu}} --}}
-        <div class="swift__content">
+        <div class="swift__content ">
             <div class="section__1">
                 <div class="card__like">
                     <!--The Customer Card start-->
@@ -220,7 +224,7 @@
                     <!--The job application card ends here-->
                 </div>
                 <div class="section__1_2">
-                    <div class="recent__payments">
+                    <div class="recent__payments new__users">
                        <div class="title">
                         <h2>Recent Payments</h2>
                         <a href=""><button>View all</button></a>
@@ -271,6 +275,7 @@
         </div>
         
     </div>
+    <script src="/javascripts/darkMode.js"></script>
 </body>
 
 </html>

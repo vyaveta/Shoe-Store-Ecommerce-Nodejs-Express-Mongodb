@@ -35,7 +35,8 @@ router.get('/login',auth.userLoggedIn,(req,res)=>{
 /////////////////////////////////////////// USER LOGIN  ////////////////////////////////////////////////////////////////////
 router.post('/login',(req,res)=>{
   console.log(req.body)
-   username = req.body.name
+  
+   
   console.log(` message from  post ${username}`);
   user__helper.user__login(req.body).then((response)=>{
     console.log(response)
@@ -43,6 +44,9 @@ router.post('/login',(req,res)=>{
       res.render('blocked')
     }
     else if(response){
+      user__helper.get__user__name().then((name)=>{
+    
+      })
       const usertoken = jwt.sign(req.body,process.env.USER_TOKEN_SECRET,{expiresIn:'365d'})
       res.cookie('usertoken',usertoken,{
         httpOnly:true
@@ -51,10 +55,12 @@ router.post('/login',(req,res)=>{
       console.log('user has logged in ');
       // res.redirect('/users');
       product__helper.get__all__products().then((products)=>{
-        // for(var i = 0;i<response.length;i++){
-        //   response[i]._id= response[i]._id.toString()
-        // }
-        res.render('home1',{token,username,products})
+        user__helper.get__user__name(req.body.email).then((name)=>{
+          console.log(name,'is the name')
+          username = name
+          res.render('home1',{token,username,products})
+        })
+       
       })    
     }
     else{

@@ -68,10 +68,11 @@ module.exports={
         }})
     },
     get__user__name:(user__email)=>{
-        let user__name
+        let username
         return new Promise (async(resolve,reject)=>{
-            user__name = await db.get().collection(collection.USER__COLLECTIONS).findOne({email:user__email},{name:1})
-            resolve(user__name)
+            username = await db.get().collection(collection.USER__COLLECTIONS).findOne({email:user__email},{name:1,_id:-1})
+            console.log('the user details if s sjf')
+            resolve(username)
         })
     },find__the__user:(phone__number)=>{
         return new Promise (async(resolve,reject)=>{

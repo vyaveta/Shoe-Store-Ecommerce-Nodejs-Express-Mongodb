@@ -208,6 +208,12 @@ router.post('/editProduct/:id',(req,res)=>{
     }
   })
 })
+///////////// For deleting a category///////////////////
+router.get('/deleteCategory/:id',(req,res)=>{
+  category__helper.delete__category(req.params.id).then((response)=>{
+    res.redirect('/admin/showCategory')
+  })
+})
 
 ///////Logout Route for the admin/////////
 router.get('/logout',(req,res)=>{
