@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt')
 const { reject } = require('promise')
 const objectId = require('mongodb').ObjectId
 
+
 module.exports={
     add__admin:(admin__data)=>{
         return new Promise (async(resolve,reject)=>{
@@ -79,18 +80,29 @@ module.exports={
     },
     delete__user:(user__id)=>{
         return new Promise(async(resolve,reject)=>{
-            var deleted__user__name = await db.get().collection(collection__list.USER__COLLECTIONS).findOne({_id:objectId(user__id)},{name:1,_id:0})
-         db.get().collection(collection__list.USER__COLLECTIONS).deleteOne({_id:objectId(user__id)}).then((response)=>{
-                if(response){
-                    console.log(deleted__user__name)
-                    // var user__name = deleted__user__details.name
-                    resolve('status')
-                }
-                else{
-                    console.log('error occured in delete__user')
-                }
+            var action = {}
+            var deleted__user = await db.get().collection(collection__list.USER__COLLECTIONS).findOne({_id:objectId(user__id)})
+             await db.get().collection(collection__list.DELETED__ACCOUNTS).insertOne(deleted__user).then((response)=>{
+            action.action = 'Deleted a User Account'
+            action.deletedAccountName = deleted__user.name
+            action.details = `deleted the account of ${deleted__user.name}`
+            action.deletedAccountId= deleted__user._id
+            action.date = new Date()
+            db.get().collection(collection__list.ADMIN__ACTIONS).insertOne(action).then((response)=>{
+                db.get().collection(collection__list.USER__COLLECTIONS).deleteOne({_id:objectId(user__id)}).then((response)=>{
+                    if(response){
+                        console.log(deleted__user)
+                        // var user__name = deleted__user__details.name
+                        resolve('status')
+                    }
+                    else{
+                        console.log('error occured in delete__user')
+                    }
+                })
             })
-           
+               
+            })
+        
         })
     },block__user:(user__id)=>{
         return new Promise(async(resolve,reject)=>{
@@ -132,6 +144,23 @@ module.exports={
         return new Promise(async(resolve,reject)=>{
             var new_users = await db.get().collection(collection__list.USER__COLLECTIONS).find().sort({$natural:-1}).limit(10).toArray()
             resolve(new_users)
+        })
+    },get__admin__action:()=>{
+        return new Promise(async(resolve,reject)=>{
+            var data
+              data = await db.get().collection(collection__list.ADMIN__ACTIONS).find().toArray()
+                resolve(data)
+        })
+    },undo__user__deletion:(id)=>{
+        return new Promise(async(resolve,reject)=>{
+            let user = await db.get().collection(collection__list.DELETED__ACCOUNTS).findOne({_id:objectId(id)})
+            db.get().collection(collection__list.USER__COLLECTIONS).insertOne(user).then((response)=>{
+                db.get().collection(collection__list.ADMIN__ACTIONS).deleteOne({deletedAccountId:objectId(id)}).then((response)=>{
+                    db.get().collection(collection__list.DELETED__ACCOUNTS).deleteOne({_id:objectId(id)}).then((response)=>{
+                        resolve('successfuly undone the deletion ')
+                    })
+                })
+            })
         })
     }
 }

@@ -187,7 +187,7 @@ a{
     position:absolute;
     right: 0;
     top:0;
-    background:linear-gradient(green,greenyellow,yellowgreen);
+    background:linear-gradient(yellowgreen,greenyellow,green);
     border-radius:20px 0 0 20px;
     height: 100%;
     width: 80%;
@@ -351,4 +351,7 @@ a{
         margin: 50px 0;
         flex-direction: column reverse;
     }
+}
+a{
+    text-decoration:none;
 }

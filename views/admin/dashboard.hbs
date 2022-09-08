@@ -1,17 +1,8 @@
-{{!-- {{ sidemenenu}} --}}
-{{!-- {{#> sidemenu}} --}}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="/stylesheets/admin/admin__dashboard.css">
+    
 </head>
-
-<body class="">
+<link rel="stylesheet" href="/stylesheets/admin/admin__dashboard.css">
    <div class="side__menu ">
         <div class="brand__name">
             <h1>Shoe Store</h1>
@@ -124,8 +115,11 @@
                 </div>
                     <!--The code for the search button ends here-->
                     <div class="admin">
-                        <div class="admin__profile"><img src="/firstpage.jpg" alt="" width="40" height="40"></div>
-                        <div class="admin__name"><p>{{adminname}}</p></div>
+                        <a href="/admin/profilePage">
+                             <div class="admin__profile"><img src="/firstpage.jpg" alt="" width="40" height="40"></div> </a>
+                             <div class="admin__name"><p>{{adminname}}</p></div>
+                       
+                       
                         <div class="admin__logout">
                             <button><a href="/admin/logout">Logout</a></button>
                         </div>
@@ -276,6 +270,3 @@
         
     </div>
     <script src="/javascripts/darkMode.js"></script>
-</body>
-
-</html>

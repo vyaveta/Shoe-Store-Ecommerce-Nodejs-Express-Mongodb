@@ -8,9 +8,15 @@ const admin__helpers = require('../helpers/admin__helpers');
 const auth = require('../helpers/auth');
 const category__helper = require('../helpers/category__helper');
 const product__helper = require('../helpers/product__helper');
-// router.use(fileupload())
+
+router.use(function(req, res, next) {
+    res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+    next();
+  });
+
 require('dotenv').config()
 var adminname
+let admin__msg
 
 /* GET  listing. */
 router.get('/',auth.adminCookieJWTAuth,function(req, res) {
@@ -19,8 +25,17 @@ router.get('/',auth.adminCookieJWTAuth,function(req, res) {
       res.render('admin/dashboard',{response,adminname,newUsers});
     })
   })
-  
 });
+  ////////////////////////////////////////////  Admin Profile ////////////////////////////
+
+router.get('/profilePage',(req,res)=>{
+  admin__helpers.get__admin__action().then((actions)=>{
+    res.render('admin/profilePage',{title:'adminProfile',actions,admin__msg})
+    admin__msg =''
+  })
+  
+})
+
 router.get('/login',auth.adminLoggedIn,function(req,res){
   console.log('got this far')
   res.render('admin/login');
@@ -195,9 +210,7 @@ router.get('/editProduct/:id',auth.adminCookieJWTAuth, async(req,res)=>{
     })
   })
 })
-// router.post('/editProduct/:id',(req,res)=>{
-//   res.send('this skjflkjsg')
-// })
+
 router.post('/editProduct/:id',(req,res)=>{
   let id = req.params.id
   product__helper.update__product(req.params.id,req.body).then(()=>{
@@ -211,9 +224,19 @@ router.post('/editProduct/:id',(req,res)=>{
 ///////////// For deleting a category///////////////////
 router.get('/deleteCategory/:id',(req,res)=>{
   category__helper.delete__category(req.params.id).then((response)=>{
+    admin__msg = response
     res.redirect('/admin/showCategory')
   })
 })
+
+/////////////////////////////////////////// undo user deletion  ///////////////////////////////////////
+router.get('/undoUserDeletion/:id',async(req,res)=>{
+  admin__helpers.undo__user__deletion(req.params.id).then((response)=>{
+    admin__msg = response
+    res.redirect('/admin/profilePage')
+  })
+})
+
 
 ///////Logout Route for the admin/////////
 router.get('/logout',(req,res)=>{

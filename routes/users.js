@@ -5,6 +5,7 @@ const user__helper = require('../helpers/user__helper')
 const auth = require('../helpers/user__auth');
 // const { token } = require('morgan');
 let token
+let error__msg
 
 //twilio
 // const client = require('twilio')(accountSid,authtoken)
@@ -19,34 +20,29 @@ router.get('/',function(req, res, next) {
   console.log(req.body)
    token = req.cookies.usertoken
   
-  // if(token){
+  
    product__helper.get__all__products().then((products)=>{
     console.log(`the user name that is going to be displayed in the top of the website header is ${username}`)
     res.render('home1',{token,username,products})
    })
     
-  // }
+ 
 });
 router.get('/login',auth.userLoggedIn,(req,res)=>{
   console.log('signup button clicked over over!')
   // res.send('you can signup here')
-  res.render('login')
+  res.render('login',{error__msg})
+  error__msg = ''
 })
 /////////////////////////////////////////// USER LOGIN  ////////////////////////////////////////////////////////////////////
 router.post('/login',(req,res)=>{
   console.log(req.body)
-  
-   
-  console.log(` message from  post ${username}`);
   user__helper.user__login(req.body).then((response)=>{
     console.log(response)
     if(response=='user__blocked'){
       res.render('blocked')
     }
     else if(response){
-      user__helper.get__user__name().then((name)=>{
-    
-      })
       const usertoken = jwt.sign(req.body,process.env.USER_TOKEN_SECRET,{expiresIn:'365d'})
       res.cookie('usertoken',usertoken,{
         httpOnly:true
@@ -64,22 +60,28 @@ router.post('/login',(req,res)=>{
       })    
     }
     else{
+      error__msg = 'invalid email or password'
       console.log('login__failed');
-      res.render('login')
+      res.redirect('/users/login')
+      // res.render('login',{error__msg})
+     
     }
   })
   
 })
 router.get('/signup',(req,res)=>{
   console.log('signup button clicked!! over over!!!');
-  res.render('signup');
+  res.render('signup',{error__msg});
+  error__msg=''
 })
 router.post('/signup',(req,res)=>{
- console.log('User signup action detected ')
-
+ console.log('User signup action detected')
  console.log(req.body)
   user__helper.add__user(req.body).then((response)=>{
-    if(response) {
+    if (response=='deleted by admin'){
+      res.render('blocked')
+    }
+   else if(response) {
       const usertoken = jwt.sign(req.body,process.env.USER_TOKEN_SECRET,{expiresIn:'365d'})
       res.cookie('usertoken',usertoken,{
         httpOnly:true
@@ -91,7 +93,8 @@ router.post('/signup',(req,res)=>{
       console.log('signup completed');
     }
     else{
-      res.render('signup')
+      error__msg ='Account already Exists'
+      res.redirect('/users/signup')
     }
   })
 })

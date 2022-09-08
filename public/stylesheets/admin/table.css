@@ -22,15 +22,15 @@
     transition: all .2 ease-out;
 }
 .content__table tr:nth-of-type(even){
-    background-color:#585656;
-    color: white;
+    background-color:#cac8c8;
+    color: rgb(5, 5, 5);
 }
 .content__table tr:last-of-type{
     border-bottom: 2px solid rebeccapurple;
 }
 .content__table tr:hover{
-    color: rebeccapurple;
-    background-color: #f5f5f5;
+    color: rgb(255, 255, 255);
+    background-color:rgb(209, 173, 245) ;
     transform: scale(1.01);
 }
 /* for dark mode */

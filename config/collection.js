@@ -3,5 +3,8 @@ module.exports={
     ADMIN__COLLECTIONS:'admin__ecommerce',
     PRODUCTS__COLLECTIONS:'product__ecommerce',
     COUPONS__COLLECTIONS:'coupon__ecommerce',
-    CATEGORY__COLLECTIONS:'category__ecommerce'
+    CATEGORY__COLLECTIONS:'category__ecommerce',
+    ADMIN__ACTIONS:'admin__actions',
+    DELETED__ACCOUNTS:'deleted__accounts',
+    DELETED__PRODUCTS:'deleted__products'
 }

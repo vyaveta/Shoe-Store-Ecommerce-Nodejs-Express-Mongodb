@@ -10,11 +10,15 @@ module.exports={
     add__user:(user)=>{
         return new Promise(async(resolve,reject)=>{
             var success = null
-            var is__there = await db.get().collection(collection.USER__COLLECTIONS).findOne({$or:[{name:user.name},{email:user.email},{phone__number:user.phone__number}]});
-            var is__admin = await db.get().collection(collection.ADMIN__COLLECTIONS).findOne({$or:[{name:user.name},{email:user.email},{phone__number:user.phone__number}]});
+            var is__there = await db.get().collection(collection.USER__COLLECTIONS).findOne({$or:[{email:user.email},{phone__number:user.phone__number}]});
+            var is__deleted = await db.get().collection(collection.DELETED__ACCOUNTS).findOne({$or:[{email:user.email},{phone__number:user.phone__number}]})
+            var is__admin = await db.get().collection(collection.ADMIN__COLLECTIONS).findOne({$or:[{email:user.email},{phone__number:user.phone__number}]});
             if(is__admin){
                 success = false;
                 resolve(success);
+            }
+            else if (is__deleted){
+                resolve('deleted by admin')
             }
             else if (!is__there){
                 success = true;
