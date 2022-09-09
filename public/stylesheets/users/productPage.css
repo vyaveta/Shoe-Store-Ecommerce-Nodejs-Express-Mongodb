@@ -89,3 +89,11 @@
     border: 1px solid green;
     color: green;
 }
+@media only screen and (max-width: 995px) {
+    .magnifier-lens{
+        display: none;
+    }
+    .magnified__image{
+        display: none;
+    }
+  }

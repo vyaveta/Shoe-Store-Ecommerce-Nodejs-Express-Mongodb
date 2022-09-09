@@ -36,7 +36,7 @@ module.exports={
                     if(status){
                         console.log(`login process of ${admin__data.name} successful - from admin__login,admin__helpers`)
                         success = true
-                        resolve(success)
+                        resolve(is__there)
                     }
                     else{
                         console.log(`login failed the password of ${admin__data.name} doesnt match with the password in the database `)

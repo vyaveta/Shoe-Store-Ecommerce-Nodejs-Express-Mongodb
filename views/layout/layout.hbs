@@ -111,8 +111,14 @@
     <title>{{title}}</title>
 </head>
 <body>
-    {{#if admin__sidemenu}}
+{{#if no__partials}}
+    {{> noPartials}}
+    
+    {{else if admin__sidemenu}}
     {{> sidemenu}}
+    {{else}}
+    {{> userHeader}}
+    
     {{/if}}
      {{{body}}}
 </body>

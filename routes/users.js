@@ -19,11 +19,14 @@ let username
 router.get('/',function(req, res, next) {
   console.log(req.body)
    token = req.cookies.usertoken
-  
-  
-   product__helper.get__all__products().then((products)=>{
-    console.log(`the user name that is going to be displayed in the top of the website header is ${username}`)
-    res.render('home1',{token,username,products})
+   product__helper.get__top__picks().then((products)=>{
+    console.log(products)
+    product__helper.get__new__arrivals().then((new__products)=>{
+      // product__helper.get__top__picked__products().then((new__products)=>{
+        console.log(`the user name that is going to be displayed in the top of the website header is ${username}`)
+        res.render('home1',{token,username,products,new__products})
+      // })
+    })
    })
     
  
@@ -31,7 +34,7 @@ router.get('/',function(req, res, next) {
 router.get('/login',auth.userLoggedIn,(req,res)=>{
   console.log('signup button clicked over over!')
   // res.send('you can signup here')
-  res.render('login',{error__msg})
+  res.render('login',{error__msg,no__partials:true})
   error__msg = ''
 })
 /////////////////////////////////////////// USER LOGIN  ////////////////////////////////////////////////////////////////////
@@ -50,14 +53,17 @@ router.post('/login',(req,res)=>{
       const token = usertoken
       console.log('user has logged in ');
       // res.redirect('/users');
-      product__helper.get__all__products().then((products)=>{
         user__helper.get__user__name(req.body.email).then((name)=>{
-          console.log(name,'is the name')
-          username = name
-          res.render('home1',{token,username,products})
+
+          product__helper.get__top__picks().then((products)=>{
+            console.log(products)
+            product__helper.get__new__arrivals().then((new__products)=>{
+              username = name
+                console.log(`the user name that is going to be displayed in the top of the website header is ${username}`)
+                res.render('home1',{token,username,products,new__products})
+            })
+           })
         })
-       
-      })    
     }
     else{
       error__msg = 'invalid email or password'
@@ -71,7 +77,7 @@ router.post('/login',(req,res)=>{
 })
 router.get('/signup',(req,res)=>{
   console.log('signup button clicked!! over over!!!');
-  res.render('signup',{error__msg});
+  res.render('signup',{error__msg,no__partials:true});
   error__msg=''
 })
 router.post('/signup',(req,res)=>{
@@ -79,7 +85,7 @@ router.post('/signup',(req,res)=>{
  console.log(req.body)
   user__helper.add__user(req.body).then((response)=>{
     if (response=='deleted by admin'){
-      res.render('blocked')
+      res.render('blocked',{no__partials:true})
     }
    else if(response) {
       const usertoken = jwt.sign(req.body,process.env.USER_TOKEN_SECRET,{expiresIn:'365d'})
@@ -106,7 +112,8 @@ router.get('/productPage/:id',(req,res)=>{
   console.log(req.params.id)
   var id = req.params.id
   product__helper.get__the__product(id).then((data)=>{
-    console.log('the token is  ',token)
+   data.total__clicks++
+   console.log(data.total__clicks)
     res.render('users/productPage',{data,token,username})
   })
 })
@@ -115,7 +122,7 @@ router.get('/productPage/:id',(req,res)=>{
 
 router.get('/login__with__otp',(req,res)=>{
   console.log('got it')
-  res.render('users/otpLogin')
+  res.render('users/otpLogin',{no__partials:true})
 })
 router.post('/otp',(req,res)=>{
   // console.log('get jfsa;d')
@@ -127,7 +134,7 @@ router.post('/otp',(req,res)=>{
     channel:'sms'
   })
  
-  res.render('users/otp')
+  res.render('users/otp',{no__partials:true})
 })
 router.post('/user__otp',(req,res)=>{
   const otp = req.body.otp
@@ -142,7 +149,7 @@ router.post('/user__otp',(req,res)=>{
    if(response.valid){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
  user__helper.find__the__user(phone__number).then((response)=>{
   if(response=='blocked'){
-    res.render('blocked')
+    res.render('blocked',{no__partials:true})
   }
   else if(response){
     username = response
@@ -171,7 +178,7 @@ router.post('/user__otp',(req,res)=>{
 // logout///
 router.get('/logout',(req,res)=>{
   res.clearCookie('usertoken')
-  res.render('login')
+  res.render('login',{no__partials:true})
 })
 
 module.exports = router;

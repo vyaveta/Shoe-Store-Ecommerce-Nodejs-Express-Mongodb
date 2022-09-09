@@ -5,6 +5,7 @@ const objectId = require('mongodb').ObjectId
 module.exports={
     add__product:(product__details)=>{
         return new Promise( async (resolve,reject)=>{
+            product__details.total__clicks = 0
             console.log(product__details);
             await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).insertOne(product__details).then((data)=>{
             //    
@@ -40,6 +41,7 @@ module.exports={
         return new Promise (async(resolve,reject)=>{
             console.log('got inside the get__prpoducts')
             var product = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).findOne({_id:objectId(id)})
+            db.get().collection(collection__list.PRODUCTS__COLLECTIONS).updateOne({_id:objectId(id)},{$inc:{total__clicks:1}})
             resolve(product)
         })
     },update__product:(pId,pDetails)=>{
@@ -53,6 +55,16 @@ module.exports={
             }}).then((response)=>{
                 resolve()
             })
+        })
+    },get__new__arrivals:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let new__products = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find().sort({$natural:-1}).limit(10).toArray()
+            resolve(new__products)
+        })
+    },get__top__picks:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let top__picks = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find().sort({total__clicks:-1}).limit(10).toArray()
+            resolve(top__picks)
         })
     }
 }

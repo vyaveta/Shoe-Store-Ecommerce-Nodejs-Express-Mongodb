@@ -17,6 +17,7 @@ router.use(function(req, res, next) {
 require('dotenv').config()
 var adminname
 let admin__msg
+let admin__details
 
 /* GET  listing. */
 router.get('/',auth.adminCookieJWTAuth,function(req, res) {
@@ -30,7 +31,8 @@ router.get('/',auth.adminCookieJWTAuth,function(req, res) {
 
 router.get('/profilePage',(req,res)=>{
   admin__helpers.get__admin__action().then((actions)=>{
-    res.render('admin/profilePage',{title:'adminProfile',actions,admin__msg})
+    console.log('got the details of the admin ',admin__details)
+    res.render('admin/profilePage',{title:'adminProfile',actions,admin__msg,admin__details,no__partials:true})
     admin__msg =''
   })
   
@@ -38,7 +40,7 @@ router.get('/profilePage',(req,res)=>{
 
 router.get('/login',auth.adminLoggedIn,function(req,res){
   console.log('got this far')
-  res.render('admin/login');
+res.render('admin/login',{no__partials:true});
 })
 router.post('/login',(req,res)=>{
   console.log('got inside the post')
@@ -46,6 +48,7 @@ router.post('/login',(req,res)=>{
   adminname = req.body.name
   admin__helpers.admin__login(req.body).then((response)=>{
     if(response){
+      admin__details = response
       // console.log('login success -- from admin post router')
       // res.render('admin/dashboard')
       const admintoken = jwt.sign(req.body,process.env.ADMIN_TOKEN_SECRET,{expiresIn:'12d'})
@@ -57,16 +60,16 @@ router.post('/login',(req,res)=>{
     }
     else{
       console.log('login fail - from admin post router')
-      res.render('admin/login')
+      res.render('admin/login',{no__partials:true})
     }
   })
 })
 router.get('/signup',(req,res)=>{
-  res.render('admin/signup');
+  res.render('admin/signup',{no__partials:true});
 })
 //router for adding another admin
 router.get('/addAdmin',(req,res)=>{
-  res.render('admin/signup')
+  res.render('admin/signup',{no__partials:true})
 })
 router.post('/addAdmin',(req,res)=>{
   console.log(req.body)
@@ -90,13 +93,13 @@ router.get('/showUsers',auth.adminCookieJWTAuth,(req,res)=>{
   //code to get the users data from the database
   admin__helpers.get__users('get__all__users').then((response)=>{
     console.log("And the Admin.js got the data of all users from admin__helpers and now shipping it to the admin webpage")
-    res.render('admin/showUsers',{response,adminname})
+    res.render('admin/showUsers',{response,adminname,customers:true,admin__sidemenu:true})
   })
 })
 router.get('/showPrimeUsers',auth.adminCookieJWTAuth,(req,res)=>{
   admin__helpers.get__users('get__prime__users').then((response)=>{
     console.log(`now printing all the prime users ${response}`)
-    res.render('admin/showPrimeUsers',{response})
+    res.render('admin/showPrimeUsers',{response,admin__sidemenu:true,prime__users:true})
   })
 })
 //route for deleting a user
@@ -149,7 +152,7 @@ router.get('/showProducts',auth.adminCookieJWTAuth,(req,res)=>{
     //   response[i].image_id= response[i]._id.toString()
     // }
     console.log(response)
-    res.render('admin/show-products',{response,adminname})
+    res.render('admin/show-products',{response,adminname,admin__sidemenu:true,product:true})
   })
 })
 /// For adding a product ///////////
@@ -157,10 +160,10 @@ router.get('/showProducts',auth.adminCookieJWTAuth,(req,res)=>{
 router.get('/addProduct',auth.adminCookieJWTAuth,(req,res)=>{
   category__helper.get__category__list().then((data)=>{
   //  console.log(data)
-    res.render('admin/add-product',{data})
+    res.render('admin/add-product',{data,no__partials:true})
   })
 })
-router.post('/addProduct',(req,res)=>{
+router.post('/addProduct',auth.adminCookieJWTAuth,(req,res)=>{
   console.log('got inside the ppost addproduct')
   product__helper.add__product(req.body).then((data)=>{
     // console.log(req.files);
@@ -175,7 +178,7 @@ router.post('/addProduct',(req,res)=>{
 })
 
 //////////////for deleting a product /////////////////
-router.get('/deleteProduct/:id',(req,res)=>{
+router.get('/deleteProduct/:id',auth.adminCookieJWTAuth,(req,res)=>{
   let id = req.params.id
  product__helper.delete__product(id).then((response)=>{
   console.log('passed the delete__product function and got inside the get method of delete product')
@@ -185,12 +188,12 @@ router.get('/deleteProduct/:id',(req,res)=>{
 
 router.get('/showCategory',auth.adminCookieJWTAuth,(req,res)=>{
   category__helper.get__category__list().then((data)=>{
-    res.render('admin/show-category',{data})
+    res.render('admin/show-category',{data,adminname,admin__sidemenu:true,category:true})
   })
 })
 router.get('/addCategory',auth.adminCookieJWTAuth,(req,res)=>{
   category__helper.get__category__list().then((data)=>{
-    res.render('admin/addCategory',{data})
+    res.render('admin/addCategory',{data,no__partials:true})
   })
 })
 router.post('/addCategory',auth.adminCookieJWTAuth,(req,res)=>{
@@ -206,12 +209,12 @@ router.get('/editProduct/:id',auth.adminCookieJWTAuth, async(req,res)=>{
  await  product__helper.get__the__product(id).then(async(data)=>{
    await category__helper.get__category__list().then((category)=>{
     console.log(category)
-      res.render('admin/editProduct',{data,category})
+      res.render('admin/editProduct',{data,category,no__partials:true})
     })
   })
 })
 
-router.post('/editProduct/:id',(req,res)=>{
+router.post('/editProduct/:id',auth.adminCookieJWTAuth,(req,res)=>{
   let id = req.params.id
   product__helper.update__product(req.params.id,req.body).then(()=>{
     res.redirect('/admin/showProducts')
@@ -222,7 +225,7 @@ router.post('/editProduct/:id',(req,res)=>{
   })
 })
 ///////////// For deleting a category///////////////////
-router.get('/deleteCategory/:id',(req,res)=>{
+router.get('/deleteCategory/:id',auth.adminCookieJWTAuth,(req,res)=>{
   category__helper.delete__category(req.params.id).then((response)=>{
     admin__msg = response
     res.redirect('/admin/showCategory')
@@ -230,7 +233,7 @@ router.get('/deleteCategory/:id',(req,res)=>{
 })
 
 /////////////////////////////////////////// undo user deletion  ///////////////////////////////////////
-router.get('/undoUserDeletion/:id',async(req,res)=>{
+router.get('/undoUserDeletion/:id',auth.adminCookieJWTAuth,async(req,res)=>{
   admin__helpers.undo__user__deletion(req.params.id).then((response)=>{
     admin__msg = response
     res.redirect('/admin/profilePage')
@@ -242,6 +245,6 @@ router.get('/undoUserDeletion/:id',async(req,res)=>{
 router.get('/logout',(req,res)=>{
   console.log('admin logout attempt detected!!')
   res.clearCookie('admintoken')
-  res.render('admin/login')
+  res.render('admin/login',{no__partials:true})
 })
 module.exports = router;
