@@ -1,5 +1,6 @@
 let body = document.querySelector('body')
 let dark = document.getElementById('dark')
+<<<<<<< HEAD
 let darkMode = localStorage.getItem('darkMode')
 
 console.log('script is running peacefully')
@@ -34,3 +35,22 @@ if(darkMode == 'enabled'){
 }
 
 
+=======
+let section1_2 = document.querySelector('.section__1_2')
+let header = document.querySelector(".header")
+let sidemenu = document.querySelector('.side__menu')
+
+dark.onclick = ()=>{
+    if(dark.checked==true){
+        body.classList.add('darkmode')
+        section1_2.classList.add('darkmode')
+        header.classList.add('darkmode')
+        sidemenu.classList.add('darkmode')
+    }else{
+        body.classList.remove('darkmode')
+        section1_2.classList.remove('darkmode')
+        header.classList.remove('darkmode')
+        sidemenu.classList.remove('darkmode')
+    }
+}
+>>>>>>> 4b47ecb4a1f5c00338ee3dd258bb85aed527af07
