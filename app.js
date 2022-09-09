@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var fileupload = require('express-fileupload')
-var hbs = require('hbs')
+var hbs = require('express-handlebars')
 
 
 var indexRouter = require('./routes/index');
@@ -24,6 +24,7 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+app.engine('hbs', hbs.engine({extname:'hbs', defaultLayout:'layout', layoutsDir:__dirname+'/views/layout/', partialsDir:__dirname+'/views/partials/'}))
 // app.engine('hbs',hbs.engine({extname:'hbs',defaultLayout:'layout',layoutDir:__dirname  + '/views/layout/',partialsDir:__dirname+'/views/partials'}))
 
 app.use(logger('dev'));
@@ -33,13 +34,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileupload())
 // caching disabled for every route
-// app.use(function(req, res, next) {
-//   res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
-//   next();
-// });
+app.use(function(req, res, next) {
+  res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+  next();
+});
 
 // hbs.registerPartials(__dirname+'/views/admin/partials/')
-hbs.registerPartials('partials',path.join(__dirname,'partials'))
+// hbs.registerPartials('partials',path.join(__dirname,'partials'))
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

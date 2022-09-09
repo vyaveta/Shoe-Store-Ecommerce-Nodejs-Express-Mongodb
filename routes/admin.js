@@ -22,7 +22,7 @@ let admin__msg
 router.get('/',auth.adminCookieJWTAuth,function(req, res) {
   admin__helpers.get__users('get__everything').then((response)=>{
     admin__helpers.get__new__users().then((newUsers)=>{
-      res.render('admin/dashboard',{response,adminname,newUsers});
+      res.render('admin/dashboard',{response,adminname,newUsers,admin__sidemenu:true});
     })
   })
 });

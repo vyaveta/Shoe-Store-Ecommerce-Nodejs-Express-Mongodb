@@ -208,23 +208,63 @@ a{
 }
 
     /* product section css */
+    .new__arrivals{
+        color:white;
+        border-radius:20px 0 20px 0;
+        height: 60px;
+        margin: 60px auto 10px;
+        background-color: #059408;
+        font-family: 'Satisfy', cursive;
+        width: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .button__div{
+        display: flex;
+        justify-content: center;
+        align-items:center;
+        font-family: 'Satisfy', cursive;
+    }
+   .button__div  a{
+    text-decoration: none;
+}
 
     .the__products{
         display: flex;
         justify-content: center;
         align-items: center;
+        
     }
     .the__container{
         margin-top: 40px;
+        margin: 40px;
         position: relative;
         width: 1200px;
+        /* max-width: 1200px; */
         display: grid;
-        grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+        /* grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); */
+        grid-template-columns: repeat(10, 300px);
         grid-gap: 20px;
+        grid-auto-flow: column;
+        grid-auto-columns: 21%;
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+        /* grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); */
+    }
+    .snaps__inline{
+        scroll-snap-type: inline mandatory;
+        scroll-margin-inline-start: 30px;
+    }
+    .snaps__inline > *{
+        
+        scroll-snap-align: start;
     }
     .the__container .the__card{
         width: 100%;
         max-width: 450px;
+        /* margin: 30px; */
+        /* min-width: 400px; */
         /* background:yellowgreen; */
         /* background:rgb(26, 222, 43); */
         background-color: rgb(68, 149, 66);
@@ -351,7 +391,12 @@ a{
         margin: 50px 0;
         flex-direction: column reverse;
     }
+   
 }
 a{
     text-decoration:none;
 }
+
+
+
+/* Kevin powell tutorial for carousal done by the Adwaith */
