@@ -34,10 +34,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileupload())
 // caching disabled for every route
-app.use(function(req, res, next) {
-  res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
-  next();
-});
+// app.use(function(req, res, next) {
+//   res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+//   next();
+// });
 
 // hbs.registerPartials(__dirname+'/views/admin/partials/')
 // hbs.registerPartials('partials',path.join(__dirname,'partials'))

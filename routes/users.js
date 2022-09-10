@@ -10,7 +10,8 @@ let error__msg
 //twilio
 // const client = require('twilio')(accountSid,authtoken)
 const product__helper = require('../helpers/product__helper');
-require('dotenv')
+require('dotenv').config()
+const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID ,process.env.TWILIO_AUTH_TOKEN)
 
 let useremail
 let username
@@ -125,7 +126,8 @@ router.get('/login__with__otp',(req,res)=>{
   res.render('users/otpLogin',{no__partials:true})
 })
 router.post('/otp',(req,res)=>{
-  // console.log('get jfsa;d')
+  
+  console.log('get jfsa;d')
   phone__number = req.body.phone__number;
   client.verify
   .services(process.env.TWILIO_SERVICE_ID)

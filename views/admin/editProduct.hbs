@@ -38,12 +38,12 @@
                 </select>
             </div>
             <div class="content">
-                <p>Price</p>
-                <input type="file" name="image" id="image" onchange="viewImage(event)" required>
+                <p>Image</p>
+                <input type="file" value="/product-images/{{data._id}}.jpg" name="image" id="image" onchange="viewImage(event)" required>
             </div>
             <div class="content des">
                 <p>Description</p>
-                <textarea name="description" required value="{{data.description}}" id="description" ></textarea  >
+                <textarea name="description" required  id="description" >{{data.description}}</textarea  >
             </div>
             <center> <button class="btn btn-success" type="submit">Edit Product</button> </center>
            <div class="content">
@@ -61,12 +61,8 @@
              <center>  <a href="/admin"><button class="btn btn-primary">Dashboard / Home</button></a></center>
         </div>
     </div>
-   <script>
-    function viewImage(event){
-        document.getElementById('img__view').src=URL.createObjectURL(event.target.files[0])
-    }
-   </script>
-    
+
+    <script src="/javascripts/imageChange.js"></script>
      <script src="/javascripts/darkMode.js"></script>
     <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>

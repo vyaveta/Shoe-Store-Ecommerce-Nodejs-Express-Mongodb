@@ -174,7 +174,7 @@
             </div>
             <!--The start of the searc div-->
             <div class="search">
-                <input type="text" placeholder="search...">
+                <input type="text" placeholder="search..." id="search">
                 <!--Just a code for the search button-->
                 <button type="submit">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -187,7 +187,7 @@
             <!--The code for the search button ends here-->
             <div class="admin">
                 <a href="/admin/profilePage">
-                    <div class="admin__profile"><img src="/firstpage.jpg" alt="adminpic" width="40" height="40"></div>
+                    <div class="admin__profile"><img src="/adminProfile/{{admin__details._id}}.jpg" alt="adminpic" width="40" height="40" style="object-fit: cover;"></div>
                 </a>
                 <div class="admin__name">
                     <p>{{adminname}}</p>

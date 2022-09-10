@@ -8,6 +8,7 @@ const admin__helpers = require('../helpers/admin__helpers');
 const auth = require('../helpers/auth');
 const category__helper = require('../helpers/category__helper');
 const product__helper = require('../helpers/product__helper');
+const objectId = require('mongodb').ObjectId
 
 router.use(function(req, res, next) {
     res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
@@ -23,7 +24,7 @@ let admin__details
 router.get('/',auth.adminCookieJWTAuth,function(req, res) {
   admin__helpers.get__users('get__everything').then((response)=>{
     admin__helpers.get__new__users().then((newUsers)=>{
-      res.render('admin/dashboard',{response,adminname,newUsers,admin__sidemenu:true});
+      res.render('admin/dashboard',{response,adminname,newUsers,admin__details,admin__sidemenu:true});
     })
   })
 });
@@ -173,7 +174,6 @@ router.post('/addProduct',auth.adminCookieJWTAuth,(req,res)=>{
         res.redirect('/admin/addProduct')
       }
     })
-    
   })
 })
 
@@ -209,7 +209,10 @@ router.get('/editProduct/:id',auth.adminCookieJWTAuth, async(req,res)=>{
  await  product__helper.get__the__product(id).then(async(data)=>{
    await category__helper.get__category__list().then((category)=>{
     console.log(category)
-      res.render('admin/editProduct',{data,category,no__partials:true})
+    var imgId = data._id.toString()
+    
+    console.log('the id that we got is ',imgId)
+      res.render('admin/editProduct',{data,imgId,category,no__partials:true})
     })
   })
 })
@@ -238,6 +241,24 @@ router.get('/undoUserDeletion/:id',auth.adminCookieJWTAuth,async(req,res)=>{
     admin__msg = response
     res.redirect('/admin/profilePage')
   })
+})
+
+
+///////////////////////////////////////////////////////  UPDATING THE ADMIN PROFILE /////////////////////////////////// 
+
+router.post('/updateProfile',auth.adminCookieJWTAuth,async(req,res)=>{
+  let Image = req.files.image
+  if (admin__details){
+    Image.mv(`public/adminProfile/${admin__details._id}.jpg`,(err,done)=>{
+      if(!err){
+        console.log('success')
+        res.redirect('/admin/profilePage')
+      }
+    })
+  }else{
+    res.redirect('/admin/profilePage')
+  }
+ 
 })
 
 
