@@ -8,7 +8,7 @@
         flex-direction:row ;
         justify-content: flex-start !important;
         align-items:center;
-        height: 100vh;
+        height: 100%;
         /* padding: 40px; */
     }
     .contact__form{
@@ -19,7 +19,7 @@
         align-items: center;
        
         padding: 30px;
-        max-height: 100vh;
+        height: 100%;
         border-radius: 15px;
         background: #f1f1f1;
         box-shadow:  -5px 5px 9px #ebebeb,
@@ -30,8 +30,8 @@
         color: rebeccapurple;
         width: 100%;
         min-width: 250px;
-        height: 30px;
-        border-radius: 2px;
+        height: 35px;
+        border-radius: 10px;
         outline: none;
         border:none;
         text-align: center;

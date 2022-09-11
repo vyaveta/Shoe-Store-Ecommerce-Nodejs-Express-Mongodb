@@ -21,7 +21,6 @@ router.get('/',function(req, res, next) {
   console.log(req.body)
    token = req.cookies.usertoken
    product__helper.get__top__picks().then((products)=>{
-    console.log(products)
     product__helper.get__new__arrivals().then((new__products)=>{
       // product__helper.get__top__picked__products().then((new__products)=>{
         console.log(`the user name that is going to be displayed in the top of the website header is ${username}`)
@@ -33,14 +32,12 @@ router.get('/',function(req, res, next) {
  
 });
 router.get('/login',auth.userLoggedIn,(req,res)=>{
-  console.log('signup button clicked over over!')
-  // res.send('you can signup here')
   res.render('login',{error__msg,no__partials:true})
   error__msg = ''
 })
 /////////////////////////////////////////// USER LOGIN  ////////////////////////////////////////////////////////////////////
 router.post('/login',(req,res)=>{
-  console.log(req.body)
+  
   user__helper.user__login(req.body).then((response)=>{
     console.log(response)
     if(response=='user__blocked'){
@@ -57,7 +54,6 @@ router.post('/login',(req,res)=>{
         user__helper.get__user__name(req.body.email).then((name)=>{
 
           product__helper.get__top__picks().then((products)=>{
-            console.log(products)
             product__helper.get__new__arrivals().then((new__products)=>{
               username = name
                 console.log(`the user name that is going to be displayed in the top of the website header is ${username}`)
@@ -82,6 +78,8 @@ router.get('/signup',(req,res)=>{
   error__msg=''
 })
 router.post('/signup',(req,res)=>{
+  var name = req.body.name
+  console.table(req.body)
  console.log('User signup action detected')
  console.log(req.body)
   user__helper.add__user(req.body).then((response)=>{
@@ -94,7 +92,8 @@ router.post('/signup',(req,res)=>{
         httpOnly:true
       })
       
-        username = req.body.name
+        username = name
+        console.warn(username)
       res.redirect('/users')
       // res.render('home1')
       console.log('signup completed');

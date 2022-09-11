@@ -60,6 +60,7 @@
 
 <body>
     <div class="section__1">
+        <p style="color: green ; font-size:22px;font-weight:600;">{{admin__msg}}</p>
         {{#if response}}
         <table id="example" class="display" style="width:100%">
 
@@ -70,6 +71,7 @@
                     <th>category</th>
                     <th>price</th>
                     <th>description</th>
+                    <th>Stocks left</th>
                     <th>Image</th>
                     <th>Edit</th>
                     <th>Delete</th>
@@ -84,6 +86,7 @@
                     <td>{{this.category}}</td>
                     <td>{{this.price}}</td>
                     <td>{{this.description}}</td>
+                    <td>{{this.stock}}</td>
                     <td><img src="/product-images/{{this._id}}.jpg" alt="imagehere " width="50px" height="50px"></td>
                     <td><a href="/admin/editProduct/{{this._id}}" class="btn btn-primary btn-sm">Edit</a></td>
                     <td><a href="/admin/deleteProduct/{{this._id}}" class="btn btn-danger btn-sm"

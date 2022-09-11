@@ -1,20 +1,23 @@
 const db = require('../config/connection')
 const collection__list = require('../config/collection')
+const { response } = require('express')
 const objectId = require('mongodb').ObjectId
 
 module.exports={
     add__product:(product__details)=>{
         return new Promise( async (resolve,reject)=>{
+            product__details.price = product__details.price * 1
+            product__details.stock = product__details.stock * 1
             product__details.total__clicks = 0
             console.log(product__details);
             await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).insertOne(product__details).then((data)=>{
             //    
                     // console.log('product added')
                     console.log(data)
-                    resolve(data.insertedId)
+                    // resolve(data.insertedId)
+                    resolve([data.insertedId,`successfuly added ${product__details.company__name} ${product__details.model} to Shoe Store Site`])
                 // resolve(data._id)
             })
-
         })
     },get__all__products:()=>{
         return new Promise(async(resolve,reject)=>{
@@ -23,13 +26,13 @@ module.exports={
         })
     },delete__product:(id)=>{
         console.log(id)
-        return new Promise ((resolve,reject)=>{
+        return new Promise (async(resolve,reject)=>{
             console.log('got inside the delete__product promise')
-             db.get().collection(collection__list.PRODUCTS__COLLECTIONS).deleteOne({_id:objectId(id)}).then((response)=>{
+             await  db.get().collection(collection__list.PRODUCTS__COLLECTIONS).findOneAndDelete({_id:objectId(id)}).then((product)=>{
                 if(response){
-                    console.log('Deleted a product')
+                    console.log(' a product', response)
                     // var user__name = deleted__user__details.name
-                    resolve('status')
+                    resolve(`Successfully deleted ${product.value.company__name} ${product.value.model}`)
                 }
                 else{
                     console.log('error occured in delete__user')
@@ -51,19 +54,20 @@ module.exports={
                 model:pDetails.model,
                 price:pDetails.price,
                 category:pDetails.category,
-                description:pDetails.description
+                description:pDetails.description,
+                stock:pDetails.stock
             }}).then((response)=>{
-                resolve()
+                resolve(`Successfuly updated ${pDetails.company__name} ${pDetails.model}`)
             })
         })
     },get__new__arrivals:()=>{
         return new Promise(async(resolve,reject)=>{
-            let new__products = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find().sort({$natural:-1}).limit(10).toArray()
+            let new__products = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find({stock: {$gt:0}}).sort({$natural:-1}).limit(10).toArray()
             resolve(new__products)
         })
     },get__top__picks:()=>{
         return new Promise(async(resolve,reject)=>{
-            let top__picks = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find().sort({total__clicks:-1}).limit(10).toArray()
+            let top__picks = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find({stock: {$gt:0}}).sort({total__clicks:-1}).limit(10).toArray()
             resolve(top__picks)
         })
     }

@@ -30,14 +30,15 @@
 }
 .content__table tr:hover{
     color: rgb(255, 255, 255);
-    background-color:rgb(209, 173, 245) ;
-    transform: scale(1.01);
+    background-color:rgb(103, 103, 103) ;
+    transform: scale(1.002);
 }
 /* for dark mode */
 .darkmode .content__table tr:hover{
-    color: rgb(255, 255, 255);
-    background-color: #333;
-    transform: scale(1.02);
+    color: rgb(0, 0, 0);
+    background-color: rebeccapurple;
+    transform: scale(1.002);
+    
 }
 .darkmode .content__table tr:last-of-type{
     border-bottom: 2px solid #333;

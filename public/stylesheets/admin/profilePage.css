@@ -2,6 +2,7 @@ body{
     margin:0px;
     padding:0px;
     background-color: white;
+    font-family: 'Roboto Mono', monospace;
 }
 .main{
     padding: 15px;
@@ -11,14 +12,20 @@ body{
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 1px 1px 5px 2px rgba(0,0,0,.1),-1px -1px 6px 1px rgba(0,0,0,.1);
+    padding: 20px 0px 20px;
 }
 .topbar a {
     float: right;
     color:whitesmoke;
     text-align: center;
-    padding:20px 26px;
+    /* padding:20px 26px; */
     text-decoration:none;
-    font-size:26px;
+    font-size:20px;
+    border-radius: 10px;
+    border: 2px solid white;
+    /* height: 15px; */
+    padding: 10px;
+    margin-right: 10px;
 }
 .sidebar{
     background-color:white;
@@ -76,4 +83,17 @@ body{
 .darkmode  .content{
     background:#333;
    color:white;
+}
+.darkmode .topbar a {
+    float: right;
+    color:rgb(255, 255, 255);
+    text-align: center;
+    /* padding:20px 26px; */
+    text-decoration:none;
+    font-size:20px;
+    border-radius: 10px;
+    border: 2px solid rgb(0, 0, 0);
+    /* height: 15px; */
+    padding: 10px;
+    margin-right: 10px;
 }

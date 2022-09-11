@@ -41,6 +41,10 @@
                 <p>Image</p>
                 <input type="file" value="/product-images/{{data._id}}.jpg" name="image" id="image" onchange="viewImage(event)" required>
             </div>
+             <div class="content">
+                <p>Stocks</p>
+                <input type="number" name="stock" value="{{data.stock}}" id="image" min="1" required>
+            </div>
             <div class="content des">
                 <p>Description</p>
                 <textarea name="description" required  id="description" >{{data.description}}</textarea  >

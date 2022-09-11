@@ -182,6 +182,7 @@
                 <!--The end of the search div-->
         </div> --}}
         <div class="section__1">
+             <p style="color: rgb(223, 23, 23) ; font-size:22px;font-weight:600;">{{admin__msg}}</p>
          <button><a href="/admin/addCategory">Add Category</a></button>
             {{#if data}}
            <table id="example" class="display" style="width:100%">
@@ -195,7 +196,7 @@
 {{# each data}}
             <tr>
                 <td>{{this.name}}</td>
-                <td><a href="/admin/deleteCategory/{{this._id}}"><button class="btn btn-danger">Delete</button></a></td>
+                <td><a href="/admin/deleteCategory/{{this._id}}"><button class="btn btn-danger" onclick=" return confirm('Are you sure do you really want to delete {{this.name}} from category list')">Delete</button></a></td>
             </tr>
  {{/each}}
             </tbody>

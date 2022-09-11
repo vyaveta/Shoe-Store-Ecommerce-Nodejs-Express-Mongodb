@@ -93,7 +93,7 @@ module.exports={
                     if(response){
                         console.log(deleted__user)
                         // var user__name = deleted__user__details.name
-                        resolve('status')
+                        resolve(`Successfuly deleted the account of ${deleted__user.name} , Any way you can undo the deletion from admin actions!!`)
                     }
                     else{
                         console.log('error occured in delete__user')

@@ -1,6 +1,7 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Aboreto&family=Changa:wght@400;600;700;800&family=Cookie&family=Exo:wght@400;500;600;800;900&family=IBM+Plex+Mono:ital,wght@0,700;1,700&family=Righteous&family=Roboto+Mono:wght@300;400;500;600;700&family=Satisfy&family=Source+Code+Pro:wght@400;600;700;800&display=swap'); */
 body{
     margin: 0;
+    padding: 0;
     font-family: 'Source Code Pro', monospace;
     transition: .5s;
 }
@@ -143,11 +144,13 @@ a{
     color:white;
     background: linear-gradient(to right,  yellowgreen,green);
     border-radius: 10px;
+    
     transition:width .15s
 }
 .button__more a {
     color: white;
     text-decoration: none;
+    
 
 }
 .button__more:hover{
@@ -412,6 +415,7 @@ a{
     color: goldenrod;
     font-family: 'IBM Plex Mono', monospace;
     font-weight: 700;
+    padding: 15px;
 }
 .simple__gold{
     padding: 5px 15px;
@@ -422,6 +426,8 @@ a{
     border:none;
     font-size: 20px;
     font-weight: 500;
+    min-width: 100px;
+    margin:0px 14px 0px;
 }
 
 

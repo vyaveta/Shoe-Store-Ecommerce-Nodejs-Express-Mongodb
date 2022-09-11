@@ -15,6 +15,7 @@
     <div class="contact__form">
          <button id="dark" style="display: none;"> dark mode</button>
         <h1>Add Product</h1>
+        <p style="color: green ; font-size:22px;font-weight:600;">{{admin__msg}}</p>
          <form action="/admin/addProduct" class="signin__form" method="post" enctype="multipart/form-data">
             <div class="content">
                 <p>Company Name</p>
@@ -38,8 +39,12 @@
                 </select>
             </div>
             <div class="content">
-                <p>Price</p>
-                <input type="file" name="image" id="image" required>
+                <p>Image</p>
+                <input type="file" name="image" id="image"  required>
+            </div>
+             <div class="content">
+                <p>Stocks</p>
+                <input type="number" name="stock" id="image" min="1" required>
             </div>
             <div class="content des">
                 <p>Description</p>

@@ -15,13 +15,13 @@ module.exports={
         return new Promise (async(resolve,reject)=>{
             db.get().collection(collection__list.CATEGORY__COLLECTIONS).insertOne(data).then((response)=>{
                 console.log('got inside the add__category promise ')
-                resolve(data)
+                resolve('Successfuly added a new Category!')
             })
         })
     },delete__category:(id)=>{
         return new Promise (async(resolve,reject)=>{
             await db.get().collection(collection__list.CATEGORY__COLLECTIONS).deleteOne({_id:objectId(id)}).then((response)=>{
-                resolve('done')
+                resolve('Successfuly deleted the Category')
             })
         })
     }

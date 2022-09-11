@@ -94,7 +94,8 @@ router.get('/showUsers',auth.adminCookieJWTAuth,(req,res)=>{
   //code to get the users data from the database
   admin__helpers.get__users('get__all__users').then((response)=>{
     console.log("And the Admin.js got the data of all users from admin__helpers and now shipping it to the admin webpage")
-    res.render('admin/showUsers',{response,adminname,customers:true,admin__sidemenu:true})
+    res.render('admin/showUsers',{response,adminname,customers:true,admin__sidemenu:true,admin__msg})
+    admin__msg = ''
   })
 })
 router.get('/showPrimeUsers',auth.adminCookieJWTAuth,(req,res)=>{
@@ -108,7 +109,7 @@ router.get('/deleteUser/:id',auth.adminCookieJWTAuth,(req,res)=>{
   console.log('got inside the delete router ')
   let uid = req.params.id
   admin__helpers.delete__user(uid).then((response)=>{
-    console.log(response)
+    admin__msg = response
     res.redirect('/admin/showUsers')
   })
 })
@@ -153,7 +154,8 @@ router.get('/showProducts',auth.adminCookieJWTAuth,(req,res)=>{
     //   response[i].image_id= response[i]._id.toString()
     // }
     console.log(response)
-    res.render('admin/show-products',{response,adminname,admin__sidemenu:true,product:true})
+    res.render('admin/show-products',{response,adminname,admin__sidemenu:true,product:true,admin__msg})
+    admin__msg = ''
   })
 })
 /// For adding a product ///////////
@@ -161,15 +163,18 @@ router.get('/showProducts',auth.adminCookieJWTAuth,(req,res)=>{
 router.get('/addProduct',auth.adminCookieJWTAuth,(req,res)=>{
   category__helper.get__category__list().then((data)=>{
   //  console.log(data)
-    res.render('admin/add-product',{data,no__partials:true})
+    res.render('admin/add-product',{data,no__partials:true,admin__msg})
+    admin__msg = ''
   })
 })
 router.post('/addProduct',auth.adminCookieJWTAuth,(req,res)=>{
   console.log('got inside the ppost addproduct')
   product__helper.add__product(req.body).then((data)=>{
+    admin__msg = data[1]
+    console.log(data[0],data[1])
     // console.log(req.files);
     let Image = req.files.image
-    Image.mv(`public/product-images/${data}.jpg`,(err,done)=>{
+    Image.mv(`public/product-images/${data[0]}.jpg`,(err,done)=>{
       if(!err){
         res.redirect('/admin/addProduct')
       }
@@ -181,6 +186,7 @@ router.post('/addProduct',auth.adminCookieJWTAuth,(req,res)=>{
 router.get('/deleteProduct/:id',auth.adminCookieJWTAuth,(req,res)=>{
   let id = req.params.id
  product__helper.delete__product(id).then((response)=>{
+  admin__msg = response
   console.log('passed the delete__product function and got inside the get method of delete product')
   res.redirect('/admin/showProducts')
  })
@@ -188,20 +194,33 @@ router.get('/deleteProduct/:id',auth.adminCookieJWTAuth,(req,res)=>{
 
 router.get('/showCategory',auth.adminCookieJWTAuth,(req,res)=>{
   category__helper.get__category__list().then((data)=>{
-    res.render('admin/show-category',{data,adminname,admin__sidemenu:true,category:true})
+    res.render('admin/show-category',{data,adminname,admin__sidemenu:true,category:true,admin__msg})
+    admin__msg = ''
   })
 })
 router.get('/addCategory',auth.adminCookieJWTAuth,(req,res)=>{
   category__helper.get__category__list().then((data)=>{
-    res.render('admin/addCategory',{data,no__partials:true})
+    res.render('admin/addCategory',{data,no__partials:true,admin__msg})
+    admin__msg = ''
   })
 })
 router.post('/addCategory',auth.adminCookieJWTAuth,(req,res)=>{
   console.log('got inside the addcategory post method')
   category__helper.add__category(req.body).then((response)=>{
+    admin__msg = response
     res.redirect('/admin/addCategory')
   })
 })
+
+///////////// For deleting a category///////////////////
+router.get('/deleteCategory/:id',auth.adminCookieJWTAuth,(req,res)=>{
+  category__helper.delete__category(req.params.id).then((response)=>{
+    admin__msg = response
+    res.redirect('/admin/showCategory')
+  })
+})
+
+
 ///////////// Edit Product route (get) ////////
 router.get('/editProduct/:id',auth.adminCookieJWTAuth, async(req,res)=>{
   let id = req.params.id
@@ -219,7 +238,8 @@ router.get('/editProduct/:id',auth.adminCookieJWTAuth, async(req,res)=>{
 
 router.post('/editProduct/:id',auth.adminCookieJWTAuth,(req,res)=>{
   let id = req.params.id
-  product__helper.update__product(req.params.id,req.body).then(()=>{
+  product__helper.update__product(req.params.id,req.body).then((msg)=>{
+    admin__msg = msg
     res.redirect('/admin/showProducts')
     if(req.files.image){
       let Image = req.files.image
@@ -227,13 +247,7 @@ router.post('/editProduct/:id',auth.adminCookieJWTAuth,(req,res)=>{
     }
   })
 })
-///////////// For deleting a category///////////////////
-router.get('/deleteCategory/:id',auth.adminCookieJWTAuth,(req,res)=>{
-  category__helper.delete__category(req.params.id).then((response)=>{
-    admin__msg = response
-    res.redirect('/admin/showCategory')
-  })
-})
+
 
 /////////////////////////////////////////// undo user deletion  ///////////////////////////////////////
 router.get('/undoUserDeletion/:id',auth.adminCookieJWTAuth,async(req,res)=>{
