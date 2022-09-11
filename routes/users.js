@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken')
 const user__helper = require('../helpers/user__helper')
 const auth = require('../helpers/user__auth');
 // const { token } = require('morgan');
+const print = console.log
+const table = console.table
 let token
 let error__msg
 
@@ -18,12 +20,13 @@ let username
 
 /* GET users listing. */
 router.get('/',function(req, res, next) {
-  console.log(req.body)
+  // console.log(req.body)
+  print('this is really cool !!!')
    token = req.cookies.usertoken
    product__helper.get__top__picks().then((products)=>{
     product__helper.get__new__arrivals().then((new__products)=>{
       // product__helper.get__top__picked__products().then((new__products)=>{
-        console.log(`the user name that is going to be displayed in the top of the website header is ${username}`)
+      print(`the user name that is going to be displayed in the top of the website header is ${username}`)
         res.render('home1',{token,username,products,new__products})
       // })
     })

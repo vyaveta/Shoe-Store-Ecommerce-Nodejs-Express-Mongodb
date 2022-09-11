@@ -39,7 +39,7 @@
             </div>
             <div class="content">
                 <p>Image</p>
-                <input type="file" value="/product-images/{{data._id}}.jpg" name="image" id="image" onchange="viewImage(event)" required>
+                <input type="file" name="image" id="image" onchange="viewImage(event)" >
             </div>
              <div class="content">
                 <p>Stocks</p>
@@ -65,6 +65,8 @@
              <center>  <a href="/admin"><button class="btn btn-primary">Dashboard / Home</button></a></center>
         </div>
     </div>
+    
+    
 
     <script src="/javascripts/imageChange.js"></script>
      <script src="/javascripts/darkMode.js"></script>

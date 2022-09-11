@@ -18,6 +18,20 @@
     <title>Document</title>
 </head>
 <style>
+   .small-img-group{
+    display: flex;
+    justify-content: space-between;
+   }
+   .small-img-col{
+    margin-top: 8px;
+    flex-basis: 24%;
+    cursor: pointer;
+    height: 150px;
+    
+   }
+   .small-img-col img{
+    object-fit: cover;
+   }
    
 </style>
 
@@ -27,8 +41,21 @@
 <section class=" container sproduct  pt-4 ">
     <div class="row mt-5 parent__of__magnifier">
         <div class="col-12 col-md-12 col-lg-5 image__box " >
-            <img class="img-fluid w-100 img" src="/product-images/{{data._id}}.jpg" alt="image__here">
-            <div class="magnifier-lens"></div>
+            <img class="img-fluid w-100 img" id="mainImg" src="/product-images/{{data._id}}.jpg" alt="image__here">
+            <div class="magnifier-lens"></div> 
+
+            <div class="small-img-group">
+                <div class="small-img-col">
+                    <img src="/product-images/{{data._id}}2.jpg" alt=""  width="150px" height="150px" class="small-img" srcset="">
+                </div>
+                <div class="small-img-col">
+                    <img src="/product-images/{{data._id}}3.jpg" alt=""  width="150px" height="150px" class="small-img" srcset="">
+                </div>
+                <div class="small-img-col">
+                    <img src="/product-images/{{data._id}}4.jpg" alt="" width="150px" height="150px" class="small-img" srcset="">
+                </div>
+            </div>
+
         </div>
         <div class="col-12 col-md-12 col-lg-6">
             <h6>Shoe Store</h6>
@@ -64,6 +91,27 @@
         <div class="magnified__image"></div>
     </div>
 </section>
+<script>
+    var temp
+    var main__img = document.getElementById('mainImg')
+    var small__img = document.getElementsByClassName('small-img')
+    small__img[0].onclick=()=>{
+         temp = main__img.src
+         main__img.src = small__img[0].src
+         small__img[0].src = temp
+         
+    }
+    small__img[1].onclick=()=>{
+        temp = main__img.src
+         main__img.src = small__img[1].src
+         small__img[1].src = temp
+    }
+    small__img[2].onclick=()=>{
+          temp = main__img.src
+         main__img.src = small__img[2].src
+         small__img[2].src = temp
+    }
+</script>
 
 <script src="/javascripts/productZoom.js"></script>
 

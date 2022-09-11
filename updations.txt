@@ -1,0 +1,8 @@
+----------------------------- SEPTEMBER 11 NIGHT UPDATION ----------------------------------------
+Newly added featured 
+1.added multiple image for a product 
+
+Bug fixes
+1.stabilized product page
+2.stabilized product edit page on the admin side 
+3.fixed the bug of having problem with loading username on navbar

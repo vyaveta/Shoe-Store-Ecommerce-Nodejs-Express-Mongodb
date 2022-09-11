@@ -9,13 +9,18 @@ const auth = require('../helpers/auth');
 const category__helper = require('../helpers/category__helper');
 const product__helper = require('../helpers/product__helper');
 const objectId = require('mongodb').ObjectId
+const path = require('path')
+const table = console.table
+const print = console.log
+
+require('dotenv').config()
 
 router.use(function(req, res, next) {
     res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
     next();
   });
 
-require('dotenv').config()
+
 var adminname
 let admin__msg
 let admin__details
@@ -167,19 +172,32 @@ router.get('/addProduct',auth.adminCookieJWTAuth,(req,res)=>{
     admin__msg = ''
   })
 })
-router.post('/addProduct',auth.adminCookieJWTAuth,(req,res)=>{
-  console.log('got inside the ppost addproduct')
-  product__helper.add__product(req.body).then((data)=>{
+router.post('/addProduct',auth.adminCookieJWTAuth,async(req,res)=>{
+  try{
+    table(req.body)
+  var product = req.body
+  
+  product__helper.add__product(product).then(async(data)=>{
     admin__msg = data[1]
     console.log(data[0],data[1])
-    // console.log(req.files);
-    let Image = req.files.image
-    Image.mv(`public/product-images/${data[0]}.jpg`,(err,done)=>{
-      if(!err){
-        res.redirect('/admin/addProduct')
-      }
-    })
+    print(req.files ,)
+      let Image = req.files.image
+      let Image2 = req.files.image2
+      let Image3 = req.files.image3
+      let Image4 = req.files.image4
+      Image.mv(`public/product-images/${data[0]}.jpg`,(err,done)=>{
+      })
+      Image2.mv(`public/product-images/${data[0]}2.jpg`,(err,done)=>{
+      })
+      Image3.mv(`public/product-images/${data[0]}3.jpg`,(err,done)=>{
+      })
+      Image4.mv(`public/product-images/${data[0]}4.jpg`,(err,done)=>{
+      })
+    res.redirect('/admin/addProduct')
   })
+  }catch(err){
+    print(err)
+  }
 })
 
 //////////////for deleting a product /////////////////
@@ -241,10 +259,16 @@ router.post('/editProduct/:id',auth.adminCookieJWTAuth,(req,res)=>{
   product__helper.update__product(req.params.id,req.body).then((msg)=>{
     admin__msg = msg
     res.redirect('/admin/showProducts')
+   try{
     if(req.files.image){
       let Image = req.files.image
       Image.mv(`public/product-images/${id}.jpg`)
+    }else{
+     print('no pics ')
     }
+   }catch(err){
+    print(err)
+   }
   })
 })
 

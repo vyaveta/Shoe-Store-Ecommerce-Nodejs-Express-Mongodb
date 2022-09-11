@@ -6,7 +6,8 @@ const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID ,process.env.TWI
 const jwt = require('jsonwebtoken')
 
 const auth = require('../helpers/user__auth');
-
+const table = console.table
+const print = console.log
 let phone__number;
 let username;
 

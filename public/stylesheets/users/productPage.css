@@ -13,7 +13,12 @@
     position: relative;
     padding: 10px;
     background-color: green;
-    box-shadow: inset 10px 10px 10px 10px rgba(0,0,0,.7);
+    box-shadow: 1px 1px 1px 1px rgba(0,0,0,.7),-1px -1px 1px 1px rgba(0,0,0,.7);
+    border-radius: 12px;
+}
+.img{
+    height: 400px;
+    object-fit: cover;
 }
 .sproduct input:focus{
     outline: none;
