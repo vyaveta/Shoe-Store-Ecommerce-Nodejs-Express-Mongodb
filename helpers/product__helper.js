@@ -52,10 +52,10 @@ module.exports={
             db.get().collection(collection__list.PRODUCTS__COLLECTIONS).updateOne({_id:objectId(pId)},{$set:{
                 company__name:pDetails.company__name,
                 model:pDetails.model,
-                price:pDetails.price,
+                price:pDetails.price * 1,
                 category:pDetails.category,
                 description:pDetails.description,
-                stock:pDetails.stock
+                stock:pDetails.stock * 1
             }}).then((response)=>{
                 resolve(`Successfuly updated ${pDetails.company__name} ${pDetails.model}`)
             })

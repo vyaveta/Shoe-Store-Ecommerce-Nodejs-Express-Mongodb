@@ -180,7 +180,7 @@ router.post('/addProduct',auth.adminCookieJWTAuth,async(req,res)=>{
   product__helper.add__product(product).then(async(data)=>{
     admin__msg = data[1]
     console.log(data[0],data[1])
-    print(req.files ,)
+    print(req.files )
       let Image = req.files.image
       let Image2 = req.files.image2
       let Image3 = req.files.image3
@@ -263,7 +263,17 @@ router.post('/editProduct/:id',auth.adminCookieJWTAuth,(req,res)=>{
     if(req.files.image){
       let Image = req.files.image
       Image.mv(`public/product-images/${id}.jpg`)
-    }else{
+    }if (req.files.image2){
+      let Image2 = req.files.image2
+      Image2.mv(`public/product-images/${id}2.jpg`)
+    } if (req.files.image3){
+      let Image3 = req.files.image3
+      Image3.mv(`public/product-images/${id}3.jpg`)
+    } if (req.files.image4){
+      let Image4=req.files.image4
+        Image4.mv(`public/product-images/${id}4.jpg`)
+    }
+    else{
      print('no pics ')
     }
    }catch(err){

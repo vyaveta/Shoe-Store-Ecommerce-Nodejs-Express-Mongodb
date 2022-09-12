@@ -6,3 +6,12 @@ Bug fixes
 1.stabilized product page
 2.stabilized product edit page on the admin side 
 3.fixed the bug of having problem with loading username on navbar
+----------------------------- SEPTEMBER 12.1 UPDATION -----------------------------------------------
+BUG FIXES 
+1=> fixed the price and stock into string bug on product updation
+2=> fixed the bug of sub images not showing in the product page
+3=> stabilized the product page
+
+NEW FEATURES IN SEPTEMBER 12.1 UPDATION
+1=> Added multiple image input option on edit product in the admin side
+2=> Added multiple image view and and change image on click on the product page in user user side
