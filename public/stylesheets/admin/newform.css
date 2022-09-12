@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Aboreto&family=Changa:wght@400;600;700;800&family=Cookie&family=Exo:wght@400;500;600;800;900&family=Righteous&family=Roboto+Mono:wght@300;400;500;600;700&family=Satisfy&family=Source+Code+Pro:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto Mono', monospace; 
+}
+body{
+    font-family: 'Roboto Mono', monospace;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, rebeccapurple, rgb(205, 50, 179));
+    padding: 10px;
+}
+
+.div__container {
+    max-width: 700px;
+    width: 100%;
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 10px;
+}
+
+.div__container .title {
+    font-size: 25px;
+    font-weight: 500;
+    position: relative;
+    text-align: center;
+}
+
+.div__container .title::before {
+    content: '';
+    position: absolute;
+    top: 35px;
+    left: 0;
+    bottom: 0;
+    height: 5px;
+    width: 100%;
+    background: linear-gradient(135deg, rebeccapurple, rgb(205, 50, 179));
+}
+
+.div__container form .product__details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.div__container form .product__details .input__box {
+    margin-bottom: 15px;
+    margin: 20px 0 12px 0;
+    width: calc(100%/ 2 - 20px);
+}
+
+.div__container form .product__details .input__box .details {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.div__container form .product__details .input__box input,
+.div__container form .product__details .input__box textarea {
+    height: 45px;
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    /* border: 1px solid #ccc; */
+    padding-left: 15px;
+    font-size: 16px;
+    transition: all 0.3 ease;
+}
+
+.div__container form .product__details .input__box input:focus,
+.div__container form .product__details .input__box input:valid,
+.div__container form .product__details .input__box textarea:focus,
+.div__container form .product__details .input__box textarea:valid {
+    border-color: rebeccapurple;
+}
+
+form .button {
+    height: 45px;
+    width: 100%;
+    outline: none;
+    color: #fff;
+    background: linear-gradient(135deg, rebeccapurple, rgb(205, 50, 179));
+    border: 1px solid white;
+    font-weight: 500;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+@media (max-width: 584px){
+    .div__container {
+    max-width: 100%;
+    }
+    .div__container form .product__details .input__box {
+    margin-bottom: 15px;
+    
+    width: 100%;
+}
+.div__container form .product__details{
+    max-height: 500px;
+    overflow-y: scroll;
+}
+}

@@ -84,7 +84,10 @@ module.exports={
             var is__valid = null;
             var account = await db.get().collection(collection.USER__COLLECTIONS).findOne({phone__number:phone__number})
             console.log(account)
-            if(account.is__blocked){
+            if(!account){
+                resolve('no__account')
+            }
+          else if(account.is__blocked){
                 is__valid = 'user__blocked';
                 resolve('blocked')
                 console.log('the user__login says that the user is blocked!!')

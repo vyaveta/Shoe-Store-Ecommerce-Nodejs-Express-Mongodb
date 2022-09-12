@@ -6,9 +6,107 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-      <link rel="stylesheet" href="/stylesheets/admin/newform.css">
 </head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
 
+    body {
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, rebeccapurple, rgb(205, 50, 179));
+        padding: 10px;
+    }
+
+    .div__container {
+        max-width: 700px;
+        width: 100%;
+        background: #fff;
+        padding: 25px 30px;
+        border-radius: 10px;
+    }
+
+    .div__container .title {
+        font-size: 25px;
+        font-weight: 500;
+        position: relative;
+    }
+
+    .div__container .title::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 5px;
+        width: 300px;
+        background: linear-gradient(135deg, rebeccapurple, rgb(205, 50, 179));
+    }
+
+    .div__container form .product__details {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .div__container form .product__details .input__box {
+        margin-bottom: 15px;
+        margin: 20px 0 12px 0;
+        width: calc(100%/ 2 - 20px);
+    }
+
+    .div__container form .product__details .input__box .details {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+
+    .div__container form .product__details .input__box input {
+        height: 45px;
+        width: 100%;
+        outline: none;
+        border-radius: 5px;
+        /* border: 1px solid #ccc; */
+        padding-left: 15px;
+        font-size: 16px;
+        transition: all 0.3 ease;
+    }
+
+    .div__container form .product__details .input__box input:focus,
+    .div__container form .product__details .input__box input:valid {
+        border-color: rebeccapurple;
+    }
+
+    form .button {
+        height: 45px;
+        width: 100%;
+        outline: none;
+        color: #fff;
+        background: linear-gradient(135deg, rebeccapurple, rgb(205, 50, 179));
+        border: 1px solid white;
+        font-weight: 500;
+        border-radius: 10px;
+    }
+    @media (max-width: 584px){
+        .div__container {
+        max-width: 100%;
+        }
+        .div__container form .product__details .input__box {
+        margin-bottom: 15px;
+        
+        width: 100%;
+    }
+    .div__container form .product__details{
+        max-height: 500px;
+        overflow-y: scroll;
+    }
+    }
+</style>
 
 <body>
     <div class="div__container">
@@ -39,23 +137,19 @@
                 </div>
                 <div class="input__box">
                     <span class="details">image 1</span>
-                     <img class="img-fluid" src="/product-images/{{data._id}}.jpg" alt="image here" id="img__view" width="70px">
                     <input type="file" name="image"  class="form__file__input" id="image" onchange="viewImage(event)" >
                 </div>
                 <div class="input__box">
                     <span class="details">image 2</span>
-                     <img class="img-fluid" src="/product-images/{{data._id}}2.jpg" alt="image here" id="img__view2" width="70px">
                     <input type="file" name="image2" class="form__file__input" id="image2"  onchange="viewImage2(event)" >
                 </div>
                 <div class="input__box">
                     <span class="details">image 3</span>
-                    <img class="img-fluid" src="/product-images/{{data._id}}3.jpg" alt="image here" id="img__view3" width="70px">
                     <input type="file" name="image3" class="form__file__input" id="image3" onchange="viewImage3(event)"  >
                 </div>
                 <div class="input__box">
                     <span class="details">image 4</span>
-                     <img class="img-fluid" src="/product-images/{{data._id}}4.jpg" alt="image here" id="img__view4" width="70px">
-                    <input type="file" name="image4"  class="form__file__input" id="image4"  onchange="viewImage4(event)" >
+                    <input type="file" name="image4"  class="form__file__input"id="image4"  onchange="viewImage4(event)" >
                 </div>
                 <div class="input__box">
                     <span class="details">Stocks</span>
@@ -66,8 +160,7 @@
                     <textarea name="description" required  id="description" >{{data.description}}</textarea  >
                 </div>
             </div>
-            <input class="button" type="submit" value="Edit Product">
-            <a href="/admin"><button class="button">Dashboard / Home</button></a>
+            <input class="button" type="submit" value="Add Product">
         </form>
     </div>
 

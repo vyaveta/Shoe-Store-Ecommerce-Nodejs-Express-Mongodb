@@ -152,7 +152,11 @@ router.post('/user__otp',(req,res)=>{
     console.log(response)
    if(response.valid){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
  user__helper.find__the__user(phone__number).then((response)=>{
-  if(response=='blocked'){
+  if(response=='no__account'){
+    error__msg ='Sorry we Couldnt find the account with entered phone number'
+    res.redirect('/users/login')
+  }
+ else if(response=='blocked'){
     res.render('blocked',{no__partials:true})
   }
   else if(response){

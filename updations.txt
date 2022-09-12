@@ -15,3 +15,238 @@ BUG FIXES
 NEW FEATURES IN SEPTEMBER 12.1 UPDATION
 1=> Added multiple image input option on edit product in the admin side
 2=> Added multiple image view and and change image on click on the product page in user user side
+
+-------------------------------updations backup
+<style>
+    .cropper__container{
+        background:rebeccapurple;
+        position:absolute;
+        width: 10vw;
+        height: 80vh;
+       
+       visibility:hidden;
+    }
+</style>
+    
+     <div class="cropper__container">
+        
+     </div>
+<script>
+    console.log('script is running peacefully ')
+    let image1 = document.getElementById('image')
+    let cropper__container = document.querySelector('.cropper__container')
+    image1.onclick = ()=>{
+        cropper__container.style.visibility='visible'
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////back up for add product
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <script src="/javascripts/darkMode.js" defer></script>
+    <link rel="stylesheet" href="/stylesheets/admin/form.css">
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+</head>
+<body class="">
+   
+    <div class="contact__form">
+         <button id="dark" style="display: none;"> dark mode</button>
+        <h1>Add Product</h1>
+        <p style="color: green ; font-size:22px;font-weight:600;">{{admin__msg}}</p>
+         <form action="/admin/addProduct" class="signin__form" method="post" enctype="multipart/form-data">
+            <div class="content">
+                <p>Company Name</p>
+                <input type="text" name="company__name" id="company__name" placeholder="company name" required>
+            </div>
+            <div class="content">
+                <p>Model</p>
+                <input type="text" name="model" id="model" placeholder="model" required>
+            </div>
+            <div class="content">
+                <p>Price</p>
+                <input type="number" name="price" id="price" placeholder="price" required>
+            </div>
+            <div class="content">
+                <p>Select Category</p>
+                <select name="category" required>
+                    {{#each data}}
+                    <option >{{this.name}}</option>
+                   {{/each}}
+
+                </select>
+            </div>
+            <div class="content">
+                <p>Image</p>
+                <input type="file" name="image" id="image"   required>
+            </div>
+             <div class="content">
+                <p>Image 2</p>
+                <input type="file" name="image2" id="image2"  required>
+            </div>
+             <div class="content">
+                <p>Image 3</p>
+                <input type="file" name="image3" id="image3"  required>
+            </div>
+             <div class="content">
+                <p>Image 4</p>
+                <input type="file" name="image4" id="image4"  required>
+            </div>
+             <div class="content">
+                <p>Stocks</p>
+                <input type="number" name="stock" id="image" min="1" required>
+            </div>
+            <div class="content des">
+                <p>Description</p>
+                <textarea name="description" required></textarea>
+            </div>
+              
+    </div>  <center><button class="btn btn-success" type="submit">Add Product</button></center>
+     </form>
+    <a href="/admin"><button class="btn btn-primary">Dashboard / Home</button></a>
+
+
+
+
+    
+    <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+
+
+backup for edit product -------------------------------------------------------------------------------
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/admin/form.css">
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+</head>
+
+<body>
+   
+    <div class="contact__form">
+        <h1>Edit Product</h1>
+          <button id="dark" style="display: none;"> dark mode</button>
+         <form action="/admin/editProduct/{{data._id}}" class="signin__form" method="post" enctype="multipart/form-data">
+            <div class="content">
+                <p>Company Name</p>
+                <input type="text" name="company__name" id="company__name" placeholder="company name" value="{{data.company__name}}" required>
+            </div>
+            <div class="content">
+                <p>Model</p>
+                <input type="text" name="model" id="model" placeholder="model" value="{{data.model}}" required>
+            </div>
+            <div class="content">
+                <p>Price</p>
+                <input type="number" name="price" id="price" placeholder="price" value="{{data.price}}" required>
+            </div>
+            <div class="content">
+                <p>Select Category</p>
+                <select name="category"  required >
+                    <option >{{data.category}}</option>
+                    {{#each category}}
+                    <option >{{this.name}}</option>
+                   {{/each}}
+                </select>
+            </div>
+            <div class="content">
+                <p>Image</p>
+                <input type="file" name="image"  class="form__file__input" id="image" onchange="viewImage(event)" >
+            </div>
+             <div class="content">
+                <p>Image 2</p>
+                <input type="file" name="image2" class="form__file__input" id="image2"  onchange="viewImage2(event)" >
+            </div>
+             <div class="content">
+                <p>Image 3</p>
+                <input type="file" name="image3" class="form__file__input" id="image3" onchange="viewImage3(event)"  >
+            </div>
+             <div class="content">
+                <p>Image 4</p>
+                <input type="file" name="image4"  class="form__file__input"id="image4"  onchange="viewImage4(event)" >
+            </div>
+             <div class="content">
+                <p>Stocks</p>
+                <input type="number" name="stock" value="{{data.stock}}" id="image" min="1" required>
+            </div>
+            <div class="content des">
+                <p>Description</p>
+                <textarea name="description" required  id="description" >{{data.description}}</textarea  >
+            </div>
+            <center> <button class="btn btn-success" type="submit">Edit Product</button> </center>
+           <div class="content">
+            
+           </div>
+        </form>
+    </div> 
+   
+      
+    <div class="container">
+        <div class="row">
+            <div class="img_box">
+                <h2 style="color:rgb(183, 0, 255) ;">Image 1</h2>
+                <img class="img-fluid" src="/product-images/{{data._id}}.jpg" alt="image here" id="img__view" width="300px">
+            </div>
+             <div class="img_box">
+                <h2 style="color:rgb(183, 0, 255) ;">Image 2</h2>
+                <img class="img-fluid" src="/product-images/{{data._id}}.jpg" alt="image here" id="img__view2" width="300px">
+            </div>
+             <div class="img_box">
+                <h2 style="color:rgb(183, 0, 255) ;">Image 3</h2>
+                <img class="img-fluid" src="/product-images/{{data._id}}.jpg" alt="image here" id="img__view3" width="300px">
+            </div>
+             <div class="img_box">
+                <h2 style="color:rgb(183, 0, 255) ;">Image 4</h2>
+                <img class="img-fluid" src="/product-images/{{data._id}}.jpg" alt="image here" id="img__view4" width="300px">
+            </div>
+        </div>
+        <div class="button__class" style="position:absolute ;">
+             <center>  <a href="/admin"><button class="btn btn-primary">Dashboard / Home</button></a></center>
+        </div>
+    </div>
+    
+    
+
+    <script>
+        let input = document.querySelector('.form__file__input')
+        input.addEventListener('change',(event)=>{
+            
+            let image_file = event.target.files[0]
+            let reader = new FileReader
+           
+            reader.readAsDataURL(image_file)
+           // console.log(reader)
+           reader.onload =(event)=>{
+            
+           }
+        })
+    </script>
+
+    <script src="/javascripts/imageChange.js"></script>
+     <script src="/javascripts/darkMode.js"></script>
+    <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+</body>
+</html>
