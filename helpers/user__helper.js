@@ -56,7 +56,7 @@ module.exports={
             else if(account){
                 bcrypt.compare(user.password,account.password).then((status)=>{
                     if(status){
-                        is__valid = true;
+                        is__valid = account;
                         resolve(is__valid);
                     }
                     else{
@@ -93,7 +93,7 @@ module.exports={
                 console.log('the user__login says that the user is blocked!!')
             }
              else if(account){
-                        is__valid = account.name;
+                        is__valid = account;
                         resolve(is__valid);
                     }
             else{

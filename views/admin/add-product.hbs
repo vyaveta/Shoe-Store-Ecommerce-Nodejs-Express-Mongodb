@@ -7,6 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/stylesheets/admin/newform.css">
+    <link rel="stylesheet" href="/stylesheets/admin/profilePage.css"> 
+    <link rel="stylesheet" href="/cropperjs/dist/cropper.min.css">
+    <script src="/cropperjs/dist/cropper.min.js" defer></script>
+    
 </head>
 
 
@@ -39,19 +43,27 @@
                 </div>
                 <div class="input__box">
                     <span class="details">image 1</span>
-                    <input type="file" name="image" id="image" required>
+                    <img class="img-fluid" src="" alt="" id="img__view" width="70px">
+                    <input type="file" class='image__input' name="image" id="image" onchange="viewImage(event)" required>
+                     <label class="the__button" for="image" required> Add img1</label> 
                 </div>
                 <div class="input__box">
                     <span class="details">image 2</span>
-                    <input type="file" name="image2" id="image2" required>
+                    <img class="img-fluid" src="" alt="" id="img__view2" width="70px">
+                    <input type="file" class='image__input' name="image2" id="image2"  onchange="viewImage2(event)" required>
+                    <label class="the__button" for="image2" required> Add img2</label>
                 </div>
                 <div class="input__box">
                     <span class="details">image 3</span>
-                    <input type="file" name="image3" id="image3" required>
+                    <img class="img-fluid" src="" alt="" id="img__view3" width="70px">
+                    <input type="file" class='image__input' name="image3" id="image3"  onchange="viewImage3(event)" required>
+                     <label class="the__button" for="image3" required> Add img3 </label>
                 </div>
                 <div class="input__box">
-                    <span class="details">image 3</span>
-                    <input type="file" name="image4" id="image4" required>
+                    <span class="details">image 4</span>
+                      <img class="img-fluid" src="" alt="" id="img__view4" width="70px">
+                    <input type="file" class='image__input' name="image4" id="image4"  onchange="viewImage4(event)" required>
+                     <label class="the__button" for="image4" required> Add img4 </label>
                 </div>
                 <div class="input__box">
                     <span class="details">Stocks</span>
@@ -63,9 +75,11 @@
                 </div>
             </div>
             <input class="button" type="submit" value="Add Product">
-             <a href="/admin"><button class="button">Dashboard / Home</button></a>
         </form>
+             <a href="/admin"><button class="home__button">Dashboard / Home</button></a>
     </div>
+      <script src="/javascripts/imageChange.js"></script>
+    {{!-- <script src="https://cdn.crop.guide/loader/l.js?c=TRYDYD"></script> --}}
 </body>
 
 </html>

@@ -8,31 +8,36 @@ const print = console.log
 const table = console.table
 let token
 let error__msg
+let number
+let cart__count
 
 //twilio
 // const client = require('twilio')(accountSid,authtoken)
 const product__helper = require('../helpers/product__helper');
+const { response } = require('express');
 require('dotenv').config()
 const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID ,process.env.TWILIO_AUTH_TOKEN)
 
-let useremail
+let useremail = null
 let username
 
+
 /* GET users listing. */
-router.get('/',function(req, res, next) {
+router.get('/',async(req, res, next)=> {
   // console.log(req.body)
   print('this is really cool !!!')
    token = req.cookies.usertoken
    product__helper.get__top__picks().then((products)=>{
     product__helper.get__new__arrivals().then((new__products)=>{
+     product__helper.get__cart__count(useremail).then((count)=>{
+        cart__count = count
       // product__helper.get__top__picked__products().then((new__products)=>{
       print(`the user name that is going to be displayed in the top of the website header is ${username}`)
-        res.render('home1',{token,username,products,new__products})
+        res.render('home1',{token,username,products,new__products,cart__count})
       // })
     })
+    })
    })
-    
- 
 });
 router.get('/login',auth.userLoggedIn,(req,res)=>{
   res.render('login',{error__msg,no__partials:true})
@@ -47,23 +52,26 @@ router.post('/login',(req,res)=>{
       res.render('blocked')
     }
     else if(response){
-      const usertoken = jwt.sign(req.body,process.env.USER_TOKEN_SECRET,{expiresIn:'365d'})
+      const usertoken = jwt.sign(response,process.env.USER_TOKEN_SECRET,{expiresIn:'365d'})
       res.cookie('usertoken',usertoken,{
         httpOnly:true
       })
       const token = usertoken
       console.log('user has logged in ');
       // res.redirect('/users');
-        user__helper.get__user__name(req.body.email).then((name)=>{
-
-          product__helper.get__top__picks().then((products)=>{
-            product__helper.get__new__arrivals().then((new__products)=>{
-              username = name
+      user__helper.get__user__name(req.body.email).then((name)=>{
+          useremail = req.body.email
+          product__helper.get__cart__count(useremail).then((count)=>{
+            cart__count = count
+            product__helper.get__top__picks().then((products)=>{
+              product__helper.get__new__arrivals().then((new__products)=>{
+                username = name
                 console.log(`the user name that is going to be displayed in the top of the website header is ${username}`)
-                res.render('home1',{token,username,products,new__products})
-            })
+                res.render('home1',{token,username,products,new__products,cart__count})
+               })
+             })
            })
-        })
+       })
     }
     else{
       error__msg = 'invalid email or password'
@@ -125,20 +133,29 @@ router.get('/productPage/:id',(req,res)=>{
 
 router.get('/login__with__otp',(req,res)=>{
   console.log('got it')
-  res.render('users/otpLogin',{no__partials:true})
+  res.render('users/otpLogin',{no__partials:true,error__msg})
+  error__msg=''
 })
 router.post('/otp',(req,res)=>{
-  
-  console.log('get jfsa;d')
-  phone__number = req.body.phone__number;
-  client.verify
-  .services(process.env.TWILIO_SERVICE_ID)
-  .verifications.create({
-    to:`+91${req.body.phone__number}`,
-    channel:'sms'
-  })
- 
-  res.render('users/otp',{no__partials:true})
+  number = req.body.phone__number
+ user__helper.find__the__user(req.body.phone__number).then((response)=>{
+  if(response=='no__account'){
+    error__msg = 'no account with that phone number'
+    res.redirect('/users/login')
+  }
+  else{
+    console.log('get jfsa;d')
+     
+    client.verify
+    .services(process.env.TWILIO_SERVICE_ID)
+    .verifications.create({
+      to:`+91${req.body.phone__number}`,
+      channel:'sms'
+    })
+   
+    res.render('users/otp',{no__partials:true})
+  }
+ })
 })
 router.post('/user__otp',(req,res)=>{
   const otp = req.body.otp
@@ -146,39 +163,54 @@ router.post('/user__otp',(req,res)=>{
   client.verify
   .services(process.env.TWILIO_SERVICE_ID)
   .verificationChecks.create({
-    to: `+91${phone__number}`,
+    to: `+91${number}`,
     code:otp
   }).then((response)=>{
     console.log(response)
-   if(response.valid){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
- user__helper.find__the__user(phone__number).then((response)=>{
-  if(response=='no__account'){
-    error__msg ='Sorry we Couldnt find the account with entered phone number'
-    res.redirect('/users/login')
-  }
- else if(response=='blocked'){
+   if(response.valid==true){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+ user__helper.find__the__user(number).then((response)=>{
+  
+  if(response=='blocked'){
     res.render('blocked',{no__partials:true})
   }
   else if(response){
     username = response
-    const usertoken = jwt.sign(req.body,process.env.USER_TOKEN_SECRET,{expiresIn:'365d'})
+    const usertoken = jwt.sign(response,process.env.USER_TOKEN_SECRET,{expiresIn:'365d'})
     res.cookie('usertoken',usertoken,{
       httpOnly:true
     })
     const token = usertoken
     console.log('user has logged in ');
     // res.redirect('/users');
-    product__helper.get__all__products().then((products)=>{
       // for(var i = 0;i<response.length;i++){
       //   response[i]._id= response[i]._id.toString()
       // }
       res.redirect('/users')
       // res.render('home1',{token,username,products})
 
-    })   
+      
   }
  })
    }
+   else{
+    error__msg ='incorrect otp'
+    res.render('users/otp',{error__msg}) // redirecting is the problem
+   }
+  })
+})
+router.get('/otpiloodvaa',(req,res)=>{
+  res.render('users/otp',{error__msg})
+  error__msg =''
+})
+
+
+
+router.get('/add__to__cart/:product__id',auth.usercookieJWTAuth,(req,res)=>{
+  print('got inside the add to cart router')
+  var user__details = auth.get__user__details()
+  print(user__details,'success')
+  product__helper.add__to__cart(req.params.product__id,user__details._id,user__details.email).then((response)=>{
+    res.redirect('/')
   })
 })
 

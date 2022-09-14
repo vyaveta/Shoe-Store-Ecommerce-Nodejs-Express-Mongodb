@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/cropperjs/dist/cropper.min.css">
+    <script src="/cropperjs/dist/cropper.min.js" defer></script>
+</head>
+<style>
+    html{
+        height: 100%;
+    }
+    body{
+        display: flex;
+        
+        align-items: center;
+        justify-content: center;
+        font-family: cursive;
+        background: linear-gradient(130deg,rebeccapurple,hotpink);
+    }
+    .container{
+       
+        background: rgba(255,255,255,0.229);
+        position:relative;
+        width:76%;
+        border-radius:4px;
+        box-shadow: 1px 2px 2px 2px black;
+        margin-top: 15px;
+        padding-bottom:40px;
+
+    }
+    .image-container{
+        padding: 20px;
+        width: 677px;
+        height: calc(100%-100px);
+        border-right:1px solid snow;
+        border-bottom:1px solid snow;
+    }
+    .image-workspace{
+
+        height:100%;
+        align-items:center;
+        justify-content:center;
+        display: flex;
+    }
+    .container img{
+        max-width: 100%;
+        max-height: 100%;
+        display: block;
+    }
+    .preview-container{
+        border:2px solid rgba(255,255,255,0.229);
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 263px;
+        min-height: 150px;
+        display: flex;
+        
+        align-items: center;
+        justify-content: center;
+    }
+    .preview-cover{
+        overflow: hidden;
+    }
+    .preview-cover span{
+        position: absolute;
+        top:66px;
+        left:77px ;  
+    }
+    .side-control-shifter{
+        position: absolute;
+        right: 20px;
+        top: 177px;
+        user-select: none;
+    }
+    .side-control-shifter svg{
+        display: inline-block;
+        background: rgba(255,255,255,0.229);
+        border-bottom: 1px solid transparent;
+        border-radius: 3px;
+        fill: white;
+    }
+    .side-control-shifter .active{
+        border:1px solid rgba(255,255,255,0.229);
+    }
+    .side-control-page-1,
+    .side-control-page-2{
+        position: absolute;
+        right: 20px;
+        bottom: 11px;
+        user-select: none;
+        width: 267px;
+    }
+    .side-control-page-1 span,
+    .side-control-page-2 span{
+        display: block;
+        font-size: 16px;
+    }
+    .side-control-page-1 li
+    .side-control-page-2 li{
+        /* margin-bottom: 10px; */
+        list-style: none;
+        height: auto;
+        display: inline-block;
+        margin-left: 40px; 
+        position:relative;
+    }
+    .side-control-page-1 svg{
+        position:relative;
+        display: inline;
+        border-radius: 50%;
+        padding:4px;
+        transition-duration:.5s;
+        margin-left:10px;
+        border:1px solid transparent;
+        fill:white;
+    }.side-control-page-1 .zoom,
+    .side-control-page-1 .flip,
+    .side-control-page-1 .move,
+    .side-control-page-1 .rotate{
+        padding-top: -10px;
+        padding-left: 20px;
+        margin-bottom: 0px;
+         bottom: 0;
+        border-bottom: 2px solid rgba(255,255,255,0.229);
+    }
+    .side-control-page-2{
+        top:205px;
+    }
+    .side-control-page-2 .aspect{
+        margin-left: 2px;
+        display: flex;
+       
+    }
+    .side-control-page-2 .aspect span{
+        padding-left: 19px;
+        position: absolute;
+    }
+    .side-control-page-2 li{
+        list-style: none;
+        font-size: 15px;
+        margin-top: 28px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 10px;
+        background-color: rgba(255,255,255,0.229);
+        color: white;
+        border-radius: 3px;
+        border: 1px solid transparent;
+        transition-duration:.4s ;
+    }
+    .side-control-page-2 li:active{
+        border: 1px solid white;
+    }
+    .action-button .upload,
+    .action-button .download{
+        display: block;
+        width: 170px;
+        height: 35px;
+        margin: 10px;
+        margin-left: 20px;
+        margin-right: 20px;
+        background-color: rgba(255,255,255,0.229);
+        color:white;
+        border-radius:3px;
+        outline:none;
+        transition-duration: .3s;
+        cursor:pointer;
+        border: 1px solid whitesmoke;     
+    }
+    .bottom-control{
+        user-select: none;
+        display: inline-block;
+        margin-left:277px;
+        position: relative;
+    }
+    .bottom-control .ctrl-cropper,
+    .bottom-control .lock,
+    .bottom-control .drag-mode{
+        display: inline-block;
+        width: 165px;
+        height: 99px;
+        border-right: 1px solid rgba(255,255,255,0.229);
+        margin-top: -200px;
+        /* top: 0%; */
+        /* position: absolute; */
+    }
+    .bottom-control li{
+        list-style: none;
+        /* display: inline; */
+        margin-left: 8%;
+    }
+    .bottom-control li svg{
+        position: relative;
+        /* display: inline; */
+        border-radius: 50%;
+        padding: 4px;
+        transition-duration: .4s;
+        background-color: rgba(255,255,255,0.229);
+        border: 1px solid transparent;
+        fill: white;
+    }
+    .bottom-control li svg:active{
+        border:1px solid rgba(255,255,255,0.229)
+    }
+</style>
+
+<body>
+    <!-- <form action="/something" method="post" enctype="multipart/form-data"> -->
+    <div class="container">
+        <div class="image-container">
+            <div class="image-workspace">
+                <img src="" height="400px" alt="" srcset="">
+                <span>Image Work Space</span>
+            </div>
+        </div>
+      <div class="preview-container">
+        <div class="preview-cover">
+            <div class="img-preview" style="height: 9rem; width:16rem;"></div>
+            <span>Image Preview</span>
+        </div>
+      </div>
+      <div class="side-control-shifter">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-app" viewBox="0 0 16 16">
+            <path d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z"/>
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-app" viewBox="0 0 16 16">
+            <path d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z"/>
+          </svg>
+      </div>
+      <div class="side-control-page-1" style="display: none;">
+        <div class="zoom">
+            <span>Zoom in - out</span>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-app" viewBox="0 0 16 16">
+                <path d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z"/>
+              </svg></li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-app" viewBox="0 0 16 16">
+                <path d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z"/>
+              </svg></li>
+        </div>
+        <div class="rotate">
+            <span>Rotate image</span>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-app" viewBox="0 0 16 16">
+                <path d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z"/>
+              </svg></li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-app" viewBox="0 0 16 16">
+                <path d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z"/>
+              </svg></li>
+        </div>
+        <div class="flip">
+            <span>Flip image</span>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-app" viewBox="0 0 16 16">
+                <path d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z"/>
+              </svg></li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-app" viewBox="0 0 16 16">
+                <path d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z"/>
+              </svg></li>
+        </div>
+        <div class="move" style="border-bottom: 0px;">
+            <span style="margin-bottom:20px ;" >Move image</span>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-app" viewBox="0 0 16 16">
+                <path d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z"/>
+              </svg></li> 
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-app" viewBox="0 0 16 16">
+                <path d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z"/>
+              </svg></li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-app" viewBox="0 0 16 16">
+                <path d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z"/>
+              </svg></li>
+            <li><svg style="left:44px ;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-app" viewBox="0 0 16 16">
+                <path d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z"/>
+              </svg></li>
+        </div>
+      </div>
+      <div class="side-control-page-2">
+        <div class="aspect">
+            <span>Aspect Ratio</span>
+            <li>16:9</li>
+            <li>4:3</li>
+            <li>1:1</li>
+            <li>2:3</li>
+            <li>Free</li>
+        </div>
+      </div>
+
+      <div class="action-button">
+        <button class="upload" type="submit">upload </button>
+            <input type="file" class="hidden-upload"  style="display: none;" accept="image/*">
+            <button class="download"> download</button>
+        </button>
+      </div>
+      <div class="bottom-control">
+        <div class="ctrl-cropper">
+            <span> Cropper</span>
+            <li><svg style="left:44px ;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-app" viewBox="0 0 16 16">
+                <path d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z"/>
+              </svg></li>
+            <li><svg style="left:44px ;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-app" viewBox="0 0 16 16">
+                <path d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z"/>
+              </svg></li>
+        </div>
+        
+      <div class="lock">
+        <span>Lock Cropper</span>
+        <li><svg style="left:44px ;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-app" viewBox="0 0 16 16">
+            <path d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z"/>
+          </svg></li>
+        <li><svg style="left:44px ;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-app" viewBox="0 0 16 16">
+            <path d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z"/>
+          </svg></li>
+      </div>
+      <div class="drag-mode">
+        <span>Drag Mode</span>
+        <li><svg style="left:44px ;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-app" viewBox="0 0 16 16">
+            <path d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z"/>
+          </svg></li>
+        <li><svg style="left:44px ;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-app" viewBox="0 0 16 16">
+            <path d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z"/>
+          </svg></li>
+      </div>
+    </div>
+</div>
+<!-- </form> -->
+<script>
+     
+    var image_workspace = document.querySelector('.image-workspace img') //img
+    var side_control_shifter = document.querySelectorAll('.side-control-shifter svg')
+    var side_control_page_1 = document.querySelector('.side-control-page-1')  
+    var side_control_page_2 = document.querySelector('.side-control-page-2') 
+    var actionButton = document.querySelectorAll('.action-button button')
+    var hiddenUpload = document.querySelector('.hidden-upload') // .action required?
+    var image_workspaceSpan = document.querySelector('.image-workspace span')
+    var preview_containerSpan = document.querySelector('.preview-container span')
+    var zoom = document.querySelectorAll('.side-control-page-1 .zoom svg')
+    var rotate = document.querySelectorAll('.side-control-page-1 .rotate svg')
+    var flip = document.querySelectorAll('.side-control-page-1 .flip svg')
+    var move = document.querySelectorAll('.side-control-page-1 .move svg')
+    var aspectRatio = document.querySelectorAll('.side-control-page-2 .aspect li')
+    var controlCroper = document.querySelectorAll('.bottom-control .ctrl-cropper svg')
+    var lockCropper = document.querySelectorAll('.bottom-control .lock svg')
+    var dragMode = document.querySelectorAll('.bottom-control .drag-mode svg')
+console.log('script is running')
+
+    side_control_shifter[0].onclick=()=>{
+        console.log('clicked')
+        side_control_page_1.style.display = 'block'
+        side_control_page_2.style.display = 'none'
+        side_control_shifter[0].classList.add('active')
+        side_control_shifter[1].classList.remove('active')
+    }
+    side_control_shifter[1].onclick=() =>{
+        console.log("ja;skjfajsfkj")
+        side_control_page_1.style.display = 'none'
+        side_control_page_2.style.display = 'block'
+        side_control_shifter[0].classList.remove('active')
+        side_control_shifter[1].classList.add('active')
+
+    }
+        //upload image
+        actionButton[0].onclick=()=> hiddenUpload.click()
+        hiddenUpload.onchange = (event) => {
+
+            var file = hiddenUpload.files[0]
+            var url = window.URL.createObjectURL(new Blob([file],{type:'image/jpg'})) // i sense something fishy with this code
+            image_workspace.src = url
+            image_workspaceSpan.style.display ='none'
+            preview_containerSpan.style.display = 'none'
+
+            var options = {
+                dragMode:'move',
+                preview:'.img-preview',
+                viewMode:2,
+                modal:false,
+                background:false,
+                ready: function(){
+                    //zoom form image
+                    zoom[0].onclick = ()=> cropper.zoom(0.1)
+                    zoom[1].onclick = ()=> cropper.zoom(-0.1)
+                    // rotate image
+                    rotate[0].onclick = ()=> cropper.rotate(45)
+                    rotate[1].onclick = ()=> cropper.rotate(-45)
+                    // flip image
+                    var flipX = -1
+                    var flipY = -1
+                    flip[0].onclick = ()=> {
+                        cropper.scale(flipX,1)
+                        flipX = -flipX
+                    }
+                    flip[1].onclick = ()=> {
+                        cropper.scale(1,flipY)
+                        flipY = -flipY
+                    }
+                    //move image
+                    move[0].onclick = ()=>cropper.move(0,-1)
+                    move[1].onclick = ()=>cropper.move(-1,0)
+                    move[2].onclick = ()=>cropper.move(1,0)
+                    move[3].onclick = ()=>cropper.move(0,1)
+                    
+                    //set aspect ratio
+                    aspectRatio[0].onclick = ()=> cropper.setAspectRatio(1.7777777777777777)
+                    aspectRatio[1].onclick = ()=> cropper.setAspectRatio(1.3333333333333333)
+                    aspectRatio[2].onclick = ()=> cropper.setAspectRatio(1)
+                    aspectRatio[3].onclick = ()=> cropper.setAspectRatio(0)
+
+                    // croper control
+                    controlCroper[0].onclick = ()=> cropper.clear()
+                    controlCroper[1].onclick = ()=> cropper.crop()
+
+                    //lock cropper
+                    lockCropper[0].onclick = () => cropper.disable()
+                    lockCropper[1].onclick = () => cropper.enable()
+
+                    //drag mode
+                    dragMode[0].onclick = () => cropper.setDragMode("crop")
+                    dragMode[1].onclick = () => cropper.setDragMode('move')
+
+                    //download 
+                    // actionButton[1].onclick = () => {
+                    //     actionButton[1].innerText = '......'
+                    //     cropper.getCroppedCanvas().toBlob((blob)=>{
+                    //         var downloadUrl = window.URL.createObjectURL(blob)
+                    //         var a = document.createElement('a')
+                    //         a.href = downloadUrl
+                    //         a.downloadUrl = 'cropped-image.jpg' //output image name
+                    //         a.click()
+                    //         actionButton[1].innerText = 'Download'
+                    //     })
+                    // }
+                }
+            }
+            var cropper = new Cropper(image_workspace,options)
+            actionButton[1].addEventListener('click',(e)=>{
+            console.log(e)
+            console.log('jsfdkljlkasjf;')
+  
+  // get result to data url
+  let imgSrc = cropper.getCroppedCanvas({
+	//	width: img_w.value // input value
+	}).toDataURL();
+    console.log(imgSrc)
+    event.target.files[0]=imgSrc
+    console.log(imgSrc ,'is the imagkwjfkldsjklj')
+    console.log(event.target.files[0] , 'is the url inside the file upload')
+  // remove hide class of img
+//   cropped.classList.remove('hide');
+// 	img_result.classList.remove('hide');
+// 	// show image cropped
+});
+}
+
+// revoked
+
+        
+            
+    
+</script>
+</body>
+</html>

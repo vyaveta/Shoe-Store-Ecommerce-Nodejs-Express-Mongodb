@@ -247,9 +247,8 @@ router.get('/editProduct/:id',auth.adminCookieJWTAuth, async(req,res)=>{
    await category__helper.get__category__list().then((category)=>{
     console.log(category)
     var imgId = data._id.toString()
-    
-    console.log('the id that we got is ',imgId)
-      res.render('admin/editProduct',{data,imgId,category,no__partials:true})
+    // console.log('the id that we got is ',imgId)
+      res.render('admin/editProduct',{data,imgId,category,no__partials:true,admin__details})
     })
   })
 })

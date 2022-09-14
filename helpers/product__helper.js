@@ -1,15 +1,21 @@
 const db = require('../config/connection')
 const collection__list = require('../config/collection')
 const { response } = require('express')
+const collection = require('../config/collection')
+const { resolve, reject } = require('promise')
 const objectId = require('mongodb').ObjectId
+const print = console.log
+const table = console.table
 
 module.exports={
     add__product:(product__details)=>{
         return new Promise( async (resolve,reject)=>{
+            table(product__details);
+            var category__id = await  db.get().collection(collection__list.CATEGORY__COLLECTIONS).findOne({name:pDetails.category},{_id:1})
             product__details.price = product__details.price * 1
             product__details.stock = product__details.stock * 1
             product__details.total__clicks = 0
-            console.log(product__details);
+            product__details.category = category__id
             await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).insertOne(product__details).then((data)=>{
             //    
                     // console.log('product added')
@@ -48,12 +54,15 @@ module.exports={
             resolve(product)
         })
     },update__product:(pId,pDetails)=>{
-        return new Promise((resolve,reject)=>{
+        return new Promise(async(resolve,reject)=>{
+             var category__id = await  db.get().collection(collection__list.CATEGORY__COLLECTIONS).findOne({name:pDetails.category},{_id:1})
+            print(category__id,"is the id of  category something something")
+
             db.get().collection(collection__list.PRODUCTS__COLLECTIONS).updateOne({_id:objectId(pId)},{$set:{
                 company__name:pDetails.company__name,
                 model:pDetails.model,
                 price:pDetails.price * 1,
-                category:pDetails.category,
+                category:category__id,
                 description:pDetails.description,
                 stock:pDetails.stock * 1
             }}).then((response)=>{
@@ -70,5 +79,41 @@ module.exports={
             let top__picks = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find({stock: {$gt:0}}).sort({total__clicks:-1}).limit(10).toArray()
             resolve(top__picks)
         })
+    },add__to__cart:(product__id,user__id,user__email)=>{
+        return new Promise(async(resolve,reject)=>{
+            let user__cart = await db.get().collection(collection__list.CART__COLLECTIONS).findOne({user:objectId(user__id)})
+            if(user__cart){
+                db.get().collection(collection__list.CART__COLLECTIONS).updateOne({user:objectId(user__id)},
+                {
+                        $push:{products:objectId(product__id)}
+                }).then((response)=>{
+                    resolve('successfully added to cart')
+                })
+            }else{
+                cart = {
+                    user:objectId(user__id),
+                    user__email:user__email,
+                    products:[objectId(product__id)]
+                }
+                await db.get().collection(collection__list.CART__COLLECTIONS).insertOne(cart).then((response)=>{
+                    resolve('successfully added to cart')
+                })
+            }
+        })
+    },get__cart__count: (Uemail)=>{
+        return new Promise(async(resolve,reject)=>{
+            let cart__count= await db.get().collection(collection__list.CART__COLLECTIONS).aggregate([{$match:{user__email:Uemail}},{$project: { count: { $size:"$products" }}}]).toArray()
+                print(cart__count,'is the shipped cart count!!!!!!!!!!!!!!!!')
+            if(cart__count == ''){
+                print('000000000000000000000000000000000000')
+                resolve(0)
+            }
+                else if(cart__count[0].count){
+                  resolve(cart__count[0].count)
+                }
+                else{
+                  resolve(0) 
+                }
+        })  
     }
 }

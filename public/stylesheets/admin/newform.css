@@ -52,6 +52,7 @@ body{
     margin-bottom: 15px;
     margin: 20px 0 12px 0;
     width: calc(100%/ 2 - 20px);
+    
 }
 
 .div__container form .product__details .input__box .details {
@@ -79,7 +80,8 @@ body{
     border-color: rebeccapurple;
 }
 
-form .button {
+form .button,
+.home__button {
     height: 45px;
     width: 100%;
     outline: none;
@@ -90,6 +92,9 @@ form .button {
     border-radius: 10px;
     cursor: pointer;
     margin-bottom: 10px;
+}
+.image__input{
+    visibility: hidden;
 }
 @media (max-width: 584px){
     .div__container {
