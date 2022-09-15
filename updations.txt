@@ -36,3 +36,7 @@ NEW FEATURES
 
 BUG FIXES
 1=> Stabilized add to cart page
+
+----------------------------------------------- SEPTEMBER 15.2 UPDATION -----------------------------------------------
+NEW FEATURES
+1=> Added ajax in add to card

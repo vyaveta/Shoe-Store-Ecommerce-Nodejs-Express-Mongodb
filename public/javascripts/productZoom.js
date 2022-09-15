@@ -13,7 +13,7 @@ function magnify(product__image,magnified__image){
 }
 
 function moveLens(e){
-    console.log("x :" +e.pageX+ "Y :" + e.pageY) 
+   // console.log("x :" +e.pageX+ "Y :" + e.pageY) 
     let x,y,cx,cy;
     //get the position of the cursor
     const product__image__rect = product__image.getBoundingClientRect();

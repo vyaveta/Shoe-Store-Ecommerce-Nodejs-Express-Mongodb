@@ -56,7 +56,8 @@ router.post('/login',(req,res)=>{
       res.cookie('usertoken',usertoken,{
         httpOnly:true
       })
-      const token = usertoken
+     // const token = usertoken
+      token = usertoken
       console.log('user has logged in ');
       // res.redirect('/users');
       user__helper.get__user__name(req.body.email).then((name)=>{
@@ -207,20 +208,30 @@ router.get('/otpiloodvaa',(req,res)=>{
 })
 
 router.get('/add__to__cart/',auth.usercookieJWTAuth,(req,res)=>{
+
+  if(token==null){
+    res.redirect('/users/login')
+  }
+  print(req.query.product__id)
+  print('got the call from ajax')
   var user__details = auth.get__user__details()
+  if(user__details==null){
+    print('user__Details is null')
+  }else
   print(user__details,'success')
   product__helper.add__to__cart(req.query.product__id,user__details._id,user__details.email).then((response)=>{
-    if(req.query.from=='product__page'){
-     // res.redirect(`/users/productPage/:${req.query.product__id}`)
-     product__helper.get__the__product(req.query.product__id).then((data)=>{
-      console.log(data.total__clicks)
-      product__helper.get__cart__count(useremail).then((count)=>{
-        cart__count = count
-       res.render('users/productPage',{data,token,username,cart__count})
-     })
-    })
-    }else
-    res.redirect('/')
+    // if(req.query.from=='product__page'){
+    //  // res.redirect(`/users/productPage/:${req.query.product__id}`)
+    //  product__helper.get__the__product(req.query.product__id).then((data)=>{
+    //   console.log(data.total__clicks)
+    //   product__helper.get__cart__count(useremail).then((count)=>{
+    //     cart__count = count
+    //    res.render('users/productPage',{data,token,username,cart__count})
+    //  })
+    // })
+    // }else
+    // res.redirect('/')
+    res.json({status:true})
   })  
 })
 router.get('/cart__page',auth.usercookieJWTAuth,async(req,res)=>{

@@ -14,11 +14,10 @@
 <link rel="stylesheet" href="/stylesheets/users/productPage.css">
  <link rel="stylesheet" href="/stylesheets/home1.css">
     <link rel="stylesheet" href="/stylesheets/users/header.css">
-
-    <link rel="stylesheet" href="/stylesheets/home1.css">
+    <link rel="stylesheet" href="/stylesheets/home1.css"> 
+    <!-- bootstrap growl -->
    
 </head>
-
 <body>
     <!-- The Start of the Great Nav Section -->
     <div class="container__home">
@@ -49,8 +48,6 @@
             </div>
         </div>
     </div>
-
-
     <div class="new__arrivals">
         <h3>New arrivals</h3>
     </div>
@@ -67,8 +64,9 @@
                             </span>
                         </li>
                         <li>
-                            <i class="fa fa-shopping-cart"  onclick="window.location.href='/users/add__to__cart/?product__id={{this._id}}&from=home1'"></i>
-                            <span>Add to Cart</span>
+                           
+                            <i class="fa fa-shopping-cart" onclick=addToCart('{{this._id}}')></i>
+                            <span >Add to Cart</span>
                         </li>
                         <li>
                             <i class="fa fa-eye"></i>
@@ -117,7 +115,7 @@
                             </span>
                         </li>
                         <li>
-                          <i class="fa fa-shopping-cart" onclick="window.location.href='/users/add__to__cart/?product__id={{this._id}}&from=home1'" ></i>
+                          <i class="fa fa-shopping-cart" onclick=addToCart('{{this._id}}') ></i>
                             <span>Add to Cart</span>
                         </li>
                         <li>
@@ -138,7 +136,6 @@
                     </div>
                 </div>
             </div>
-
             {{/each}}
             <div class="button__div" style="padding:40px ;  width:190px">
                 <a href=""> <button class="button__more"> View More<svg xmlns="http://www.w3.org/2000/svg" width="34"
@@ -154,7 +151,6 @@
                     <path fill-rule="evenodd"
                         d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
                 </svg></button> </a></center>
-
     <div class="signup__banner">
         <div class="signup__box">
             <h1>Signup now and get 50% off on your first order !!!!</h1>
@@ -168,7 +164,25 @@
     <footer class="footer">
 
     </footer>
-
+    
+       <script>
+    function addToCart(proId){
+       $.ajax({
+        url:'/users/add__to__cart?product__id='+proId+'&from=home1', ///users/add__to__cart/?product__id={{this._id}}&from=home1
+        method:'get',
+        success:(response)=>{
+            console.log(response)
+            if(response.status){
+                let count = $('#cart__count').html()
+                count=parseInt(count)+1
+                $('#cart__count').html(count)
+            }
+            console.log('message here')
+            //alert('added to shoe store cart')
+        }
+       })
+    }
+</script> 
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"

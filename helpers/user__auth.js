@@ -16,7 +16,9 @@ module.exports={
             print('got inside the usercookie auth function in user__auth.js')
             console.log('error occured in userauth.js')
             res.clearCookie('usertoken')
-            return res.redirect('/users/login')
+            
+           //return res.render('login')
+             return res.redirect('/users/login')
         }
     },
     userLoggedIn:(req,res,next)=>{

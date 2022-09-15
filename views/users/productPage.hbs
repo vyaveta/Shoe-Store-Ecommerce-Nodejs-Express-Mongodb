@@ -71,7 +71,7 @@
             </select>
             <input type="number"name="" value="1" id="" min="1">
             <button class="btn btn-success">Buy Now</button>
-            <button  onclick="window.location.href='/users/add__to__cart/?product__id={{data._id}}&from=product__page'" class="btn btn-light add__to__cart">Add to Cart</button>
+            <button onclick=addToCart('{{data._id}}') class="btn btn-light add__to__cart">Add to Cart</button>
             <h4>Product details</h4>
             <p></p>{{data.description}}
             <div class="reviews">
@@ -110,8 +110,26 @@
           temp = main__img.src
          main__img.src = small__img[2].src
          small__img[2].src = temp
+    } 
+
+    function addToCart(proId){
+       $.ajax({
+        url:'/users/add__to__cart?product__id='+proId+'&from=product__page', 
+        method:'get',
+        success:(response)=>{
+            console.log(response)
+            if(response.status){
+                let count = $('#cart__count').html()
+                count=parseInt(count)+1
+                $('#cart__count').html(count)
+            }
+            alert('added to shoe store cart')
+        }
+       })
     }
-</script>
+</script> 
+
+
 
 <script src="/javascripts/productZoom.js"></script>
 
