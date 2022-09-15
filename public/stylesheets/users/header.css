@@ -56,7 +56,7 @@ body{
 .header__searchIcon{
     padding: 5px;
     height: 22px;
-    background-color: #1aef16;
+    background-color: rgb(10, 152, 10) !important;
     cursor: pointer;
 }
 .header__optionLineOne{

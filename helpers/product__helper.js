@@ -46,7 +46,6 @@ module.exports={
             })
         })
     },get__the__product:(id)=>{
-        console.log('asjflkjjlj')
         return new Promise (async(resolve,reject)=>{
             console.log('got inside the get__prpoducts')
             var product = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).findOne({_id:objectId(id)})
@@ -105,7 +104,7 @@ module.exports={
             let cart__count= await db.get().collection(collection__list.CART__COLLECTIONS).aggregate([{$match:{user__email:Uemail}},{$project: { count: { $size:"$products" }}}]).toArray()
                 print(cart__count,'is the shipped cart count!!!!!!!!!!!!!!!!')
             if(cart__count == ''){
-                print('000000000000000000000000000000000000')
+                print('0')
                 resolve(0)
             }
                 else if(cart__count[0].count){
@@ -115,5 +114,31 @@ module.exports={
                   resolve(0) 
                 }
         })  
+    },find__the__user__cart:(Uemail)=>{
+        return new Promise (async(resolve,reject)=>{
+            let user__cart = await db.get().collection(collection__list.CART__COLLECTIONS).aggregate([
+                {
+                    $match:{user__email:Uemail}
+                },
+                {
+                    $lookup:{
+                        from:collection__list.PRODUCTS__COLLECTIONS,
+                        let:{product__list:'$products'},
+                        pipeline:[
+                            {
+                                $match:{
+                                    $expr:{
+                                        $in:['$_id','$$product__list']
+                                    }
+                                }
+                            }
+                        ], 
+                        as:'user__cart'
+                    }
+                }
+            ]).toArray()
+            resolve(user__cart[0].user__cart)
+            
+        })
     }
 }

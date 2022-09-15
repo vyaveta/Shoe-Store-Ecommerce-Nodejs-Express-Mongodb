@@ -30,3 +30,9 @@ BUG FIXES
 1=> Stabilized Admin header partial
 2=>Stabilized edit product section in admin side
 3=> Fixed the bug of not loading custom fonts in user landing page
+------------------------------------------------    SEPTEMBER 15 UPDATION -----------------------------------------------------
+NEW FEATURES
+1=> Cart page is now available
+
+BUG FIXES
+1=> Stabilized add to cart page

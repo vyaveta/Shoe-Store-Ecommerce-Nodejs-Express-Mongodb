@@ -71,7 +71,7 @@
             </select>
             <input type="number"name="" value="1" id="" min="1">
             <button class="btn btn-success">Buy Now</button>
-            <button class="btn btn-light add__to__cart">Add to Cart</button>
+            <button  onclick="window.location.href='/users/add__to__cart/?product__id={{data._id}}&from=product__page'" class="btn btn-light add__to__cart">Add to Cart</button>
             <h4>Product details</h4>
             <p></p>{{data.description}}
             <div class="reviews">

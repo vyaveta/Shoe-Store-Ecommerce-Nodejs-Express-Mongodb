@@ -123,10 +123,13 @@ router.get('/productPage/:id',(req,res)=>{
   console.log(req.params.id)
   var id = req.params.id
   product__helper.get__the__product(id).then((data)=>{
-   data.total__clicks++
+   
    console.log(data.total__clicks)
-    res.render('users/productPage',{data,token,username})
+   product__helper.get__cart__count(useremail).then((count)=>{
+    cart__count = count
+    res.render('users/productPage',{data,token,username,cart__count})
   })
+})
 })
 
 
@@ -203,16 +206,46 @@ router.get('/otpiloodvaa',(req,res)=>{
   error__msg =''
 })
 
-
-
-router.get('/add__to__cart/:product__id',auth.usercookieJWTAuth,(req,res)=>{
-  print('got inside the add to cart router')
+router.get('/add__to__cart/',auth.usercookieJWTAuth,(req,res)=>{
   var user__details = auth.get__user__details()
   print(user__details,'success')
-  product__helper.add__to__cart(req.params.product__id,user__details._id,user__details.email).then((response)=>{
+  product__helper.add__to__cart(req.query.product__id,user__details._id,user__details.email).then((response)=>{
+    if(req.query.from=='product__page'){
+     // res.redirect(`/users/productPage/:${req.query.product__id}`)
+     product__helper.get__the__product(req.query.product__id).then((data)=>{
+      console.log(data.total__clicks)
+      product__helper.get__cart__count(useremail).then((count)=>{
+        cart__count = count
+       res.render('users/productPage',{data,token,username,cart__count})
+     })
+    })
+    }else
     res.redirect('/')
-  })
+  })  
 })
+router.get('/cart__page',auth.usercookieJWTAuth,async(req,res)=>{
+  token = req.cookies.usertoken
+  var user__details = auth.get__user__details()
+  table(user__details)
+ let cart__products = await product__helper.find__the__user__cart(user__details.email)
+// print(cart__products)
+for(var i = 0;i<cart__products.length;i++){
+  print(cart__products[i])
+  print('next ')
+  cart__products[i]._id = cart__products[i]._id.toHexString()
+  print(cart__products[i]._id)
+}
+    res.render('users/cartPage',{cart__products,token,username,cart__count})
+})
+
+// router.get('/add__to__cart/:product__id',auth.usercookieJWTAuth,(req,res)=>{
+//   print('got inside the add to cart router')
+//   var user__details = auth.get__user__details()
+//   print(user__details,'success')
+//   product__helper.add__to__cart(req.params.product__id,user__details._id,user__details.email).then((response)=>{
+//     res.redirect('/')
+//   })
+// })
 
 
 // logout///
