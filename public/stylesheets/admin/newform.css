@@ -8,12 +8,18 @@
 }
 body{
     font-family: 'Roboto Mono', monospace;
-    display: flex;
+    /* display: flex; */
     height: 100%;
+    background-repeat: no-repeat;
     justify-content: center;
     align-items: center;
     background: linear-gradient(135deg, rebeccapurple, rgb(205, 50, 179));
     padding: 10px;
+}
+.topper__container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .div__container {

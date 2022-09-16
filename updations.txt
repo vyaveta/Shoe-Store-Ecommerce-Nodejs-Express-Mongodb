@@ -51,3 +51,8 @@ BUG FIXES
 ----------------------------------------------- SEPTEMBER 16 BUGFIX UPDATION ------------------------------------------
 BUG FIXES
 1=> Fixed the bugs in add to cart section in user side
+
+------------------------------------------------   SEPTEMBER 16 NIGHT UPDATION  -----------------------------------------
+NEW FEATURES
+1=> Added profile page in user side
+2=> Product checkout option work started

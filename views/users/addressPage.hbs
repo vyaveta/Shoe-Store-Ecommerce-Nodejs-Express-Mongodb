@@ -1,0 +1,62 @@
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+ <link rel="stylesheet" href="/stylesheets/home1.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+<!--Google Fonts-->
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Oleo+Script+Swash+Caps:wght@400;700&family=Roboto+Mono:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<link rel="stylesheet" href="/stylesheets/users/productPage.css">
+ <link rel="stylesheet" href="/stylesheets/admin/newform.css">
+   <link rel="stylesheet" href="/stylesheets/users/header.css">
+   <style>
+    .the__class{
+        background: #f1f1f1 !important;
+    }
+    .for__the__button{
+        background: green !important;
+    }
+   </style>
+<body class="the__class">
+    <div class="topper__container">
+    <div class="div__container">
+        <div class="title"> Enter delivery Address</div>
+        <p style="color: green ; font-size:22px;font-weight:600;">{{admin__msg}}</p>
+        <form action="/admin/addProduct" class="signin__form" method="post" enctype="multipart/form-data">
+            <div class="product__details">
+                <div class="input__box">
+                    <span class="details">State</span>
+                    <input type="text" name="company__name" id="company__name"  required>
+                </div>
+                <div class="input__box">
+                    <span class="details">District</span>
+                    <input type="text" name="model" id="model"  required>
+                </div>
+                <div class="input__box">
+                    <span class="details">Pincode</span>
+                    <input type="number" name="model" id="model"  required>
+                </div>
+                <div class="input__box">
+                    <span class="details">Landmark</span>
+                    <input type="text" name="price" id="price"  required>
+                </div>
+                <div class="input__box">
+                    <span class="details">Road</span>
+                    <input type="text" name="stock" id="image" min="1" required>
+                </div>
+                <div class="input__box">
+                    <span class="details">Additional Details(route to your home / building)</span>
+                    <textarea name="description" required></textarea>
+                </div>
+            </div>
+            <input class="button for__the__button" type="submit" value="Place Order">
+        </form>
+             <a href="/users"><button class="home__button for__the__button"> Home</button></a>
+    </div>
+    </div>
+      <script src="/javascripts/imageChange.js"></script>
+    {{!-- <script src="https://cdn.crop.guide/loader/l.js?c=TRYDYD"></script> --}}
+</body>

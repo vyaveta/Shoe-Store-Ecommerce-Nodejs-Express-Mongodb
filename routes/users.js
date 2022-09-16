@@ -260,6 +260,13 @@ router.post('/changeProductQuantity',(req,res,next)=>{
   })
 })
 
+router.get('/checkout',auth.usercookieJWTAuth,(req,res)=>{
+  res.render('users/addressPage',{token,username,cart__count})
+})
+router.get('/profilePage',auth.usercookieJWTAuth,(req,res)=>{
+  var user__details = auth.get__user__details()
+  res.render('users/userProfile',{token,token,username,cart__count,user__details})
+})
 
 // logout///
 router.get('/logout',(req,res)=>{
