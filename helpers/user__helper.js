@@ -2,6 +2,7 @@ const db = require('../config/connection');
 const collection = require('../config/collection');
 const bcrypt = require('bcrypt');
 const { resolve, reject } = require('promise');
+const objectId = require('mongodb').ObjectId
 
 
 
@@ -100,6 +101,33 @@ module.exports={
                 is__valid = false;
                 resolve(is__valid);
             }
+        })
+    },
+    change__product__quantity:(details)=>{
+       details.count = parseInt(details.count)
+       details.quantity = parseInt(details.quantity)
+        console.log(details.cart,details.product,'and the count is ',details.count)
+        return new Promise(async(resolve,reject)=>{
+            if(details.count ==-1 && details.quantity ==1){
+                db.get().collection(collection.CART__COLLECTIONS)
+                .updateOne({_id:objectId(details.cart)},
+                {
+                    $pull:{products:{item:objectId(details.product)}}
+                }
+                ).then((response)=>{
+                    resolve({removeProduct:true})
+                })
+            }else{
+            db.get().collection(collection.CART__COLLECTIONS)
+                    .updateOne({_id:objectId(details.cart),'products.item':objectId(details.product)},
+                        {
+                            $inc:{'products.$.quantity':details.count},
+                            
+                        }  
+                    ).then(()=>{
+                        resolve(true)
+                    })
+                }
         })
     }
 }

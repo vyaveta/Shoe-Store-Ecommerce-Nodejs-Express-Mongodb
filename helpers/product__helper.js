@@ -79,20 +79,39 @@ module.exports={
             resolve(top__picks)
         })
     },add__to__cart:(product__id,user__id,user__email)=>{
+        let proObj = {
+            item:objectId(product__id),
+            quantity:1
+        }
         return new Promise(async(resolve,reject)=>{
-            let user__cart = await db.get().collection(collection__list.CART__COLLECTIONS).findOne({user:objectId(user__id)})
+            let user__cart = await db.get().collection(collection__list.CART__COLLECTIONS).findOne({user__email:user__email})
             if(user__cart){
+                console.log(user__cart,'is the user cart!')
+                let proExists = user__cart.products.findIndex(product=> product.item==product__id)
+                console.log(proExists)
+                if(proExists!=-1){
+                    db.get().collection(collection__list.CART__COLLECTIONS)
+                    .updateOne({user__email:user__email,'products.item':objectId(product__id)},
+                        {
+                            $inc:{'products.$.quantity':1},
+                            
+                        }  
+                    ).then(()=>{
+                        resolve()
+                    })
+                }else{
                 db.get().collection(collection__list.CART__COLLECTIONS).updateOne({user:objectId(user__id)},
                 {
-                        $push:{products:objectId(product__id)}
+                        $push:{products:proObj}
                 }).then((response)=>{
                     resolve('successfully added to cart')
                 })
+            }
             }else{
                 cart = {
                     user:objectId(user__id),
                     user__email:user__email,
-                    products:[objectId(product__id)]
+                    products:[proObj]
                 }
                 await db.get().collection(collection__list.CART__COLLECTIONS).insertOne(cart).then((response)=>{
                     resolve('successfully added to cart')
@@ -121,23 +140,30 @@ module.exports={
                     $match:{user__email:Uemail}
                 },
                 {
+                    $unwind:'$products'
+                },
+                {
+                    $project:{
+                        item:'$products.item',
+                        quantity:'$products.quantity'
+                    }
+                },
+                {
                     $lookup:{
                         from:collection__list.PRODUCTS__COLLECTIONS,
-                        let:{product__list:'$products'},
-                        pipeline:[
-                            {
-                                $match:{
-                                    $expr:{
-                                        $in:['$_id','$$product__list']
-                                    }
-                                }
-                            }
-                        ], 
-                        as:'user__cart'
+                        localField:'item',
+                        foreignField:'_id',
+                        as:'product'
+                    }
+                },
+                {
+                    $project:{
+                        item:1,quantity:1,product:{$arrayElemAt:['$product',0]}
                     }
                 }
             ]).toArray()
-            resolve(user__cart[0].user__cart)
+            console.table(user__cart)
+            resolve(user__cart)
             
         })
     }

@@ -238,15 +238,18 @@ router.get('/cart__page',auth.usercookieJWTAuth,async(req,res)=>{
   token = req.cookies.usertoken
   var user__details = auth.get__user__details()
   table(user__details)
- let cart__products = await product__helper.find__the__user__cart(user__details.email)
+ let cart__details = await product__helper.find__the__user__cart(user__details.email)
 // print(cart__products)
-for(var i = 0;i<cart__products.length;i++){
-  print(cart__products[i])
-  print('next ')
-  cart__products[i]._id = cart__products[i]._id.toHexString()
-  print(cart__products[i]._id)
-}
-    res.render('users/cartPage',{cart__products,token,username,cart__count})
+// for(var i = 0;i<cart__details.length;i++){
+//   print(cart__details[i])
+//   print('next ')
+//   cart__details[i]._id = cart__details[i]._id.toHexString()
+//   print(cart__details[i]._id)
+// }
+   product__helper.get__cart__count(useremail).then((count)=>{
+        cart__count = count
+        res.render('users/cartPage',{cart__details,token,username,cart__count})
+     })
 })
 
 // router.get('/add__to__cart/:product__id',auth.usercookieJWTAuth,(req,res)=>{
@@ -257,6 +260,14 @@ for(var i = 0;i<cart__products.length;i++){
 //     res.redirect('/')
 //   })
 // })
+
+router.post('/changeProductQuantity',(req,res,next)=>{
+  print('got inside the change product quantity router !')
+  console.log(req.body)
+  user__helper.change__product__quantity(req.body).then((response)=>{
+   res.json(response)
+  })
+})
 
 
 // logout///

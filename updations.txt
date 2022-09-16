@@ -40,3 +40,11 @@ BUG FIXES
 ----------------------------------------------- SEPTEMBER 15.2 UPDATION -----------------------------------------------
 NEW FEATURES
 1=> Added ajax in add to card
+
+------------------------------------------------ SEPTEMBER 16 UPDATION -----------------------------------------------
+NEW FEATURES
+1=> Added Cart page 
+2=> Added Cart quantity option
+
+BUG FIXES
+1=> Fixed the bug while adding products to card
