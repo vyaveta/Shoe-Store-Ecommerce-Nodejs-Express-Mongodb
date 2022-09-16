@@ -220,18 +220,11 @@ router.get('/add__to__cart/',auth.usercookieJWTAuth,(req,res)=>{
   }else
   print(user__details,'success')
   product__helper.add__to__cart(req.query.product__id,user__details._id,user__details.email).then((response)=>{
-    // if(req.query.from=='product__page'){
-    //  // res.redirect(`/users/productPage/:${req.query.product__id}`)
-    //  product__helper.get__the__product(req.query.product__id).then((data)=>{
-    //   console.log(data.total__clicks)
-    //   product__helper.get__cart__count(useremail).then((count)=>{
-    //     cart__count = count
-    //    res.render('users/productPage',{data,token,username,cart__count})
-    //  })
-    // })
-    // }else
-    // res.redirect('/')
-    res.json({status:true})
+    product__helper.get__cart__count(useremail).then((count)=>{
+      cart__count = count
+      
+      res.json({status:true,count})
+   })
   })  
 })
 router.get('/cart__page',auth.usercookieJWTAuth,async(req,res)=>{
@@ -239,13 +232,7 @@ router.get('/cart__page',auth.usercookieJWTAuth,async(req,res)=>{
   var user__details = auth.get__user__details()
   table(user__details)
  let cart__details = await product__helper.find__the__user__cart(user__details.email)
-// print(cart__products)
-// for(var i = 0;i<cart__details.length;i++){
-//   print(cart__details[i])
-//   print('next ')
-//   cart__details[i]._id = cart__details[i]._id.toHexString()
-//   print(cart__details[i]._id)
-// }
+
    product__helper.get__cart__count(useremail).then((count)=>{
         cart__count = count
         res.render('users/cartPage',{cart__details,token,username,cart__count})
@@ -265,7 +252,11 @@ router.post('/changeProductQuantity',(req,res,next)=>{
   print('got inside the change product quantity router !')
   console.log(req.body)
   user__helper.change__product__quantity(req.body).then((response)=>{
-   res.json(response)
+    product__helper.get__cart__count(useremail).then((count)=>{
+      cart__count = count  
+      response.count = count
+      res.json(response)  
+   })
   })
 })
 

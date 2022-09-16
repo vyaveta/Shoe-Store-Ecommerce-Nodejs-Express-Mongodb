@@ -48,3 +48,6 @@ NEW FEATURES
 
 BUG FIXES
 1=> Fixed the bug while adding products to card
+----------------------------------------------- SEPTEMBER 16 BUGFIX UPDATION ------------------------------------------
+BUG FIXES
+1=> Fixed the bugs in add to cart section in user side

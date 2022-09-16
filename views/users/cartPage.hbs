@@ -187,6 +187,7 @@
             alert('product Removed from cart')
             //location.reload()
             product__box.style.display='none'
+            $('#cart__count').html(response.count)
           }else{
             document.getElementById(pro__id).innerHTML = quantity + count
           }                                                                      
