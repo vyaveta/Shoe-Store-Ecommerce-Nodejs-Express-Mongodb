@@ -17,13 +17,25 @@
         background: #f1f1f1 !important;
     }
     .for__the__button{
+        margin-top: 5px;
         background: green !important;
     }
+    .div__container .title::before {
+    content: '';
+    position: absolute;
+    top: 35px;
+    left: 0;
+    bottom: 0;
+    height: 5px;
+    width: 100%;
+    background: linear-gradient(135deg,yellowgreen, green, yellowgreen);
+}
    </style>
 <body class="the__class">
     <div class="topper__container">
     <div class="div__container">
         <div class="title"> Enter delivery Address</div>
+        
         <p style="color: green ; font-size:22px;font-weight:600;">{{admin__msg}}</p>
         <form action="/admin/addProduct" class="signin__form" method="post" enctype="multipart/form-data">
             <div class="product__details">
@@ -52,6 +64,7 @@
                     <textarea name="description" required></textarea>
                 </div>
             </div>
+             <div class="title">Total Price Rs.{{total}}</div>
             <input class="button for__the__button" type="submit" value="Place Order">
         </form>
              <a href="/users"><button class="home__button for__the__button"> Home</button></a>

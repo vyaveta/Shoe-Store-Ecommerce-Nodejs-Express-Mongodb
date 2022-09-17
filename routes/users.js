@@ -10,7 +10,7 @@ let token
 let error__msg
 let number
 let cart__count
-
+let user__details
 //twilio
 // const client = require('twilio')(accountSid,authtoken)
 const product__helper = require('../helpers/product__helper');
@@ -214,7 +214,7 @@ router.get('/add__to__cart/',auth.usercookieJWTAuth,(req,res)=>{
   }
   print(req.query.product__id)
   print('got the call from ajax')
-  var user__details = auth.get__user__details()
+   user__details = auth.get__user__details()
   if(user__details==null){
     print('user__Details is null')
   }else
@@ -229,7 +229,7 @@ router.get('/add__to__cart/',auth.usercookieJWTAuth,(req,res)=>{
 })
 router.get('/cart__page',auth.usercookieJWTAuth,async(req,res)=>{
   token = req.cookies.usertoken
-  var user__details = auth.get__user__details()
+   user__details = auth.get__user__details()
   table(user__details)
  let cart__details = await product__helper.find__the__user__cart(user__details.email)
 
@@ -260,11 +260,13 @@ router.post('/changeProductQuantity',(req,res,next)=>{
   })
 })
 
-router.get('/checkout',auth.usercookieJWTAuth,(req,res)=>{
-  res.render('users/addressPage',{token,username,cart__count})
+router.get('/checkout',auth.usercookieJWTAuth,async(req,res)=>{
+  user__details = auth.get__user__details()
+  let total = await user__helper.get__total__amount(user__details)
+  res.render('users/addressPage',{token,username,cart__count,total})
 })
 router.get('/profilePage',auth.usercookieJWTAuth,(req,res)=>{
-  var user__details = auth.get__user__details()
+   user__details = auth.get__user__details()
   res.render('users/userProfile',{token,token,username,cart__count,user__details})
 })
 
