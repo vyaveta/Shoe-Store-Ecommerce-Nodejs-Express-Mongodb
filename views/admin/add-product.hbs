@@ -45,9 +45,22 @@
                 <div class="input__box">
                     <span class="details">image 1</span>
                     <img class="img-fluid" src="" alt="" id="img__view" width="70px">
-                    <input type="file" class='image__input' name="image" id="image" onchange="viewImage(event)" required>
+                    <input type="file" class='image__input' name="image" id="image" onchange="viewImage(event)" multiple="multiple" required>
                      <label class="the__button" for="image" required> Add img1</label> 
                 </div>
+
+     <div id="crop">
+                        <img id="imgView1"  src="" alt="" style="height: 100px;width:120px;" class="clr">
+                        <div class="vald-info" id="info"></div>
+                        <h5 class="error_form text-danger" id="image1_error_message"></h5>
+                           <div style="display: flex">
+                           <div id="image-box1" class="image-container clr" style="height: 300px; width: 20%"></div>
+                              <button type="button"  class="btn btneds"  id="crop-btn1" style=" margin-top: 10px; display: none; width: 50%; margin: 20rem 0rem 0rem 0rem;" >crop</button>
+                           </div>
+                       </div>
+                    <input type="file" name="image" class="form-control" id="id_image1"  onchange="changeImg(event)"   >
+
+
                 <div class="input__box">
                     <span class="details">image 2</span>
                     <img class="img-fluid" src="" alt="" id="img__view2" width="70px">
@@ -80,8 +93,71 @@
              <a href="/admin"><button class="home__button">Dashboard / Home</button></a>
     </div>
     </div>
+    <script>
+         function changeImg(event){
+       
+            document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[0])
+        }
+         const imagebox1 = document.getElementById("image-box1");
+  const crop_btn1 = document.getElementById("crop-btn1");
+  const input1 = document.getElementById("id_image1");
+ 
+  // When user uploads the image this event will get triggered
+  input1.addEventListener("change", () => {
+    // Getting image file object from the input variable
+    const img_data1 = input1.files[0];
+    // createObjectURL() static method creates a DOMString containing a URL representing the object given in the parameter.
+    // The new object URL represents the specified File object or Blob object.
+    const url1 = URL.createObjectURL(img_data1);
+    // Creating a image tag inside imagebox which will hold the cropping view image(uploaded file) to it using the url created before.
+    imagebox1.innerHTML = `<img src="${url1}" id="image1" style="width:100%;">`;
+    // Storing that cropping view image in a variable
+    const image1 = document.getElementById("image1");
+    // Displaying the image box
+    document.getElementById("image-box1").style.display = "block";
+    // Displaying the Crop buttton
+    document.getElementById("crop-btn1").style.display = "block";
+    // Hiding the Post button
+    document.getElementById("imgView1").style.display = "block";
+    const cropper1 = new Cropper(image1, {
+      autoCropArea: 1,
+      viewMode: 1,
+      scalable: false,
+      zoomable: false,
+      movable: false,
+      minCropBoxWidth: 50,
+      minCropBoxHeight: 50,
+    });
+    // When crop button is clicked this event will get triggered
+    crop_btn1.addEventListener("click", () => {
+      // This method coverts the selected cropped image on the cropper canvas into a blob object
+      cropper1.getCroppedCanvas().toBlob((blob) => {
+        // Gets the original image data
+        let fileInputElement1 = document.getElementById("id_image1");
+        // Make a new cropped image file using that blob object, image_data.name will make the new file name same as original image
+        let file1 = new File([blob], img_data1.name, {
+          type: "image/*",
+          lastModified: new Date().getTime(),
+        });
+        // Create a new container
+        let container1 = new DataTransfer();
+        // Add the cropped image file to the container
+        container1.items.add(file1);
+        // Replace the original image file with the new cropped image file
+        fileInputElement1.files = container1.files;
+        document.getElementById("imgView1").src = URL.createObjectURL(
+          fileInputElement1.files[0]
+        );
+        // Hide the cropper box
+        document.getElementById("image-box1").style.display = "none";
+        // Hide the crop button
+        document.getElementById("crop-btn1").style.display = "none";
+          
+      });
+    });
+  });
+    </script>
       <script src="/javascripts/imageChange.js"></script>
     {{!-- <script src="https://cdn.crop.guide/loader/l.js?c=TRYDYD"></script> --}}
 </body>
-
 </html>

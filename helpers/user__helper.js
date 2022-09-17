@@ -2,6 +2,7 @@ const db = require('../config/connection');
 const collection = require('../config/collection');
 const bcrypt = require('bcrypt');
 const { resolve, reject } = require('promise');
+const { response } = require('express');
 const objectId = require('mongodb').ObjectId
 
 
@@ -109,7 +110,7 @@ module.exports={
         console.log(details.cart,details.product,'and the count is ',details.count)
         return new Promise(async(resolve,reject)=>{
             if(details.count ==-1 && details.quantity ==1){
-                db.get().collection(collection.CART__COLLECTIONS)
+              await  db.get().collection(collection.CART__COLLECTIONS)
                 .updateOne({_id:objectId(details.cart)},
                 {
                     $pull:{products:{item:objectId(details.product)}}
@@ -118,14 +119,14 @@ module.exports={
                     resolve({removeProduct:true})
                 })
             }else{
-            db.get().collection(collection.CART__COLLECTIONS)
+          await  db.get().collection(collection.CART__COLLECTIONS)
                     .updateOne({_id:objectId(details.cart),'products.item':objectId(details.product)},
                         {
                             $inc:{'products.$.quantity':details.count},
                             
                         }  
                     ).then(()=>{
-                        resolve(true)
+                        resolve({done:true})
                     })
                 }
         })
@@ -165,8 +166,44 @@ module.exports={
                     }
                 }
             ]).toArray()
-            console.table(total[0].total)
-            resolve(total[0].total)
+            try{
+                console.table(total[0].total)
+                resolve(total[0].total)
+            }catch(err){
+                console.table(err)
+                resolve(0)
+            }
+        })
+    },
+    place__order:(order__details,products,total)=>{
+        console.log('got inside the place order promise')
+        return new Promise(async(resolve,reject)=>{
+            console.log(order__details,products,total)
+            let status = order__details['payment-method']=='COD'?'placed':'pending'
+            let orderObj = {
+                delivery__details:{
+                    mobile:order__details.Phone__number,
+                    address:order__details.address,
+                    pincode:order__details.pincode
+                },
+                user__id:objectId(order__details.user__id),
+                payment__method:order__details['payment-method'],
+                products:products,
+                total__amount:total,
+                status:status
+            }
+            db.get().collection(collection.ORDER__COLLECTION).insertOne({orderObj}).then((response)=>{
+                db.get().collection(collection.CART__COLLECTIONS).deleteOne({user:objectId(order__details.user__id)})
+                console.log('inserted the order ')
+                resolve()
+            })
+        })
+    },
+    get__cart__products:(user__id)=>{
+        return new Promise(async(resolve,reject)=>{
+            console.log('got inside this get cart products promise')
+            let cart = await db.get().collection(collection.CART__COLLECTIONS).findOne({user:objectId(user__id)})
+            resolve(cart.products)
         })
     }
 }

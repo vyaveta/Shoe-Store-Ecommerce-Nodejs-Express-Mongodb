@@ -49,7 +49,7 @@ router.post('/login',(req,res)=>{
   user__helper.user__login(req.body).then((response)=>{
     console.log(response)
     if(response=='user__blocked'){
-      res.render('blocked')
+      res.render('blocked',{no__partials:true})
     }
     else if(response){
       const usertoken = jwt.sign(response,process.env.USER_TOKEN_SECRET,{expiresIn:'365d'})
@@ -231,11 +231,12 @@ router.get('/cart__page',auth.usercookieJWTAuth,async(req,res)=>{
   token = req.cookies.usertoken
    user__details = auth.get__user__details()
   table(user__details)
+  let total = await user__helper.get__total__amount(user__details)
  let cart__details = await product__helper.find__the__user__cart(user__details.email)
 
    product__helper.get__cart__count(useremail).then((count)=>{
         cart__count = count
-        res.render('users/cartPage',{cart__details,token,username,cart__count})
+        res.render('users/cartPage',{cart__details,token,username,cart__count,total})
      })
 })
 
@@ -248,26 +249,52 @@ router.get('/cart__page',auth.usercookieJWTAuth,async(req,res)=>{
 //   })
 // })
 
-router.post('/changeProductQuantity',(req,res,next)=>{
+router.post('/changeProductQuantity',async(req,res,next)=>{
   print('got inside the change product quantity router !')
   console.log(req.body)
-  user__helper.change__product__quantity(req.body).then((response)=>{
-    product__helper.get__cart__count(useremail).then((count)=>{
-      cart__count = count  
-      response.count = count
-      res.json(response)  
+ try{
+ await user__helper.change__product__quantity(req.body).then(async(response)=>{
+  await  product__helper.get__cart__count(useremail).then(async(count)=>{
+      // response.total = await  user__helper.get__total__amount(user__details)
+    await  user__helper.get__total__amount(user__details).then(async(total)=>{
+        cart__count = count  
+        response.count = count
+        console.log(response.count,'is the response.count')
+        response.total = await total
+        console.log(response.total,'is the total amount from the user js router section!!')
+        console.log(response)
+        res.json(response)  
+      })
    })
   })
+ }catch(err){
+  console.log('error catched in user.js router section in change product quantity ')
+  res.redirect('login')
+}
 })
 
 router.get('/checkout',auth.usercookieJWTAuth,async(req,res)=>{
   user__details = auth.get__user__details()
   let total = await user__helper.get__total__amount(user__details)
-  res.render('users/addressPage',{token,username,cart__count,total})
+  res.render('users/addressPage',{token,username,cart__count,total,user__details})
 })
 router.get('/profilePage',auth.usercookieJWTAuth,(req,res)=>{
    user__details = auth.get__user__details()
   res.render('users/userProfile',{token,token,username,cart__count,user__details})
+})
+
+
+///////////////////////////////////////////// order placing /////////////////////////////////////////////////
+router.post('/placeOrder',async(req,res)=>{
+  console.log('got inside the post method of router')
+  user__details = auth.get__user__details()
+  let products = await user__helper.get__cart__products(user__details._id)
+  let total__price = await user__helper.get__total__amount(user__details)
+ user__helper.place__order(req.body,products,total__price).then((response)=>{
+  res.json({status:true})
+
+ })
+  console.log(req.body)
 })
 
 // logout///

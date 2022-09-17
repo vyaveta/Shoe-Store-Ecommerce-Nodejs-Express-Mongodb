@@ -116,16 +116,16 @@
             <h2 class="product_name mb-5">Total Amount</h2>
             <div class="price_indiv d-flex justify-content-between ">
               <p>Product amount</p>
-              <p>Rs. <span>0.00</span></p>
+              <p>Rs. <span id="total__product__price">{{total}}</span></p>
             </div>
             <div class="price_indiv d-flex justify-content-between ">
               <p>Shipping Charge</p>
-              <p>Rs. <span>0.00</span></p>
+              <p>Rs. <span>100.00</span></p>
             </div>
             <hr />
             <div class="total-amt d-flex justify-content-between font-weight-bold">
               <p>Total Price Amount (including tax)</p>
-              <p>Rs. <span id="total_cart_amt">0.00</span></p>
+              <p>Rs. <span id="total_cart_amt"></span></p>
             </div>
             <button  onclick="window.location.href='/users/checkout'" class="btn btn-light border-success text-success text-uppercase">CheckOut</button>
           </div>
@@ -170,11 +170,16 @@
 
 <!--js function for changing the product quantity-->
 
-  <script>                                                                                                                                      
+  <script>      
+        let total__product__price = document.getElementById('total__product__price')
+        let total__amount = document.getElementById('total_cart_amt')  
+        total__amount.innerHTML =parseInt( total__product__price.innerHTML) + 100                                                                                                                
     function changeQuantity(cart__id,pro__id,count){  
 
       let product__box = document.getElementById(pro__id+'box')
       let quantity = document.getElementById(pro__id).innerHTML
+      let total__product__price = document.getElementById('total__product__price')
+      let total__amount = document.getElementById('total_cart_amt')
       
       console.log(quantity)
       quantity = Number(quantity)
@@ -195,8 +200,13 @@
             //location.reload()
             product__box.style.display='none'
             $('#cart__count').html(response.count)
+            $('#total__product__price').html(response.total)
+            $('#total_cart_amt').html(response.total+100)
+            console.log(response.total)
           }else{
             document.getElementById(pro__id).innerHTML = quantity + count
+             $('#total__product__price').html(response.total)
+              $('#total_cart_amt').html(response.total+100)
           }                                                                      
         }                                                                         
       })                                                                         

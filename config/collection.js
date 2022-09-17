@@ -7,5 +7,5 @@ module.exports={
     CART__COLLECTIONS:'cart__ecommerce',
     ADMIN__ACTIONS:'admin__actions',
     DELETED__ACCOUNTS:'deleted__accounts',
-    DELETED__PRODUCTS:'deleted__products'
+    ORDER__COLLECTION:'orders__ecommerce'
 }
