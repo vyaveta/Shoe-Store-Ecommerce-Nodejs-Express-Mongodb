@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>alert </title>
+</head>
+<style>
+    body{
+        overflow-x: hidden;
+    }
+    .alert__box{
+        display: flex;
+        justify-content: space-between;
+        position: absolute;
+        border-radius: 5px 0px 0 5px;
+        box-shadow: 2px 2px 1px 1px silver;
+        right: 2px;
+        top: 10px;
+        background: green;
+        font-size: 20px;
+        padding: 15px 40px 15px 15px;
+        color: aliceblue;
+        min-width: 250px;
+        max-width: 40vw;
+        z-index: 10;
+        
+    }
+    .alert__box .close__alert{
+        font-size:20px;
+        position: absolute;
+        right:10;
+        cursor: pointer;
+        z-index:11;
+    }
+    .alert__box.show::before{
+        content: '';
+        position:absolute;
+        left: 0;
+        bottom: 0;
+        height: 3px;
+        background-color: yellowgreen;
+        width: 100%;
+        box-sizing: border-box;
+        z-index: 11;
+        animation: hideMeter 5s linear;
+    }
+    @keyframes hideMeter{
+        0%{
+            width: 100%;
+        }
+        100%{
+            width: 0%;
+        }
+    }
+    .alert__box.show{
+        animation:showAlert 1s ease forwards
+    }
+    @keyframes showAlert{
+        0%{
+            transform: translateX(100%);
+        }
+        40%{
+            transform: translateX(100%);
+        }
+        80%{
+            transform: translateX(-15%);
+        }
+        100%{
+            transform: translateX(-10px);
+        }
+    }
+
+    /* for hiding the alert */
+    .alert__box.hide{
+        animation:hideAlert 1s ease forwards
+    }
+    @keyframes hideAlert{
+        0%{
+            transform: translateX(-10px);
+        }
+        40%{
+            transform: translateX(-15%);
+        }
+        80%{
+            transform: translateX(0%);
+        }
+        100%{
+            transform: translateX(100%);
+        }
+    }
+    .none{
+        visibility: hidden;
+    }
+</style>
+<body>
+    <div class="alert__box none ">
+        <div class="one">Added to cart <small>shoe store </small>
+           </div>
+            <div class="two">
+                <span class="close__alert">&times;</span>
+            </div>
+           
+    </div>
+
+
+    <button class="alert">click</button>
+
+    <script>
+        const alert__btn = document.querySelector('.alert')
+        const alertBox = document.querySelector('.alert__box')
+        const close = document.querySelector('.close__alert')
+        let timer;
+
+        alert__btn.addEventListener('click',(e)=>{
+            showAlertBox()
+        })
+        close.addEventListener('click',(e)=>{
+            hideAlertBox()
+            clearTimeout()
+        })
+      function  showAlertBox(){
+            alertBox.classList.remove('hide')
+            alertBox.classList.add('show')
+            if(alertBox.classList.contains('none')){
+                alertBox.classList.remove('none')
+            }
+            //now hide the animation after 5sec
+            timer = setTimeout(()=>{
+                hideAlertBox()
+            },5000)
+        }
+        hideAlertBox = () => {
+            alertBox.classList.remove('show')
+            alertBox.classList.add('hide')
+        }
+
+        // now hide alertBox when clicked on cross symbol
+
+    </script>
+</body>
+</html>

@@ -88,7 +88,10 @@
                 method:'post',
                 data:$('#checkout-form').serialize(),
                 success:(response)=>{
-                    alert(response)
+                    alert('successfully placed order')
+                    if(response.status){
+                        location.href='/users'
+                    }
                 }
             })
         })

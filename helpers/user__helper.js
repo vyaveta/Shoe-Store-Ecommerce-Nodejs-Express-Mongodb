@@ -190,7 +190,8 @@ module.exports={
                 payment__method:order__details['payment-method'],
                 products:products,
                 total__amount:total,
-                status:status
+                status:status,
+                date:new Date()
             }
             db.get().collection(collection.ORDER__COLLECTION).insertOne({orderObj}).then((response)=>{
                 db.get().collection(collection.CART__COLLECTIONS).deleteOne({user:objectId(order__details.user__id)})
