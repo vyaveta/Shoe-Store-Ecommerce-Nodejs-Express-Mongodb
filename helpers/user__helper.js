@@ -109,7 +109,7 @@ module.exports={
        details.quantity = parseInt(details.quantity)
         console.log(details.cart,details.product,'and the count is ',details.count)
         return new Promise(async(resolve,reject)=>{
-            if(details.count ==-1 && details.quantity ==1){
+            if(details.count ==-1 && details.quantity ==1 || details.count == 40406660999){
               await  db.get().collection(collection.CART__COLLECTIONS)
                 .updateOne({_id:objectId(details.cart)},
                 {

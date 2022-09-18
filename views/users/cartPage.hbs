@@ -97,7 +97,7 @@
                 <!--remove-->
                 <div class="row text-success ">
                   <div class="col-8 d-flex justify-content-between removean_wish">
-                    <p class="text-danger" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                    <p class="text-danger" onclick="changeQuantity('{{this._id}}','{{this.product._id}}',40406660999)" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                       <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                       <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                     </svg>  Remove</p>
@@ -178,45 +178,14 @@
 
 
 <!--js function for changing the product quantity-->
-
+<script src="/javascripts/customAlertBox.js"></script>
   <script> 
-    // alert box js code
- const alert__btn = document.querySelector('.alert')
-        const alertBox = document.querySelector('.alert__box')
-        const close = document.querySelector('.close__alert')
-        let timer;
-
-       // alert__btn.addEventListener('click',(e)=>{
-       //     console.log('alert button clicked')
-        //    showAlertBox()
-       // })
-        close.addEventListener('click',(e)=>{
-            hideAlertBox()
-            clearTimeout()
-        })
-         hideAlertBox = () => {
-            alertBox.classList.remove('show')
-            alertBox.classList.add('hide')
-        }
-      function  showAlertBox(){
-        console.log('im show alert box')
-            alertBox.classList.remove('hide')
-            alertBox.classList.add('show')
-            if(alertBox.classList.contains('none')){
-                alertBox.classList.remove('none')
-            }
-            //now hide the animation after 5sec
-            timer = setTimeout(()=>{
-                hideAlertBox()
-            },5000)
-        }
-
-// end of alert box js code     
         let total__product__price = document.getElementById('total__product__price')
         let total__amount = document.getElementById('total_cart_amt')  
-        total__amount.innerHTML =parseInt( total__product__price.innerHTML) + 100                                                                                                                
-    function changeQuantity(cart__id,pro__id,count){  
+        total__amount.innerHTML =parseInt( total__product__price.innerHTML) + 100 
 
+        // js function for change product quantity                                                                                                           
+    function changeQuantity(cart__id,pro__id,count){  
       let product__box = document.getElementById(pro__id+'box')
       let quantity = document.getElementById(pro__id).innerHTML
       let total__product__price = document.getElementById('total__product__price')
@@ -241,6 +210,7 @@
            showAlertBox()
             //location.reload()
             product__box.style.display='none'
+            console.log("code is running smoothly i mean the js code in cart page")
             $('#cart__count').html(response.count)
             $('#total__product__price').html(response.total)
             $('#total_cart_amt').html(response.total+100)
@@ -252,7 +222,7 @@
           }                                                                      
         }                                                                         
       })                                                                         
-    }                                                                        
+    }                                                                    
   </script>
 
 

@@ -1,0 +1,24 @@
+gsap.from('#bag',{
+    scrollTrigger:{
+        scrub:true
+    },
+    x:700
+})
+gsap.from('#girl',{
+    scrollTrigger:{
+        scrub:true
+    },
+    y:-700
+})
+gsap.from('#text',{
+    scrollTrigger:{
+        scrub:true
+    },
+    x:700
+})
+gsap.from('#button',{
+    scrollTrigger:{
+        scrub:true
+    },
+    x:400
+})

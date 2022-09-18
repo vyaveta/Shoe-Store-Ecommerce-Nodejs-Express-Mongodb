@@ -61,7 +61,7 @@ a{
 .header__searchIcon{
     padding: 5px;
     height: 22px;
-    background-color: #1aef16;
+    background-color:green;
     cursor: pointer;
 }
 .header__optionLineOne{
@@ -100,7 +100,7 @@ a{
     color: white;
 }
 .anchor__links:hover{
-    color: #1aef16;
+    color: rebeccapurple;
 }
 .start{
     margin-top: 60px;
@@ -126,7 +126,7 @@ a{
     
 }
 .co_1 h3{
-    color:#059408;
+    color:green;
     font-weight: 700;
     margin:20px 0 10px
 }
@@ -143,7 +143,7 @@ a{
     padding:10px 10px;
     outline:none;
     color:white;
-    background: linear-gradient(to right,  yellowgreen,green);
+    background: linear-gradient(to right,  greenyellow,green);
     border-radius: 10px;
     
     transition:width .15s
@@ -151,8 +151,6 @@ a{
 .button__more a {
     color: white;
     text-decoration: none;
-    
-
 }
 .button__more:hover{
     width: 180px;
@@ -173,7 +171,7 @@ a{
     content:'';
     width: 10px;
     height:57%;
-    background:linear-gradient( yellowgreen,green);
+    background:linear-gradient( greenyellow,green);
     position: absolute;
     left: -40px;
     top:8px;
@@ -191,7 +189,7 @@ a{
     position:absolute;
     right: 0;
     top:0;
-    background:linear-gradient(yellowgreen,greenyellow,green);
+    background:linear-gradient(yellowgreen,yellowgreen,green);
     border-radius:20px 0 0 20px;
     height: 100%;
     width: 80%;
@@ -217,7 +215,7 @@ a{
         border-radius:20px 0 20px 0;
         height: 60px;
         margin: 60px auto 10px;
-        background-color: #059408;
+        background-color: green;
         font-family: 'Satisfy', cursive;
         width: 85%;
         display: flex;
@@ -271,7 +269,7 @@ a{
         /* min-width: 400px; */
         /* background:yellowgreen; */
         /* background:#ffe77aff; */
-        background-color: rgb(68, 149, 66);
+        background-color: green;
         padding: 10px;
         border-radius: 20px;
     }
@@ -357,8 +355,8 @@ a{
         transform:translateY(-50%) translateX(-20px);
         white-space: nowrap;
         padding:4px 60px;
-        background-color: rgb(41, 214, 55);
-        color:#333;
+        background-color: green;
+        color:white;
         font-size:12px;
         border-radius: 12px;
         pointer-events: none;
@@ -378,7 +376,8 @@ a{
         right: -4px;
         width:8px;
         height: 8px;
-        background: rgb(41, 214, 55);
+        background: green;
+        color: white;
         transform: translateY(-50%) rotate(45deg);
     }
     .action li:hover span{
@@ -386,7 +385,7 @@ a{
         transform:translateY(-50%) translateX(0px);
     }
     .action li:hover{
-        background-color:  rgb(41, 214, 55);
+        background-color:  green;
         color:#f1f1f1
     }
     /* product section css ends here */
@@ -431,4 +430,76 @@ a{
     margin:0px 14px 0px;
 }
 
+
+
+
+
+.outercover__parallax {
+    position: relative;
+    overflow-x: hidden;
+    background: #fff;
+}
+
+.parallax {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.parallax img{
+    position: absolute;
+    bottom: 0;
+    /* left: 0; */
+    pointer-events: none;
+}
+.parallax .girl img{
+    left: 0;
+}
+.parallax .bag img{
+    right: 0;  
+}
+.parallax .background img{
+    position: absolute;
+    left: 0;
+    top: 10px;
+    height: 450px;
+    width: 100vw;
+    object-fit: fill;
+    
+}
+
+#text {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 4em;
+}
+
+.sec {
+    position: relative;
+    padding: 100px;
+    background: #112322;
+    color: #f2f2f2;
+}
+
+.sec h2 {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+.sec p {
+    font-size: 1em;
+    font-weight: 300;
+}
+.div{
+    height: 100vh;
+    background-color: green;
+}
+@media screen and (max-width:800px){
+    .parallax .girl{
+        display: none;
+    } 
+}
 
