@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="/stylesheets/users/productPage.css">
  <link rel="stylesheet" href="/stylesheets/home1.css">
     <link rel="stylesheet" href="/stylesheets/users/header.css">
+     <link rel="stylesheet" href="/stylesheets/users/alert.css">
     <title>Document</title>
 </head>
 <style>
@@ -38,6 +39,13 @@
 </style>
 
 <body>
+     <div class="alert__box none"> 
+        <div class="one">Added to <small>shoe store </small> cart 
+           </div>
+            <div class="two">
+                <span class="close__alert">&times;</span>
+            </div>  
+    </div> 
   <!-- The Start of the Great Nav Section -->
     <!-- Product Page     -->
 <section class=" container sproduct  pt-4 ">
@@ -93,6 +101,7 @@
         <div class="magnified__image"></div>
     </div>
 </section>
+<script src="/javascripts/customAlertBox.js"></script>
 <script>
     var temp
     var main__img = document.getElementById('mainImg')
@@ -114,6 +123,9 @@
          small__img[2].src = temp
     } 
 
+// alert box js code
+ 
+
     function addToCart(proId){
        $.ajax({
         url:'/users/add__to__cart?product__id='+proId+'&from=product__page', 
@@ -122,10 +134,10 @@
             console.log(response)
             if(response.status){
                 let count = $('#cart__count').html()
-                count=parseInt(count)+1
-                $('#cart__count').html(count)
+               // count=parseInt(count)+1
+                $('#cart__count').html(response.count)
             }
-            alert('added to shoe store cart')
+            showAlertBox()
         }
        })
     }
