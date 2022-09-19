@@ -296,6 +296,22 @@ router.post('/placeOrder',async(req,res)=>{
  })
   console.log(req.body)
 })
+//////////////////////////////////////////// FOR VIEWING ORDERS //////////////////////////////////////////////////
+router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
+  try{
+    user__details = await auth.get__user__details()
+    print(user__details)
+  let orders = await user__helper.get__user__orders(user__details._id)
+   res.render('users/viewOrders',{user__details,orders})
+  }catch(err){
+    console.log(err)
+    res.redirect('/users')
+  }
+ })
+ ///////////////////////////////////////////  FOR VIEWING ORDERED PRODUCTS  //////////////////////////////////////////////
+ router.get('/view__ordered__products/:id',auth.usercookieJWTAuth,(req,res)=>{
+  res.render('cartPage',{view__ordered__products:true})
+ })
 
 // logout///
 router.get('/logout',(req,res)=>{

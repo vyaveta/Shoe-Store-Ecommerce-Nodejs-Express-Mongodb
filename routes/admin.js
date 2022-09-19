@@ -6,8 +6,10 @@ const { verify } = require('jsonwebtoken')
 // var fileupload = require('express-fileupload')
 const admin__helpers = require('../helpers/admin__helpers');
 const auth = require('../helpers/auth');
+const user__auth = require('../helpers/user__auth');
 const category__helper = require('../helpers/category__helper');
 const product__helper = require('../helpers/product__helper');
+const user__helper = require('../helpers/user__helper')
 const objectId = require('mongodb').ObjectId
 const path = require('path')
 const table = console.table
@@ -306,10 +308,6 @@ router.post('/updateProfile',auth.adminCookieJWTAuth,async(req,res)=>{
     res.redirect('/admin/profilePage')
   }
  
-})
-/////////////////////////////////////////////////////// FOR VIEWING ALL ORDERS ///////////////////////////////////
-router.get('/showOrders',(req,res)=>{
-  res.render('admin/viewOrders',{admin__sidemenu:true,adminname,orders:true})
 })
 
 ///////Logout Route for the admin/////////

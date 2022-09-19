@@ -193,7 +193,7 @@ module.exports={
                 status:status,
                 date:new Date()
             }
-            db.get().collection(collection.ORDER__COLLECTION).insertOne({orderObj}).then((response)=>{
+            db.get().collection(collection.ORDER__COLLECTION).insertOne(orderObj).then((response)=>{
                 db.get().collection(collection.CART__COLLECTIONS).deleteOne({user:objectId(order__details.user__id)})
                 console.log('inserted the order ')
                 resolve()
@@ -202,9 +202,16 @@ module.exports={
     },
     get__cart__products:(user__id)=>{
         return new Promise(async(resolve,reject)=>{
-            console.log('got inside this get cart products promise')
             let cart = await db.get().collection(collection.CART__COLLECTIONS).findOne({user:objectId(user__id)})
             resolve(cart.products)
+        })
+    },
+    get__user__orders:(user__id)=>{
+        return new Promise(async(resolve,reject)=>{
+            console.log('got inside the get user order promise in the user helper.js')
+            let orders = await db.get().collection(collection.ORDER__COLLECTION).find({user__id:objectId(user__id)}).toArray()
+            console.log(orders ,'is the order that we got')
+            resolve(orders)
         })
     }
 }

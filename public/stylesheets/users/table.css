@@ -1,0 +1,58 @@
+.content__table{
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    min-width: 450px;
+}
+.content__table th {
+    background-color: green !important;
+    color: #f1f1f1 !important;
+    text-align: left;
+    font-weight:bold;
+    border-radius: 5px 5px 0 0 ;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0, 0.15);
+}
+.content__table td,
+.content__table th{
+    padding: 12px 15px;
+}
+.content__table tr{
+    border-bottom: 1px solid lightslategray;
+    transition: all .2 ease-out;
+}
+.content__table tr:nth-of-type(even){
+    background-color:#f1f1f1;
+    color: rgb(5, 5, 5);
+}
+.content__table tr:last-of-type{
+    border-bottom: 2px solid green;
+}
+.content__table tr:hover{
+    color: rgb(255, 255, 255);
+    background-color:lightseagreen ;
+    transform: scale(1.002);
+}
+/* for dark mode */
+.darkmode .content__table tr:hover{
+    color: rgb(0, 0, 0);
+    background-color: #c1c1c1;
+    transform: scale(1.002);
+    
+}
+.darkmode .content__table tr:last-of-type{
+    border-bottom: 2px solid #333;
+}
+.darkmode .section__1 .section__1_2 .new__users{
+    min-height: 50vh;
+    flex: 5;
+    background: rgb(197, 196, 196);
+    color: rgb(0, 0, 0);
+    margin: 0 25px 25px 25px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0, 0.2), 0 6px 20px 0 rgba(0,0,0, 0.19);
+}
+.darkmode .content__table th {
+    background-color: #333 !important;
+    color: #f1f1f1 !important;
+   
+}
