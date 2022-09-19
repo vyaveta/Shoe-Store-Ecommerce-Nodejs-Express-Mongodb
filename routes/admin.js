@@ -307,7 +307,10 @@ router.post('/updateProfile',auth.adminCookieJWTAuth,async(req,res)=>{
   }
  
 })
-
+/////////////////////////////////////////////////////// FOR VIEWING ALL ORDERS ///////////////////////////////////
+router.get('/showOrders',(req,res)=>{
+  res.render('admin/viewOrders',{admin__sidemenu:true,adminname,orders:true})
+})
 
 ///////Logout Route for the admin/////////
 router.get('/logout',(req,res)=>{
