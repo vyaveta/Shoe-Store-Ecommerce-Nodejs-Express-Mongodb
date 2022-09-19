@@ -213,6 +213,40 @@ module.exports={
             console.log(orders ,'is the order that we got')
             resolve(orders)
         })
+    },
+    get__ordered__products:(order__id)=>{
+        return new Promise(async(resolve,reject)=>{
+            console.log('got iniside the get__ordered__products promise and the order__id is ', order__id)
+            let order__products = await db.get().collection(collection.ORDER__COLLECTION).aggregate([
+                {
+                    $match:{_id:objectId(order__id)}
+                },
+                {
+                    $unwind:'$products'
+                },
+                {
+                    $project:{
+                        item:'$products.item',
+                        quantity:'$products.quantity'
+                    }
+                },
+                {
+                    $lookup:{
+                        from:collection.PRODUCTS__COLLECTIONS,
+                        localField:'item',
+                        foreignField:'_id',
+                        as:'products'
+                    }
+                },
+                {
+                    $project:{
+                        item:1,quantity:1,product:{$arrayElemAt:['$products',0]}
+                    }
+                }
+            ]).toArray()
+            console.log('passed the get__ordered__products aggregation')
+            resolve(order__products)
+        })
     }
 }
 

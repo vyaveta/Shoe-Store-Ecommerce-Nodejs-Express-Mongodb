@@ -309,8 +309,12 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
   }
  })
  ///////////////////////////////////////////  FOR VIEWING ORDERED PRODUCTS  //////////////////////////////////////////////
- router.get('/view__ordered__products/:id',auth.usercookieJWTAuth,(req,res)=>{
-  res.render('cartPage',{view__ordered__products:true})
+ router.get('/view__ordered__products/:id',auth.usercookieJWTAuth,async(req,res)=>{
+ user__helper.get__ordered__products(req.params.id).then((order__details)=>{
+console.log(order__details)
+   res.render('users/cartPage',{view__ordered__products:true,order__details})
+ })
+  // res.send('asjf;ks;kalfjkj')
  })
 
 // logout///

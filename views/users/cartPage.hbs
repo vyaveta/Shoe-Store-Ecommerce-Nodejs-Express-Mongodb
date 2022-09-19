@@ -48,7 +48,7 @@
 
   </style>
     
-  {{#if cart__details}}
+  
       <!--The code really Starts here-->
        <!--alert box code-->
          <div class="alert__box none"> 
@@ -58,6 +58,92 @@
                <span class="close__alert">  &times;</span>
             </div>  
     </div> 
+
+{{!-- for viewing ordered products --}}
+
+{{#if view__ordered__products}}
+<div class="container-fluid ">
+  <div class="row ">
+    <div class="col-md-10 col-11 mx-auto">
+      <div class="row mt-5 gx-3">
+        <!--left side div-->
+        <div class="col-md-12 col-lg-8 col-11 mx-auto main_cart mb-lg-0 mb-5 shadow">
+         
+           <!--For the product card-->
+           {{#each order__details}}
+           <div class="card p-4" id="{{this.product._id}}box">
+            <div class="row">
+              <!--Cart images div-->
+            
+              <div class="col-md-5 col-11 mx-auto bg-success d-flex justify-content-center align-items-center shadow product_img">
+                <img src="/product-images/{{this.product._id}}.jpg" class="img-fluid" alt="">
+              </div>
+              <!--Cart product details-->
+              <div class="col-md-7 col-11 mx-auto px-4 mt-2">
+                <div class="row">
+                  <div class="col-6 card-title">
+                    <h1 class="mb-4 product_name" style="font-size:18px; color:green;font-weight:800;">{{this.model}}</h1>
+                    <p class="mb-2">{{this.product.company__name}}</p>
+                    <p class="mb-2">{{this.product.category}}</p>
+                    <p class="mb-3">{{this.product.description}}</p>
+                  </div>
+                
+                  <!--quantity inc and dec -->
+                  <div class="col-6">
+                      <ul class="pagination justify-content-end set_quantity">
+                        <li class="page-item"><button class="quantity__change" onclick="changeQuantity('{{this._id}}','{{this.product._id}}',-1)">-</button></li>
+                          &nbsp;    <span id="{{this.product._id}}">{{this.quantity}}</span>   &nbsp;
+                        {{!-- <li class="page-item"><input type="text" name=""  id="textbox" class="page-link" value="{{this.product.quantity}}"></li> --}}
+                        <li class="page-item"><button class="quantity__change" onclick="changeQuantity('{{this._id}}','{{this.product._id}}',1)">+</button></li>
+                      </ul>
+                  </div>
+                </div>
+                <!--remove-->
+                <div class="row text-success ">
+                  <div class="col-8 d-flex justify-content-between removean_wish">
+                    <p class="text-danger" onclick="changeQuantity('{{this._id}}','{{this.product._id}}',40406660999)" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                      <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                    </svg>  Remove</p>
+
+                    <p > <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                    </svg> Wishlist</p>
+                  </div>
+                  
+                    <div class="col-4 d-flex justify-content-end price_money">
+                      <h4>Rs.<span id="itemval">{{this.product.price}}</span></h4>
+                    </div>
+                   
+                </div>
+              </div>
+              
+            </div>
+          </div>
+          {{/each}}
+
+        </div>
+
+{{!-- for viewing ordered products --}}
+ {{else}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{#if cart__details}}
 <div class="container-fluid ">
   <div class="row ">
     <div class="col-md-10 col-11 mx-auto">
@@ -174,6 +260,8 @@
 </div>
 {{else}}
 <h2> No items in cart</h2>
+{{/if}}
+
 {{/if}}
 
 
