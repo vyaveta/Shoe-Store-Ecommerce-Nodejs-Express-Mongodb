@@ -43,23 +43,25 @@
                     </select>
                 </div>
                 <div class="input__box">
+                <div id="crop">
                     <span class="details">image 1</span>
-                    <img class="img-fluid" src="" alt="" id="img__view" width="70px">
-                    <input type="file" class='image__input' name="image" id="image" onchange="viewImage(event)" multiple="multiple" required>
+                    <img class="img-fluid clr"  src="" alt="" id="img__view" width="70px">
+                    <div class="vald-info" id="info"></div>
+                    <div id="image-box1" class="clr img-fluid"></div>
+                    <button type="button"  class="btn btneds"  id="crop-btn1" style=" margin-top: 10px; display: none; width: 50%; margin: 20rem 0rem 0rem 0rem;" >crop</button>
+                    </div>
+                    <input type="file" class='image__input'  name="image" id="image" onchange="viewImage(event)" multiple="multiple" required>
                      <label class="the__button" for="image" required> Add img1</label> 
                 </div>
-
      <div id="crop">
+      <div class="input__box">
                         <img id="imgView1"  src="" alt="" style="height: 100px;width:120px;" class="clr">
                         <div class="vald-info" id="info"></div>
                         <h5 class="error_form text-danger" id="image1_error_message"></h5>
-                           <div style="display: flex">
-                           <div id="image-box1" class="image-container clr" style="height: 300px; width: 20%"></div>
-                              <button type="button"  class="btn btneds"  id="crop-btn1" style=" margin-top: 10px; display: none; width: 50%; margin: 20rem 0rem 0rem 0rem;" >crop</button>
-                           </div>
-                       </div>
-                    <input type="file" name="image" class="form-control" id="id_image1"  onchange="changeImg(event)"   >
-
+                        <label class="the__button" for="id_image1" required> Add img1</label> 
+                        <input type="file" class='image__input'  name="image" id="id_image1" onchange="viewImage(event)" multiple="multiple" required>
+                    {{!-- <input type="file" name="image" class="form-control" id="id_image1"  onchange="changeImg(event)"   > --}}
+              </div>
 
                 <div class="input__box">
                     <span class="details">image 2</span>

@@ -16,9 +16,9 @@ gsap.from('#text',{
     },
     x:700
 })
-gsap.from('#button',{
+gsap.from('#redbag',{
     scrollTrigger:{
         scrub:true
     },
-    x:400
+    x:-700
 })

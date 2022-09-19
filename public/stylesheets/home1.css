@@ -460,6 +460,12 @@ a{
 .parallax .bag img{
     right: 0;  
 }
+
+.parallax .red__bag img{
+    top:500px;
+    left: 0;
+    
+}
 .parallax .background img{
     position: absolute;
     left: 0;
@@ -475,9 +481,12 @@ a{
     top: 50%;
     transform: translateY(-50%);
     font-size: 4em;
+    font-family: 'Cookie', cursive;
+    color:green;
 }
 
 .sec {
+    margin-top: 100px;
     position: relative;
     padding: 100px;
     background: #112322;

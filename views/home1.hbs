@@ -56,13 +56,13 @@
             </div>
         </div>
     </div>
-    <div class="new__arrivals">
+    <div class="new__arrivals" >
         <h3>New arrivals</h3>
     </div>
     <div class="the__products">
-        <div class="the__container snaps__inline">
+        <div class="the__container snaps__inline" >
             {{#each new__products}}
-            <div class="the__card">
+            <div class="the__card" >
                 <div class="imgbx"><a href="/users/productPage/{{this._id}}" style="text-decoration:none ;">
                         <img src="/product-images/{{this._id}}.jpg" alt="image__here" width="500px"></a>
                     <ul class="action">
@@ -106,14 +106,14 @@
     </div>
 
     {{!-- section 2 of the product carousal --}}
-    <div class="new__arrivals">
+    <div class="new__arrivals" id="card">
         <h3>Top Picks</h3>
     </div>
 
     <div class="the__products">
         <div class="the__container snaps__inline">
             {{#each products}}
-            <div class="the__card" >
+            <div class="the__card" id="card">
                 <div class="imgbx"><a href="/users/productPage/{{this._id}}" style="text-decoration:none ;">
                         <img src="/product-images/{{this._id}}.jpg" alt="image__here" width="500px"></a>
                     <ul class="action">
@@ -181,6 +181,9 @@
             </div>
             <div class="girl">
                 <img src="/images/users/imgbin_shopping-woman-png.png"   width="500px" alt="Shop Caracol Silver - Shopping Girl Transparent" id="girl" />
+            </div>
+            <div class="red__bag">
+                <img src="/images/users/redbag-removebg-preview.png" alt="" id="redbag">
             </div>
             
         </section>
