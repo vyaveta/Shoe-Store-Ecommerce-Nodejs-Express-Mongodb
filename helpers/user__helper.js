@@ -246,6 +246,14 @@ module.exports={
             console.log('passed the get__ordered__products aggregation')
             resolve(order__products)
         })
+    },
+    delete__order:(order__id)=>{
+        return new Promise(async(resolve,reject)=>{
+            await db.get().collection(collection.ORDER__COLLECTION).deleteOne({_id:objectId(order__id)}).then((response)=>{
+                console.log(response,'is the response from mongodb  !!')
+                resolve('Cancelled the order!!!!!!')
+            })
+        })
     }
 }
 

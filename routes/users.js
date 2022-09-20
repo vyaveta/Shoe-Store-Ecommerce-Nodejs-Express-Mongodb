@@ -239,16 +239,6 @@ router.get('/cart__page',auth.usercookieJWTAuth,async(req,res)=>{
         res.render('users/cartPage',{cart__details,token,username,cart__count,total})
      })
 })
-
-// router.get('/add__to__cart/:product__id',auth.usercookieJWTAuth,(req,res)=>{
-//   print('got inside the add to cart router')
-//   var user__details = auth.get__user__details()
-//   print(user__details,'success')
-//   product__helper.add__to__cart(req.params.product__id,user__details._id,user__details.email).then((response)=>{
-//     res.redirect('/')
-//   })
-// })
-
 router.post('/changeProductQuantity',async(req,res,next)=>{
   print('got inside the change product quantity router !')
   console.log(req.body)
@@ -314,6 +304,14 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
 console.log(order__details)
    res.render('users/cartPage',{view__ordered__products:true,order__details,token,username})
  })
+ })
+ //////////////////////////////////////////////////// for cancelling  orders//////////////////////////////////////////////
+ router.get('/deleteOrder/:orderID',auth.usercookieJWTAuth,(req,res)=>{
+  console.log('got inside the delete order route')
+  user__helper.delete__order(req.params.orderID).then((response)=>{
+    console.log(response)
+    res.redirect('/users/profilePage')
+  })
  })
 
 // logout///

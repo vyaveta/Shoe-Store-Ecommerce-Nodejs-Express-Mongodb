@@ -24,6 +24,7 @@
                     <td>{{this.total__amount}} </td>
                     <td>{{this.payment__method}}</td>
                     <td>{{this.status}}</td>
+                    <td><a id="cancel__button" href="/users/deleteOrder/{{this._id}}" class="btn btn-danger">Cancel</a></td>
                     <td><a href="/users/view__ordered__products/{{this._id}}" class="btn  btn-success">View Products</a></td>
                 </tr>
                 {{/each}}
@@ -31,3 +32,63 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Now some code for the pop up box -->
+
+       <style>
+        .pop__up{
+           max-width: 550px;
+            height: 300px;
+            position: absolute;
+            left: 0; 
+            right: 0; 
+            top: 30%;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            background-color: #eae5e5;
+            border-radius: 20px;
+            box-shadow: 2px 2px 2px 1px rgba(0,0,0,0.5);
+            visibility: hidden;
+            position: fixed;
+        }
+        .pop__up__box{
+            display: flex;
+            flex-direction:row;
+            justify-content: space-between;
+            width: 450px;
+            min-width: 200px;
+            align-items: center;
+            padding: 20px 30px 20px;
+        }
+        .profile__pic img{
+            border-radius: 50%;
+            object-fit: cover !important;
+        }
+        .close__button{
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            padding-right: 20px;
+        }
+        .edit__button{
+            width: 150px;  
+        }
+        .edit__button input{
+           visibility: hidden;
+        }
+       
+       
+       </style>
+
+    
+      
+    <script>
+        let cancel__button = document.getElementById('cancel__button')
+        cancel__button.addEventListener('click',(e)=>{
+            console.log('button clicked')
+        })
+    </script>
