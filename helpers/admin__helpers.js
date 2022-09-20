@@ -162,5 +162,12 @@ module.exports={
                 })
             })
         })
+    },
+    get__all__orders:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let orders = await db.get().collection(collection__list.ORDER__COLLECTION).find().toArray()
+            console.table(orders)
+            resolve(orders)
+        })
     }
 }

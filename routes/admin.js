@@ -282,8 +282,6 @@ router.post('/editProduct/:id',auth.adminCookieJWTAuth,(req,res)=>{
    }
   })
 })
-
-
 /////////////////////////////////////////// undo user deletion  ///////////////////////////////////////
 router.get('/undoUserDeletion/:id',auth.adminCookieJWTAuth,async(req,res)=>{
   admin__helpers.undo__user__deletion(req.params.id).then((response)=>{
@@ -291,8 +289,6 @@ router.get('/undoUserDeletion/:id',auth.adminCookieJWTAuth,async(req,res)=>{
     res.redirect('/admin/profilePage')
   })
 })
-
-
 ///////////////////////////////////////////////////////  UPDATING THE ADMIN PROFILE /////////////////////////////////// 
 
 router.post('/updateProfile',auth.adminCookieJWTAuth,async(req,res)=>{
@@ -307,9 +303,14 @@ router.post('/updateProfile',auth.adminCookieJWTAuth,async(req,res)=>{
   }else{
     res.redirect('/admin/profilePage')
   }
- 
 })
+////////////////////////////////////////////////////// for showing users orders//////////////////////////////////
+router.get('/showOrders',(req,res)=>{
+  admin__helpers.get__all__orders().then((orders)=>{
 
+    res.render('admin/viewOrders',{admin__details,adminname,admin__sidemenu:true,orders:true,orders})
+  })
+})
 ///////Logout Route for the admin/////////
 router.get('/logout',(req,res)=>{
   console.log('admin logout attempt detected!!')

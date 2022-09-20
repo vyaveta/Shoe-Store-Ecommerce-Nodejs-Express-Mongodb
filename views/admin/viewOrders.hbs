@@ -23,37 +23,29 @@
 <body>
     <div class="section__1">
         <p style="color: green ; font-size:22px;font-weight:600;">{{admin__msg}}</p>
-        {{#if response}}
+        {{#if orders}}
         <table id="example" class="display" style="width:100%">
 
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>model</th>
-                    <th>category</th>
+                    <th>Date</th>
+                    <th>User name</th>
+                    <th>Address</th>
+                    <th>Phone</th>
                     <th>price</th>
-                    <th>description</th>
-                    <th>Stocks left</th>
-                    <th>Image</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th>payment method</th>
 
                 </tr>
             </thead>
             <tbody>
-                {{# each response}}
+                {{# each orders}}
                 <tr>
-                    <td>{{this.company__name}}</td>
-                    <td>{{this.model}}</td>
-                    <td>{{this.category}}</td>
-                    <td>{{this.price}}</td>
-                    <td>{{this.description}}</td>
-                    <td>{{this.stock}}</td>
-                    <td><img src="/product-images/{{this._id}}.jpg" alt="imagehere " width="50px" height="50px"></td>
-                    <td><a href="/admin/editProduct/{{this._id}}" class="btn btn-primary btn-sm">Edit</a></td>
-                    <td><a href="/admin/deleteProduct/{{this._id}}" class="btn btn-danger btn-sm"
-                            onclick=" return confirm('Are you sure,Do you want to delete the account of {{this.name}}?')"
-                            ;><span class="glyphicon glyphicon-trash"></span> Delete </a></td>
+                    <td>{{this.date}}</td>
+                    <td>user name here</td>
+                    <td>{{this.delivery__details.address}}</td>
+                    <td>{{this.delivery__details.mobile}}</td>
+                    <td>{{this.total__amount}}</td>
+                    <td>{{this.payment__method}}</td>
                 </tr>
                 {{/each}}
             </tbody>

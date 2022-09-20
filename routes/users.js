@@ -280,7 +280,7 @@ router.get('/checkout',auth.usercookieJWTAuth,async(req,res)=>{
 })
 router.get('/profilePage',auth.usercookieJWTAuth,(req,res)=>{
    user__details = auth.get__user__details()
-  res.render('users/userProfile',{token,token,username,cart__count,user__details})
+  res.render('users/userProfile',{token,username,cart__count,user__details})
 })
 
 
@@ -302,7 +302,7 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
     user__details = await auth.get__user__details()
     print(user__details)
   let orders = await user__helper.get__user__orders(user__details._id)
-   res.render('users/viewOrders',{user__details,orders})
+   res.render('users/viewOrders',{user__details,orders,token,username})
   }catch(err){
     console.log(err)
     res.redirect('/users')
@@ -312,9 +312,8 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
  router.get('/view__ordered__products/:id',auth.usercookieJWTAuth,async(req,res)=>{
  user__helper.get__ordered__products(req.params.id).then((order__details)=>{
 console.log(order__details)
-   res.render('users/cartPage',{view__ordered__products:true,order__details})
+   res.render('users/cartPage',{view__ordered__products:true,order__details,token,username})
  })
-  // res.send('asjf;ks;kalfjkj')
  })
 
 // logout///

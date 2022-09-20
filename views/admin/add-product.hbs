@@ -42,25 +42,28 @@
 
                     </select>
                 </div>
-                <div class="input__box">
                 <div id="crop">
+                <div class="input__box">
                     <span class="details">image 1</span>
                     <img class="img-fluid clr"  src="" alt="" id="img__view" width="70px">
                     <div class="vald-info" id="info"></div>
-                    <div id="image-box1" class="clr img-fluid"></div>
-                    <button type="button"  class="btn btneds"  id="crop-btn1" style=" margin-top: 10px; display: none; width: 50%; margin: 20rem 0rem 0rem 0rem;" >crop</button>
-                    </div>
+
+                    
                     <input type="file" class='image__input'  name="image" id="image" onchange="viewImage(event)" multiple="multiple" required>
                      <label class="the__button" for="image" required> Add img1</label> 
+                    </div>
                 </div>
      <div id="crop">
       <div class="input__box">
                         <img id="imgView1"  src="" alt="" style="height: 100px;width:120px;" class="clr">
                         <div class="vald-info" id="info"></div>
+                                            <div id="image-box1" class="clr img-fluid"></div>
                         <h5 class="error_form text-danger" id="image1_error_message"></h5>
-                        <label class="the__button" for="id_image1" required> Add img1</label> 
+                        <label class="the__button" for="id_image1" required> ,mkj img1</label> 
+                        <button type="button"  class="btn btneds"  id="crop-btn1" style=" margin-top: 10px; display: none; width: 50%; margin: 20rem 0rem 0rem 0rem;" >crop</button>
                         <input type="file" class='image__input'  name="image" id="id_image1" onchange="viewImage(event)" multiple="multiple" required>
                     {{!-- <input type="file" name="image" class="form-control" id="id_image1"  onchange="changeImg(event)"   > --}}
+              </div>
               </div>
 
                 <div class="input__box">
@@ -89,7 +92,7 @@
                     <span class="details">Description</span>
                     <textarea name="description" required></textarea>
                 </div>
-            </div>
+            
             <input class="button" type="submit" value="Add Product">
         </form>
              <a href="/admin"><button class="home__button">Dashboard / Home</button></a>

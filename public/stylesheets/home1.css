@@ -507,7 +507,7 @@ a{
     background-color: green;
 }
 @media screen and (max-width:800px){
-    .parallax .girl{
+    .parallax .bag{
         display: none;
     } 
 }

@@ -59,7 +59,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error',{no__partials:true});
 });
 app.listen(port,(err,success)=>{
   if(err) console.log('failed to load ')

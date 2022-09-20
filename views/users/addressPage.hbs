@@ -77,9 +77,6 @@
              <a href="/users"><button class="home__button for__the__button"> Home</button></a>
     </div>
     </div>
-
-
-
      <script>
         $('#checkout-form').submit((e)=>{
             e.preventDefault()
@@ -90,7 +87,7 @@
                 success:(response)=>{
                     alert('successfully placed order')
                     if(response.status){
-                        location.href='/users'
+                        location.href='/users/showOrders'
                     }
                 }
             })

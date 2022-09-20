@@ -210,7 +210,6 @@ module.exports={
         return new Promise(async(resolve,reject)=>{
             console.log('got inside the get user order promise in the user helper.js')
             let orders = await db.get().collection(collection.ORDER__COLLECTION).find({user__id:objectId(user__id)}).toArray()
-            console.log(orders ,'is the order that we got')
             resolve(orders)
         })
     },
