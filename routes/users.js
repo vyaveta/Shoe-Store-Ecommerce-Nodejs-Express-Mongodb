@@ -265,8 +265,13 @@ router.post('/changeProductQuantity',async(req,res,next)=>{
 
 router.get('/checkout',auth.usercookieJWTAuth,async(req,res)=>{
   user__details = auth.get__user__details()
-  let total = await user__helper.get__total__amount(user__details)
-  res.render('users/addressPage',{token,username,cart__count,total,user__details})
+ let response = await product__helper.find__the__user__cart(user__details.email)
+    let total = await user__helper.get__total__amount(user__details)
+    if(response=='no__cart'){
+      res.redirect('/users')
+    }
+    else
+    res.render('users/addressPage',{token,username,cart__count,total,user__details})
 })
 router.get('/profilePage',auth.usercookieJWTAuth,(req,res)=>{
    user__details = auth.get__user__details()

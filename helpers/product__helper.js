@@ -134,6 +134,7 @@ module.exports={
                 }
         })  
     },find__the__user__cart:(Uemail)=>{
+       try{
         return new Promise (async(resolve,reject)=>{
             let user__cart = await db.get().collection(collection__list.CART__COLLECTIONS).aggregate([
                 {
@@ -163,8 +164,17 @@ module.exports={
                 }
             ]).toArray()
             console.table(user__cart)
+            if(!user__cart || user__cart==null || user__cart==''){
+
+                resolve('no__cart')
+            }
+            
             resolve(user__cart)
             
         })
+       }catch(err){
+        console.log('an error occoured in find user cart promise',err)
+        resolve('no__cart')
+       }
     }
 }
