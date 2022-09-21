@@ -510,4 +510,14 @@ a{
     .parallax .bag{
         display: none;
     } 
+    #text{
+        display: none;
+    }
+    .parallax .red__bag {
+        position:absolute ;
+        left: 50vw;
+    }
+    .parallax .girl img{
+        display: none;
+    }
 }

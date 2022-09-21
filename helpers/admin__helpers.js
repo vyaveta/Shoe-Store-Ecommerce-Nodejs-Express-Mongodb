@@ -2,7 +2,9 @@ const db = require('../config/connection')
 const collection__list = require('../config/collection')
 const bcrypt = require('bcrypt')
 const { reject } = require('promise')
+const collection = require('../config/collection')
 const objectId = require('mongodb').ObjectId
+const print = console.log
 
 
 module.exports={
@@ -99,10 +101,8 @@ module.exports={
                         console.log('error occured in delete__user')
                     }
                 })
+            })    
             })
-               
-            })
-        
         })
     },block__user:(user__id)=>{
         return new Promise(async(resolve,reject)=>{
@@ -166,8 +166,24 @@ module.exports={
     get__all__orders:()=>{
         return new Promise(async(resolve,reject)=>{
             let orders = await db.get().collection(collection__list.ORDER__COLLECTION).find().toArray()
-            console.table(orders)
+            // let user__name = await db.get().collection(collection__list.USER__COLLECTIONS).find().toArray()
+            console.log(orders[0].user__id)
             resolve(orders)
+        })
+    },
+    change__order__status:(order__id,status)=>{
+        return new Promise(async(resolve,reject)=>{
+            await db.get().collection(collection__list.ORDER__COLLECTION).updateOne({_id:objectId(order__id)},{
+                $set:{status:status}
+            }).then((response)=>{
+                print(response)
+                if(response){
+                    resolve('done')
+                }
+                else{
+                    reject('not updated')
+                }
+            })
         })
     }
 }

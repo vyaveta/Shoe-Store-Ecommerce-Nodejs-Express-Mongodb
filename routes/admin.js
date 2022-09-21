@@ -311,6 +311,16 @@ router.get('/showOrders',(req,res)=>{
     res.render('admin/viewOrders',{admin__details,adminname,admin__sidemenu:true,orders:true,orders})
   })
 })
+///////////////////////////////////////////// for editing the order status /////////////////////////////
+router.post('/editOrderStatus/:orderId',(req,res)=>{
+  admin__helpers.change__order__status(req.params.orderId,req.body.status).then((response)=>{
+    if(response){
+      res.redirect('/admin/showOrders')
+    }
+  }).catch((res)=>{
+    print(res)
+  })
+})
 ///////Logout Route for the admin/////////
 router.get('/logout',(req,res)=>{
   console.log('admin logout attempt detected!!')

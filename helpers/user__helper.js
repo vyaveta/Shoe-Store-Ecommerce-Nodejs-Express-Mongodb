@@ -253,7 +253,9 @@ module.exports={
     },
     delete__order:(order__id)=>{
         return new Promise(async(resolve,reject)=>{
-            await db.get().collection(collection.ORDER__COLLECTION).deleteOne({_id:objectId(order__id)}).then((response)=>{
+            await db.get().collection(collection.ORDER__COLLECTION).updateOne({_id:objectId(order__id)},{
+                $set:{status:'cancelled'}
+            }).then((response)=>{
                 console.log(response,'is the response from mongodb  !!')
                 resolve('Cancelled the order!!!!!!')
             })
