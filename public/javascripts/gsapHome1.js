@@ -8,7 +8,7 @@ gsap.from('#girl',{
     scrollTrigger:{
         scrub:true
     },
-    y:-700
+    y:-400
 })
 gsap.from('#text',{
     scrollTrigger:{

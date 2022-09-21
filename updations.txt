@@ -56,3 +56,5 @@ BUG FIXES
 NEW FEATURES
 1=> Added profile page in user side
 2=> Product checkout option work started
+------------------------------------------------ SEPTEMBER 21.1 UPDATION ----------------------------------------------
+Stabilized TWILIO SERVICE

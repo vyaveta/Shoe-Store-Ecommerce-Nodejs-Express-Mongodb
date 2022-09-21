@@ -24,8 +24,6 @@ let username
 
 /* GET users listing. */
 router.get('/',async(req, res, next)=> {
-  // console.log(req.body)
-  print('this is really cool !!!')
    token = req.cookies.usertoken
    product__helper.get__top__picks().then((products)=>{
     product__helper.get__new__arrivals().then((new__products)=>{
@@ -149,7 +147,7 @@ router.post('/otp',(req,res)=>{
   }
   else{
     console.log('get jfsa;d')
-     
+     console.log(req.body.phone__number,'is the phone number ')
     client.verify
     .services(process.env.TWILIO_SERVICE_ID)
     .verifications.create({
@@ -190,9 +188,7 @@ router.post('/user__otp',(req,res)=>{
       //   response[i]._id= response[i]._id.toString()
       // }
       res.redirect('/users')
-      // res.render('home1',{token,username,products})
-
-      
+      // res.render('home1',{token,username,products})   
   }
  })
    }
@@ -206,9 +202,7 @@ router.get('/otpiloodvaa',(req,res)=>{
   res.render('users/otp',{error__msg})
   error__msg =''
 })
-
 router.get('/add__to__cart/',auth.usercookieJWTAuth,(req,res)=>{
-
   if(token==null){
     res.redirect('/users/login')
   }
@@ -222,7 +216,6 @@ router.get('/add__to__cart/',auth.usercookieJWTAuth,(req,res)=>{
   product__helper.add__to__cart(req.query.product__id,user__details._id,user__details.email).then((response)=>{
     product__helper.get__cart__count(useremail).then((count)=>{
       cart__count = count
-      
       res.json({status:true,count})
    })
   })  
@@ -262,7 +255,6 @@ router.post('/changeProductQuantity',async(req,res,next)=>{
   res.redirect('login')
 }
 })
-
 router.get('/checkout',auth.usercookieJWTAuth,async(req,res)=>{
   user__details = auth.get__user__details()
  let response = await product__helper.find__the__user__cart(user__details.email)
@@ -277,8 +269,6 @@ router.get('/profilePage',auth.usercookieJWTAuth,(req,res)=>{
    user__details = auth.get__user__details()
   res.render('users/userProfile',{token,username,cart__count,user__details})
 })
-
-
 ///////////////////////////////////////////// order placing /////////////////////////////////////////////////
 router.post('/placeOrder',async(req,res)=>{
   console.log('got inside the post method of router')
@@ -307,7 +297,7 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
  router.get('/view__ordered__products/:id',auth.usercookieJWTAuth,async(req,res)=>{
  user__helper.get__ordered__products(req.params.id).then((order__details)=>{
 console.log(order__details)
-   res.render('users/cartPage',{view__ordered__products:true,order__details,token,username})
+   res.render('users/cartPage',{view__ordered__products:true,order__details,token,username,cart__count})
  })
  })
  //////////////////////////////////////////////////// for cancelling  orders//////////////////////////////////////////////
@@ -318,11 +308,9 @@ console.log(order__details)
     res.redirect('/users/profilePage')
   })
  })
-
 // logout///
 router.get('/logout',(req,res)=>{
   res.clearCookie('usertoken')
   res.render('login',{no__partials:true})
 })
-
 module.exports = router;

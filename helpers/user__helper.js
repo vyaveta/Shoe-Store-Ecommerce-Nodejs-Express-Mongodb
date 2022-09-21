@@ -176,6 +176,11 @@ module.exports={
         })
     },
     place__order:(order__details,products,total)=>{
+        var today = new Date()
+        var dd = String(today.getDate()).padStart('2',0)
+        var mm = String(today.getMonth()+1).padStart('2',0)
+        var yyyy = today.getFullYear()
+        today = mm + '-' + dd + '-' + yyyy
         console.log('got inside the place order promise')
         return new Promise(async(resolve,reject)=>{
             console.log(order__details,products,total)
@@ -191,7 +196,7 @@ module.exports={
                 products:products,
                 total__amount:total,
                 status:status,
-                date:new Date()
+                date:today
             }
             db.get().collection(collection.ORDER__COLLECTION).insertOne(orderObj).then((response)=>{
                 db.get().collection(collection.CART__COLLECTIONS).deleteOne({user:objectId(order__details.user__id)})
@@ -215,7 +220,6 @@ module.exports={
     },
     get__ordered__products:(order__id)=>{
         return new Promise(async(resolve,reject)=>{
-            console.log('got iniside the get__ordered__products promise and the order__id is ', order__id)
             let order__products = await db.get().collection(collection.ORDER__COLLECTION).aggregate([
                 {
                     $match:{_id:objectId(order__id)}
@@ -256,5 +260,3 @@ module.exports={
         })
     }
 }
-
-
