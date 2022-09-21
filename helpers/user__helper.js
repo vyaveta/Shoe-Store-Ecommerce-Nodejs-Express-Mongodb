@@ -254,10 +254,21 @@ module.exports={
     delete__order:(order__id)=>{
         return new Promise(async(resolve,reject)=>{
             await db.get().collection(collection.ORDER__COLLECTION).updateOne({_id:objectId(order__id)},{
-                $set:{status:'cancelled'}
+                $set:{status:'cancelled',cancelled:true}
             }).then((response)=>{
-                console.log(response,'is the response from mongodb  !!')
-                resolve('Cancelled the order!!!!!!')
+                console.log(response)
+                resolve('done')
+            })
+        })
+    },
+    add__address:(user__email,address,address__title)=>{
+        let title = address__title
+        console.log(address__title,"from the add address promise")
+        return new Promise (async(resolve,reject)=>{
+            await db.get().collection(collection.USER__COLLECTIONS).updateOne({email:user__email},{
+                $push:{
+                    address:{ "sample" :address}
+                }
             })
         })
     }

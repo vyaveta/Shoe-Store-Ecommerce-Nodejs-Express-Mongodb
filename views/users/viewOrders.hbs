@@ -29,7 +29,7 @@
     height: 35vh;
     border-radius: 15px;
     color:white;
-    background-color: #5cdb95;
+    background-color: green;
     border: 2px solid white;
     /* box-shadow:2px 2px 1px .5px rgba(255, 255, 255, 0.624),-2px -2px 1px .5px rgba(255, 255, 255, 0.9); */
 }
@@ -162,7 +162,10 @@
                 </div>
                 <div class="view__products">
                     <button class="the__button" onclick="window.location.href='/users/view__ordered__products/{{this._id}}'">View Products</button>
-                    <button onclick="window.location.href='/users/deleteOrder/{{this._id}}'" class="the__button cancel">Cancel Order</button>
+                   {{#if this.cancelled}}
+                   {{else}}
+                         <button onclick="window.location.href='/users/deleteOrder/{{this._id}}'" class="the__button cancel">Cancel Order</button>
+                            {{/if}}
                 </div>
             </div>
         </div>

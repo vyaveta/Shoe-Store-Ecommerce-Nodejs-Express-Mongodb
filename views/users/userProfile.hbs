@@ -59,10 +59,11 @@
                                 <h5>address</h5>
                             </div>
                             <div class="col-md-9 text-secondary">
-                                cherthala
-                                alappuzha
-                                kerala
-                                india
+                               {{#if user__details.address}}
+                               {{user__details.address}}
+                               {{else}}
+                               <button class="the__button" id="address__button"> Add address</button>
+                               {{/if}}
                             </div>
                         </div>
                     </div>
@@ -71,29 +72,18 @@
             <div class="card mb-3 content actions">
                 <div class="row">
                     <div class="col-md-6 col-lg-6">
-                        <h1 class="m-3">Recent Actions</h1>
-                     <p style="color: green ; font-size:22px;font-weight:600;">{{admin__msg}}</p>
+                        <h1 class="m-3">Shoe Store</h1>
                     </div>
                    <div class="col-md-3">
                      <a href="/users/showOrders"><button class="my-4 the__button">My orders</button></a>
+                   </div>
+                    <div class="col-md-3">
+                     <a href="/users/cart__page"><button class="my-4 the__button">My S-storeCart</button></a>
                    </div>
                 </div>
             </div>
             <div class="card-body">
                 <ol> 
-                {{#each actions}}
-                <div class="row ">
-                    <div class="col-md-3">
-                      <li><h5>{{this.action}}</h5></li>   
-                    </div>
-                    <div class="col-md-6 ">
-                        {{this.details}} on {{this.date}}
-                    </div>
-                    <div class="col-md-3">
-                        <a href="/admin/undoUserDeletion/{{this.deletedAccountId}}"><button class="the__button">undo</button></a>
-                    </div>
-                </div>
-                {{/each}}
                 </ol>
             </div>
         </div>
@@ -145,11 +135,80 @@
         .edit__button input{
            visibility: hidden;
         }
+        .hide{
+            visibility: hidden;
+        }
+       .address__popup{
+        padding: 10px;
+        left: 30%; 
+        right: 0; 
+        top: 30%;
+        position:absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        align-items: center;
+        max-width: 40%;
+        min-width: 100px;
+        padding: 10px;
+        background-color: green;
+        color: white;
+        border-radius: 15px;
+        box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.4), -1px -1px 5px 1px rgba(0,0,0,0.4);
+       }
+       .address__popup textarea{
+        padding: 10px;
+        width: 80%;
+        outline: none;
+        border: none;
+        height: 100%;
+        border-radius: 10px;
+        box-shadow: 1px 1px 5px 1px rgba(255,255,255,0.4), -1px -1px 5px 1px rgba(255,255,255,0.4);
+        margin-bottom: 10px;
+       }
+       .input__div{
+        height: 100%;
+       }
+       .input__div input{
+        outline: none;
+        width: 100%;
+        border:none;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        padding: 10px;
+       }
+       .submit__btn{
+        padding: 2px 30px;
+        color: green;
+        background-color: white;
+        border-radius: 10px;
+        outline: none;
+        border: none;
+        box-shadow: 1px 1px 5px 1px rgba(255,255,255,0.5), -1px -1px 5px 1px rgba(255,255,255,0.5);
+        font-weight: 700;
+        margin-bottom: 10px;
+       }
+       .blur{
+        filter: blur(20px);
+        pointer-events: none;
+        user-select: none;
+       }
+       @media  screen and (max-width:768px){
        
+        .address__popup{
+            top:90%;
+            left:10%;
+           min-width: 80% ;
+        }
+        .address__popup textarea{
+            width: 80%;
+        }
+       }
        
        </style>
 
-    <form action="/admin/updateProfile" method="post" enctype="multipart/form-data" >
+    <form action="/user/updateProfile" method="post" enctype="multipart/form-data" >
        <div class="pop__up" id="pop__up">
         <div class="close__button">
             <a href="">
@@ -174,8 +233,31 @@
         </div>
        </div>
     </form>
-      
+
+{{!-- now the code for the address pop up  --}}
+
   </div>
+  
+<div class="address__popup hide">
+    <form action="/users/add__address/{{user__details.email}}" method="post">
+    <div class="title">
+        <center><h3>Add address</h3></center>
+    </div>
+    <div class="input__div">
+       <center><textarea name="address" id="" cols="30" rows="10" required>house name, street, city/town, district, state, country</textarea></center>
+    </div>
+    <div class="input__div">
+        <input type="text" name="title" required placeholder="Address title eg. home/office">
+    </div>
+    <div class="input__div">
+        <center><input type="submit" class="submit__btn" value="Add Address"></center> </form> 
+    </div>
+    <div class="input__div">
+        <button class="back submit__btn">Go back</button>
+    </div>
+  </div>
+
+  <script src="/javascripts/addAddress.js"></script>
   <script>
     // js file
 const img = document.getElementById("image")
@@ -185,7 +267,7 @@ img.addEventListener("error", function(event) {
 })
 const img2 = document.getElementById('img__view')
 img2.addEventListener('error',(e)=>{
-    e.target.src ='/adminProfile/630f90df1f1aa1db962fc455.jpg'
+    e.target.src ='/adminProfile/630f90df1f1aa1db962fc455.jpg' // if image doesnt load, the default image will display
     e.onerror = null
 })
   </script>

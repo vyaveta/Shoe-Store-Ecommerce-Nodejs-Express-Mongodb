@@ -302,11 +302,20 @@ console.log(order__details)
  })
  //////////////////////////////////////////////////// for cancelling  orders//////////////////////////////////////////////
  router.get('/deleteOrder/:orderID',auth.usercookieJWTAuth,(req,res)=>{
-  console.log('got inside the delete order route')
+  console.log('got inside the delete order route',req.params.orderID)
   user__helper.delete__order(req.params.orderID).then((response)=>{
     console.log(response)
     res.redirect('/users/profilePage')
   })
+ })
+
+ /////////////////////////////////////////  for users to add address ////////////////////////////
+ router.post('/add__address/:user__email',auth.usercookieJWTAuth,(req,res)=>{
+ user__helper.add__address(req.params.user__email,req.body.address,req.body.title).then((response)=>{
+  if(response == 'done'){
+    res.redirect('/users/profilePage')
+  }
+ })
  })
 // logout///
 router.get('/logout',(req,res)=>{

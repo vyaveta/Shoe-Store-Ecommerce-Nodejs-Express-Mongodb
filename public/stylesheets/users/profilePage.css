@@ -69,6 +69,7 @@ body{
 }
 .the__button:hover{
     background-color: green;
+    box-shadow: 1px 1px 5px 2px rgba(0,0,0,0.1),-1px -1px 5px 2px rgba(0,0,0,0.1);
 }
 
 /* Now applying css properties for dakmode */
