@@ -262,14 +262,15 @@ module.exports={
         })
     },
     add__address:(user__email,address,address__title)=>{
-        let title = address__title
+        
         console.log(address__title,"from the add address promise")
         return new Promise (async(resolve,reject)=>{
             await db.get().collection(collection.USER__COLLECTIONS).updateOne({email:user__email},{
                 $push:{
-                    address:{ "sample" :address}
+                    address:{title:address__title,address:address}
                 }
             })
+            resolve('Successfuly added the address')
         })
     }
 }

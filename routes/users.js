@@ -312,7 +312,7 @@ console.log(order__details)
  /////////////////////////////////////////  for users to add address ////////////////////////////
  router.post('/add__address/:user__email',auth.usercookieJWTAuth,(req,res)=>{
  user__helper.add__address(req.params.user__email,req.body.address,req.body.title).then((response)=>{
-  if(response == 'done'){
+  if(response){
     res.redirect('/users/profilePage')
   }
  })
