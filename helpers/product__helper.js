@@ -11,7 +11,7 @@ module.exports={
     add__product:(product__details)=>{
         return new Promise( async (resolve,reject)=>{
             table(product__details);
-            var category__id = await  db.get().collection(collection__list.CATEGORY__COLLECTIONS).findOne({name:pDetails.category},{_id:1})
+            var category__id = await  db.get().collection(collection__list.CATEGORY__COLLECTIONS).findOne({name:product__details.category},{_id:1})
             product__details.price = product__details.price * 1
             product__details.stock = product__details.stock * 1
             product__details.total__clicks = 0
