@@ -8,8 +8,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="/stylesheets/admin/newform.css">
     <link rel="stylesheet" href="/stylesheets/admin/profilePage.css"> 
-    <link rel="stylesheet" href="/cropperjs/dist/cropper.min.css">
-    <script src="/cropperjs/dist/cropper.min.js" defer></script>
+    {{!-- <link rel="stylesheet" href="/cropperjs/dist/cropper.min.css">
+    <script src="/cropperjs/dist/cropper.min.js" defer></script> --}}
     
 </head>
 
@@ -42,33 +42,40 @@
 
                     </select>
                 </div>
-                <div id="crop">
+               
+
+               
                 <div class="input__box">
                     <span class="details">image 1</span>
+                    <div id="crop">
+                      <img src="" id="imgView1" alt=""  class="clr" width="130px">
+                      <div class="valid-info" id="info"></div>
+                      <h5 class="error__form text-danger" id="image1_error_message"></h5>
+                      <div style="display:flex ;">
+                        <div id="image-box1" class="image-container clr" style="height:300px ; width:20%;"></div>
+                        <button type="button" class="btn the__button" id="crop-btn1" style="margin-top: 10px; display: none; width: 50%; margin: 20rem 0rem 0rem 0rem;"></button>
+                      </div>
+                    </div>
                     <img class="img-fluid clr"  src="" alt="" id="img__view" width="70px">
                     <div class="vald-info" id="info"></div>
-
-                    
                     <input type="file" class='image__input'  name="image" id="image" onchange="viewImage(event)" multiple="multiple" required>
                      <label class="the__button" for="image" required> Add img1</label> 
                     </div>
-                </div>
-     <div id="crop">
-      <div class="input__box">
-                        <img id="imgView1"  src="" alt="" style="height: 100px;width:120px;" class="clr">
-                        <div class="vald-info" id="info"></div>
-                                            <div id="image-box1" class="clr img-fluid"></div>
-                        <h5 class="error_form text-danger" id="image1_error_message"></h5>
-                        <label class="the__button" for="id_image1" required> ,mkj img1</label> 
-                        <button type="button"  class="btn btneds"  id="crop-btn1" style=" margin-top: 10px; display: none; width: 50%; margin: 20rem 0rem 0rem 0rem;" >crop</button>
-                        <input type="file" class='image__input'  name="image" id="id_image1" onchange="viewImage(event)" multiple="multiple" required>
-                    {{!-- <input type="file" name="image" class="form-control" id="id_image1"  onchange="changeImg(event)"   > --}}
-              </div>
-              </div>
+                
 
                 <div class="input__box">
                     <span class="details">image 2</span>
-                    <img class="img-fluid" src="" alt="" id="img__view2" width="70px">
+                     <div id="crop">
+                      <img src="" id="imgView1" alt=""  class="clr" width="130px">
+                      <div class="valid-info" id="info"></div>
+                      <h5 class="error__form text-danger" id="image1_error_message"></h5>
+                      <div style="display:flex ;">
+                        <div id="image-box1" class="image-container clr" style="height:300px ; width:20%;"></div>
+                        <button type="button" class="btn the__button" id="crop-btn1" style="margin-top: 10px; display: none; width: 50%; margin: 20rem 0rem 0rem 0rem;"></button>
+                      </div>
+                    </div>
+                    <img class="img-fluid clr" src="" alt="" id="img__view2" width="70px">
+                     <div class="vald-info" id="info"></div>
                     <input type="file" class='image__input' name="image2" id="image2"  onchange="viewImage2(event)" required>
                     <label class="the__button" for="image2" required> Add img2</label>
                 </div>
@@ -105,7 +112,7 @@
         }
          const imagebox1 = document.getElementById("image-box1");
   const crop_btn1 = document.getElementById("crop-btn1");
-  const input1 = document.getElementById("id_image1");
+  const input1 = document.getElementById("image");
  
   // When user uploads the image this event will get triggered
   input1.addEventListener("change", () => {
@@ -138,7 +145,8 @@
       // This method coverts the selected cropped image on the cropper canvas into a blob object
       cropper1.getCroppedCanvas().toBlob((blob) => {
         // Gets the original image data
-        let fileInputElement1 = document.getElementById("id_image1");
+        let fileInputElement1 = document.getElementById("image");
+        let fileInputElement2 = document.getElementById('image2')
         // Make a new cropped image file using that blob object, image_data.name will make the new file name same as original image
         let file1 = new File([blob], img_data1.name, {
           type: "image/*",

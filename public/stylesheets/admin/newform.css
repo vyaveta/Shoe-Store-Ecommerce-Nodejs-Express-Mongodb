@@ -116,3 +116,6 @@ form .button,
     overflow-y: scroll;
 }
 }
+.clr{
+    display: none;
+}
