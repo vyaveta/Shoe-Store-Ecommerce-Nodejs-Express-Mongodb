@@ -261,16 +261,62 @@ module.exports={
             })
         })
     },
-    add__address:(user__email,address,address__title)=>{
+    add__address:(user__email,address,address__title,state,pincode,country)=>{
         
         console.log(address__title,"from the add address promise")
         return new Promise (async(resolve,reject)=>{
             await db.get().collection(collection.USER__COLLECTIONS).updateOne({email:user__email},{
                 $push:{
-                    address:{title:address__title,address:address}
+                    address:{title:address__title,address:address,state:state,pincode:pincode,country:country}
                 }
             })
             resolve('Successfuly added the address')
         })
+    },
+    get__user__address(user__email){
+        return new Promise(async(resolve,reject)=>{
+            let addresses = await db.get().collection(collection.USER__COLLECTIONS).aggregate([
+                {
+                    $match:{email:user__email}
+                },
+                {
+                    $project:{"address":"$address",_id:0}
+                }
+            ]).toArray()
+           if(addresses){
+            console.log(addresses[0],'is the ddresdjjsfljfjslf')
+            resolve(addresses[0])
+           }
+           else{
+            resolve('no__address')
+           }
+        })
+    },
+    delete__address:(title,user__email)=>{
+        console.log(user__email,'is the user email')
+        console.log(title,'is the title of the address ')
+        return new Promise(async(resolve,reject)=>{
+            await db.get().collection(collection.USER__COLLECTIONS).updateOne(
+                { 'email': user__email }, 
+                { $pull: { address: { title: title } } },
+                false, // Upsert
+                true, // Multi
+            ).then((response)=>{
+                console.log(response)
+            })
+            resolve({success:true})
+        })
     }
+    // add__to__wishlist:(pro__id,user__email)=>{
+    //     return new Promise (async(resolve,reject)=>{
+    //         try{
+    //             let user__wishlist = await db.get().collection(collection.WISHLIST__COLLECTION).findOne({user:user__email})
+    //         if (user__wishlist){
+    //             if()
+    //         }
+    //         }catch(err){
+    //             console.log(err,'is the error that occured in the user__helpers.js while executing the add to wishlist function !!')
+    //         }
+    //     })
+    // }
 }

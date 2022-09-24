@@ -59,11 +59,7 @@
                                 <h5>address</h5>
                             </div>
                             <div class="col-md-9 text-secondary">
-                               {{#if user__details.address}}
-                               {{user__details.address}}
-                               {{else}}
                                <button class="the__button" id="address__button"> Add address</button>
-                               {{/if}}
                             </div>
                         </div>
                     </div>
@@ -72,8 +68,10 @@
             <div class="card mb-3 content actions">
                 <div class="row">
                     <div class="col-md-6 col-lg-6">
-                        <h1 class="m-3">Shoe Store</h1>
+                        <h1 class="m-3">Address list</h1>
+                        <hr>
                     </div>
+                    
                    <div class="col-md-3">
                      <a href="/users/showOrders"><button class="my-4 the__button">My orders</button></a>
                    </div>
@@ -84,6 +82,9 @@
             </div>
             <div class="card-body">
                 <ol> 
+                {{#each address}}
+                    <li class="mb-3" id="{{this.title}}">{{this.title}}  &nbsp; &nbsp; - {{this.address}}  <button  onclick="remove__address('{{this.title}}')" class="the__button ms-4">Delete</button></li>
+                    {{/each}}
                 </ol>
             </div>
         </div>
@@ -164,7 +165,7 @@
         border: none;
         height: 100%;
         border-radius: 10px;
-        box-shadow: 1px 1px 5px 1px rgba(255,255,255,0.4), -1px -1px 5px 1px rgba(255,255,255,0.4);
+        
         margin-bottom: 10px;
        }
        .input__div{
@@ -185,7 +186,7 @@
         border-radius: 10px;
         outline: none;
         border: none;
-        box-shadow: 1px 1px 5px 1px rgba(255,255,255,0.5), -1px -1px 5px 1px rgba(255,255,255,0.5);
+       
         font-weight: 700;
         margin-bottom: 10px;
        }
@@ -246,6 +247,15 @@
     <div class="input__div">
        <center><textarea name="address" id="" cols="30" rows="10" required>house name, street, city/town, district, state, country</textarea></center>
     </div>
+     <div class="input__div">
+        <input type="text" name="state" required placeholder="State">
+    </div>
+     <div class="input__div">
+        <input type="text"  name="country" required placeholder="Country">
+    </div>
+    <div class="input__div">
+        <input type="number" name="pincode"  required placeholder="Pincode">
+    </div>
     <div class="input__div">
         <input type="text" name="title" required placeholder="Address title eg. home/office">
     </div>
@@ -270,6 +280,25 @@ img2.addEventListener('error',(e)=>{
     e.target.src ='/adminProfile/630f90df1f1aa1db962fc455.jpg' // if image doesnt load, the default image will display
     e.onerror = null
 })
+
+// some ajax code for deleting the address 
+function remove__address(title){
+    
+    console.log('got inside the ajax of delete address ')
+    $.ajax({
+        url:'/users/delete__address',
+        data:{
+            title:title
+        },
+        method:'post',
+        success:(response)=>{
+            let list__item = document.getElementById(title)
+            list__item.style.display = 'none'
+            alert('deleted the address')
+
+        }
+    })
+}
   </script>
   <script src="/javascripts/admin__profile.js"></script>
    <script src="/javascripts/imageChange.js"></script>

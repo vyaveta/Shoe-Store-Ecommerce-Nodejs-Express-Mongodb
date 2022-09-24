@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home 2</title>
+    <link rel="stylesheet" href="/stylesheets/home1.css">
+</head>
+<style>
+.the__container{
+    display: flex;
+    flex-wrap: wrap;
+    padding:30px;
+}
+.the__container .the__card{
+   
+        width: 100%;
+        max-width: 400px;
+        margin:auto;
+        margin-bottom: 30px;
+        min-width: 350px;
+        /* background:yellowgreen; */
+        /* background:#ffe77aff; */
+        background-color: green;
+        padding: 10px;
+        border-radius: 20px;
+    }
+    .the__container .the__card .imgbx{
+        position:relative;
+        width: 100%;
+        height:200px;
+        overflow: hidden;
+        border-radius: 20px;
+    }
+    .the__container .the__card .imgbx img{
+        position:absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        /* object-fit: contain; */
+        object-fit: cover;
+        transition: 0.5s ease-in-out;
+        padding: 10px;
+    }
+    .the__container .the__card:hover  img{
+        transform: scale(1.15);
+    }
+    .action{
+        position:absolute;
+        top:10px;
+        right:10px;
+        width: 40px;
+        height: 40px;
+    }
+    
+     .product__name h3{
+        font-size: 18px;
+        font-weight: 500;
+        color:rgb(255, 255, 255);
+        margin-bottom:5px ;  
+        /* font-family: 'Roboto Mono', monospace; */
+        /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
+        font-family: 'Satisfy', cursive;
+
+        text-align: center;
+    }
+    .the__container .the__card .content .price__rating{
+        display: flex;
+        justify-content:space-between;
+        color:white;
+        margin: 5px;
+        align-items: center;
+    }
+    .the__card h2{
+        font-size: 20px;
+        /* font-family: 'Aboreto', cursive; */
+        font-family: 'Cookie', cursive;
+        font-weight:500;
+    }
+    .rating .fa{
+        color: gold;
+    }
+    .action li{
+        list-style: none;
+        position: relative;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 5px;
+        padding: 15px;
+        border-radius: 20px;
+        cursor: pointer;
+        transform: translateX(60px);
+        transition: transform 0.5s;
+    }
+    .the__container .the__card:hover .action li{
+        transform: translateX(-20px);
+    }
+    .action li span{
+        position:absolute;
+        right:50px;
+        top:50%;
+        cursor: pointer;
+        transform:translateY(-50%) translateX(-20px);
+        white-space: nowrap;
+        padding:4px 60px;
+        background-color: green;
+        color:white;
+        font-size:12px;
+        border-radius: 12px;
+        pointer-events: none;
+        opacity: 0;
+        transition: .5s;
+    }
+    .action li:nth-child(2){
+        transition-delay: 0.15s;
+    }
+    .action li:nth-child(3){
+        transition-delay: 0.30s;
+    }
+    .action li span::before{
+        content: '';
+        position:absolute;
+        top:50%;
+        right: -4px;
+        width:8px;
+        height: 8px;
+        background: green;
+        color: white;
+        transform: translateY(-50%) rotate(45deg);
+    }
+    .action li:hover span{
+        opacity: 1;
+        transform:translateY(-50%) translateX(0px);
+    }
+    .action li:hover{
+        background-color:  green;
+        color:#f1f1f1
+    }
+    /* product section css ends here */
+@media only screen and(max-width:700px){
+    .row__home{
+        margin: 50px 0;
+        flex-direction: column reverse;
+    }
+   
+}
+a{
+    text-decoration:none;
+}
+
+
+    /* home 1 reference */
+
+
+    body{
+        background-color: rgb(181, 214, 132);
+        margin:0;
+        padding:0;
+    }
+    .active__category{
+        border:2px solid white;
+        /* box-shadow: 1px 1px 15px 1px green, -1px -1px 15px 1px green !important; */
+    }
+    .the__home2{
+        display:flex;
+        flex-direction:column;
+        height: 100%;
+        width: 100vw;
+    }
+    .category__list{
+        display:flex;
+        justify-content:space-around;
+        height: 100%;
+        /* background-color:blanchedalmond ; */
+        /* width: 100vw; */
+        padding: 0% 20%;
+        flex-wrap: wrap;
+    }
+    .category__div h2{
+        background-color: green;
+        cursor: pointer;
+        color:white;
+        font-weight: 700;
+        border-radius: 7px;
+        box-shadow:1px 1px 5px 1px rgba(0,0,0,0.3),-1px -1px 5px 1px rgba(0,0,0,0.3);
+        padding: 5px 10px;
+    }
+    @media screen and (max-width:950px){
+       
+        .category__list{
+            padding: 0 30px;
+            justify-content: space-between;
+        }
+        .category__div h2{
+            font-size: 20px;
+        }
+    }
+    @media screen and (max-width:600px){
+       
+        .category__div{
+            padding:5px;
+        }
+        .category__div h2{
+            font-size:16px
+        }
+        .category__list{
+            margin-top: 80px;
+           
+        }
+    }
+    .category__list::after{
+        content: '';
+        background-color: green;
+        width: 100%;
+        height:5px;
+        border-radius:10px;
+    }
+  
+</style>
+<body>
+    <div class="the__home2">
+<div class="category__list">
+    <!-- <div class="category__list__inner"> -->
+        <div class="category__div">
+            <h2>Category</h2>
+        </div>
+        <div class="category__div">
+           <h2>Category</h2> 
+        </div>
+        <div class="category__div ">
+           <h2 class="active__category">Category</h2> 
+        </div>
+        <div class="category__div">
+           <h2>Category</h2> 
+        </div>
+        <div class="category__div">
+           <h2>Category</h2> 
+        </div>
+    <!-- </div> -->
+</div>
+<div class="product__list__outer">
+    <div class="the__container">
+        <div class="the__card" >
+            <div class="imgbx"><a href="/users/productPage/{{this._id}}" style="text-decoration:none ;">
+                    <img src="/public/product-images/63120e78c2aed0d3b93f4b08.jpg" alt="image__here" width="500px"></a>
+                <ul class="action">
+                    <li>
+                        <i class="fa fa-heart"></i>
+                        <span>Add to WishList
+                        </span>
+                    </li>
+                    <li>
+                       
+                        <i class="fa fa-shopping-cart"></i>
+                        <span >Add to Cart</span>
+                    </li>
+                    <li>
+                        <i class="fa fa-eye"></i>
+                        <span>View Product</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="content">
+                <div class="product__name">
+                    <h3>{{this.model}}</h3>
+                </div>
+                <div class="price__rating">
+                    <h2>Rs.{{this.price}}</h2>
+                    <div class="rating">
+                        <i class="fa fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="the__card" >
+            <div class="imgbx"><a href="/users/productPage/{{this._id}}" style="text-decoration:none ;">
+                    <img src="/product-images/{{this._id}}.jpg" alt="image__here" width="500px"></a>
+                <ul class="action">
+                    <li>
+                        <i class="fa fa-heart"></i>
+                        <span>Add to WishList
+                        </span>
+                    </li>
+                    <li>
+                       
+                        <i class="fa fa-shopping-cart" ></i>
+                        <span >Add to Cart</span>
+                    </li>
+                    <li>
+                        <i class="fa fa-eye"></i>
+                        <span>View Product</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="content">
+                <div class="product__name">
+                    <h3>{{this.model}}</h3>
+                </div>
+                <div class="price__rating">
+                    <h2>Rs.{{this.price}}</h2>
+                    <div class="rating">
+                        <i class="fa fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="the__card" >
+            <div class="imgbx"><a href="/users/productPage/{{this._id}}" style="text-decoration:none ;">
+                    <img src="/product-images/{{this._id}}.jpg" alt="image__here" width="500px"></a>
+                <ul class="action">
+                    <li>
+                        <i class="fa fa-heart"></i>
+                        <span>Add to WishList
+                        </span>
+                    </li>
+                    <li>
+                       
+                        <i class="fa fa-shopping-cart" ></i>
+                        <span >Add to Cart</span>
+                    </li>
+                    <li>
+                        <i class="fa fa-eye"></i>
+                        <span>View Product</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="content">
+                <div class="product__name">
+                    <h3>{{this.model}}</h3>
+                </div>
+                <div class="price__rating">
+                    <h2>Rs.{{this.price}}</h2>
+                    <div class="rating">
+                        <i class="fa fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+</body>
+</html>

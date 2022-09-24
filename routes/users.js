@@ -194,7 +194,7 @@ router.post('/user__otp',(req,res)=>{
    }
    else{
     error__msg ='incorrect otp'
-    res.render('users/otp',{error__msg}) // redirecting is the problem
+    res.render('users/otp',{error__msg,no__partials:true}) // redirecting is the problem
    }
   })
 })
@@ -259,15 +259,24 @@ router.get('/checkout',auth.usercookieJWTAuth,async(req,res)=>{
   user__details = auth.get__user__details()
  let response = await product__helper.find__the__user__cart(user__details.email)
     let total = await user__helper.get__total__amount(user__details)
+    let result = await user__helper.get__user__address(user__details.email)
+    let address = result.address
+    console.log(address,'is the address that we got in the get checkout router')
     if(response=='no__cart'){
       res.redirect('/users')
     }
     else
-    res.render('users/addressPage',{token,username,cart__count,total,user__details})
+    res.render('users/addressPage',{token,username,cart__count,total,user__details,address})
 })
+
+////////////////////////// some code for showing the user profile page //////////////////////
 router.get('/profilePage',auth.usercookieJWTAuth,(req,res)=>{
    user__details = auth.get__user__details()
-  res.render('users/userProfile',{token,username,cart__count,user__details})
+   user__helper.get__user__address(user__details.email).then((addresses)=>{
+    print(addresses.address, 'is the address')
+    let address = addresses.address
+    res.render('users/userProfile',{token,username,cart__count,user__details,address})
+  })
 })
 ///////////////////////////////////////////// order placing /////////////////////////////////////////////////
 router.post('/placeOrder',async(req,res)=>{
@@ -311,11 +320,32 @@ console.log(order__details)
 
  /////////////////////////////////////////  for users to add address ////////////////////////////
  router.post('/add__address/:user__email',auth.usercookieJWTAuth,(req,res)=>{
- user__helper.add__address(req.params.user__email,req.body.address,req.body.title).then((response)=>{
+ user__helper.add__address(req.params.user__email,req.body.address,req.body.title,req.body.state,req.body.pincode,req.body.country).then((response)=>{
   if(response){
     res.redirect('/users/profilePage')
   }
  })
+ })
+
+ ///////////////////////////////////// NOW SOME CODE FOR THE ADD TO WISHLIST  ////////////////////////
+ router.post('/add__to__wishlist',auth.usercookieJWTAuth,(req,res)=>{
+  try{
+    print(req.body)
+    user__details = auth.get__user__details()
+    print(user__details)
+    user__helper.add__to__wishlist(req.body.product,user__details.email).then((response)=>{
+      res.json({status:true})
+    })
+  }catch(err){
+    console.log(err,'is the error that occured in the users.js while executing the code of the add to wishlist router!')
+  }
+ })
+ //////////////////////////////   now some code for the users to delete their address //////
+ router.post('/delete__address',auth.usercookieJWTAuth,(req,res)=>{
+  user__details = auth.get__user__details()
+  user__helper.delete__address(req.body.title,user__details.email).then((response)=>{
+    res.json({status:true})
+  })
  })
 // logout///
 router.get('/logout',(req,res)=>{
