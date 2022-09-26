@@ -4,6 +4,12 @@ const bcrypt = require('bcrypt');
 const { resolve, reject } = require('promise');
 const { response } = require('express');
 const objectId = require('mongodb').ObjectId
+const Razorpay = require('razorpay')
+const crypto = require('crypto')
+var instance = new Razorpay({
+    key_id:'rzp_test_BSsgMe3aOTLBnC',
+    key_secret:'liUTofbWu4r68kbcSxU51Wmm',
+})
 
 
 
@@ -96,7 +102,7 @@ module.exports={
             }
              else if(account){
                         is__valid = account;
-                        resolve(is__valid);
+                        resolve(account);
                     }
             else{
                 is__valid = false;
@@ -185,23 +191,27 @@ module.exports={
         return new Promise(async(resolve,reject)=>{
             console.log(order__details,products,total)
             let status = order__details['payment-method']=='COD'?'placed':'pending'
+            console.log(total, 'is the total')
+            console.log(order__details,'is the order details')
             let orderObj = {
                 delivery__details:{
                     mobile:order__details.Phone__number,
                     address:order__details.address,
                     pincode:order__details.pincode
                 },
-                user__id:objectId(order__details.user__id),
+                user__id:objectId(order__details.user_id),
                 payment__method:order__details['payment-method'],
                 products:products,
                 total__amount:total,
                 status:status,
                 date:today
             }
+            console.log('before insertion')
             db.get().collection(collection.ORDER__COLLECTION).insertOne(orderObj).then((response)=>{
+                console.log('inserted the order to db')
                 db.get().collection(collection.CART__COLLECTIONS).deleteOne({user:objectId(order__details.user__id)})
-                console.log('inserted the order ')
-                resolve()
+                console.log(response.insertedId)
+                resolve(response.insertedId)
             })
         })
     },
@@ -305,6 +315,51 @@ module.exports={
                 console.log(response)
             })
             resolve({success:true})
+        })
+    },generateRazorpay:(order__id,total)=>{
+        return new Promise (async(resolve,reject)=>{
+          var options = {
+            amount:total*100,
+            currency:"INR",
+            receipt:""+order__id
+          };
+          instance.orders.create(options,(err,order)=>{
+            if(err){
+                console.log(err)
+            }
+            else{
+                console.log(order,'is the order that we got from the generate razorpay promise that is in the user helper.js')
+                resolve(order)
+            }
+          })
+        })
+    },
+    verify__payment:(details)=>{
+        console.log(details,'msg from the verufy pasfkdjkfj')
+        return new Promise (async(resolve,reject)=>{
+            let hmac = crypto.createHmac('sha256','liUTofbWu4r68kbcSxU51Wmm')
+            hmac.update(details['payment[razorpay_order_id]']+'|'+details['payment[razorpay_payment_id]'])
+            hmac = hmac.digest('hex')
+            if(hmac == details['payment[razorpay_signature]']){
+                resolve()
+            }else{
+                reject()
+            }
+        })
+    },
+    change__payment__status:(order__id)=>{
+        return new Promise(async(resolve,reject)=>{
+            console.log('got inside the update payment status and order id is ', order__id)
+            db.get().collection(collection.ORDER__COLLECTION).updateOne({_id:objectId(order__id)},
+            {
+                $set:{
+                    status:'placed' 
+                }
+            }
+            ).then((response)=>{
+                console.log(response,'from change payment status')
+                resolve()
+            })
         })
     }
     // add__to__wishlist:(pro__id,user__email)=>{

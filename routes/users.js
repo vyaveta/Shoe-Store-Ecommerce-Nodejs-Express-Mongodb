@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const user__helper = require('../helpers/user__helper')
 const auth = require('../helpers/user__auth');
 // const { token } = require('morgan');
+
 const print = console.log
 const table = console.table
 let token
@@ -171,24 +172,18 @@ router.post('/user__otp',(req,res)=>{
     console.log(response)
    if(response.valid==true){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
  user__helper.find__the__user(number).then((response)=>{
-  
   if(response=='blocked'){
     res.render('blocked',{no__partials:true})
   }
   else if(response){
-    username = response
+    username = response.name
     const usertoken = jwt.sign(response,process.env.USER_TOKEN_SECRET,{expiresIn:'365d'})
     res.cookie('usertoken',usertoken,{
       httpOnly:true
     })
-    const token = usertoken
+     token = usertoken
     console.log('user has logged in ');
-    // res.redirect('/users');
-      // for(var i = 0;i<response.length;i++){
-      //   response[i]._id= response[i]._id.toString()
-      // }
       res.redirect('/users')
-      // res.render('home1',{token,username,products})   
   }
  })
    }
@@ -266,6 +261,7 @@ router.get('/checkout',auth.usercookieJWTAuth,async(req,res)=>{
       res.redirect('/users')
     }
     else
+    console.log(user__details._id,'is the user id ')
     res.render('users/addressPage',{token,username,cart__count,total,user__details,address})
 })
 
@@ -284,9 +280,15 @@ router.post('/placeOrder',async(req,res)=>{
   user__details = auth.get__user__details()
   let products = await user__helper.get__cart__products(user__details._id)
   let total__price = await user__helper.get__total__amount(user__details)
- user__helper.place__order(req.body,products,total__price).then((response)=>{
-  res.json({status:true})
-
+ user__helper.place__order(req.body,products,total__price).then((orderId)=>{
+  if(req.body['payment-method']=='COD'){
+    res.json({codSuccess:true})
+  }
+  else{
+    user__helper.generateRazorpay(orderId,total__price).then((response)=>{
+      res.json(response)
+    })
+  }
  })
   console.log(req.body)
 })
@@ -345,6 +347,19 @@ console.log(order__details)
   user__details = auth.get__user__details()
   user__helper.delete__address(req.body.title,user__details.email).then((response)=>{
     res.json({status:true})
+  })
+ })
+
+ ////////////////////////////////////// some code for the verify payment  /////////////////////////
+ router.post('/verify__payment',(req,res)=>{
+  console.log(req.body)
+  user__helper.verify__payment(req.body).then(()=>{
+    user__helper.change__payment__status(req.body['order[receipt]']).then(()=>{
+      console.log("payment success");
+      res.json({status:true})
+    })
+  }).catch((err)=>{
+    res.json({status:false})
   })
  })
 // logout///

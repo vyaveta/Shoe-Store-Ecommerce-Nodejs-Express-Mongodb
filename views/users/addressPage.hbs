@@ -78,7 +78,7 @@
                 <p class="hidden__address" id="country">{{this.country}}</p>
             </label> <br>
            {{/each}}
-            <input type="text" name="user__id" id="" value="{{user__details._id}}" hidden>
+            <input type="text" name="user_id" id="" value="{{user__details._id}}" hidden>
             <hr>
                 </div>
             </div>
@@ -101,6 +101,7 @@
     </div>
     </div>
     <script src="/javascripts/loadAddress.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
      <script>
         $('#checkout-form').submit((e)=>{
             e.preventDefault()
@@ -110,11 +111,61 @@
                 data:$('#checkout-form').serialize(),
                 success:(response)=>{
                     alert('successfully placed order')
-                    if(response.status){
+                    if(response.codSuccess){
                         location.href='/users/showOrders'
+                    }
+                    else{
+                        razorpayPayment(response)
                     }
                 }
             })
         })
+      function  razorpayPayment(order){
+        var options = {
+    "key": "rzp_test_BSsgMe3aOTLBnC", // Enter the Key ID generated from the Dashboard
+    "amount":order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Vyaveta group",
+    "description": "Test Transaction",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR06JmZ8xM8rNxElD2kKc1xAEmN84bdz7hYILs3lYaapLP08E6g27-v48UQD6QplgoVKdI&usqp=CAU",
+    "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler":function (response){
+       
+        
+        verifyPayment(response,order)
+    },
+   // "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+    "prefill": {
+        "name": "Adwaith",
+        "email": "whatthe12hell@gmail.com",
+        "contact": "9999999999"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#50AA57"
+    }
+};
+    var rzp1 = new Razorpay(options);
+    rzp1.open()
+      }
+    function verifyPayment(payment,order){
+        $.ajax({
+            url:'/users/verify__payment',
+            data:{
+                payment,
+                order
+            },
+            method:'post',
+            success:(response)=>{
+                if(response.status){
+                  location.href='/users/showOrders'
+                }else{
+                    alert('payment failed')
+                }
+            }
+        })
+    }
      </script>
 </body>
