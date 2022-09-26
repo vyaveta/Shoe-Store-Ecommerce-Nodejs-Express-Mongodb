@@ -104,9 +104,9 @@
             flex-direction: column;
             justify-content: space-evenly;
             align-items: center;
-            background-color: #eae5e5;
+            background-color: #f0f0f0;
             border-radius: 20px;
-            box-shadow: 2px 2px 2px 1px rgba(0,0,0,0.5);
+            box-shadow: 2px 2px 2px 1px rgba(0,0,0,0.5),-2px -2px 2px 1px rgba(0,0,0,0.5);
             visibility: hidden;
             position: fixed;
         }
@@ -212,15 +212,15 @@
     <form action="/user/updateProfile" method="post" enctype="multipart/form-data" >
        <div class="pop__up" id="pop__up">
         <div class="close__button">
-            <a href="">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+            
+                <svg id="close__button" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                     <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
                   </svg>
-            </a>
+          
         </div>
         <div class="pop__up__box">
             <div class="profile__pic">
-                <img src="/adminProfile/{{admin__details._id}}.jpg" alt="" id="img__view" width="150px" height="150px" >
+                <img src="/userProfile/{{user__details._id}}.jpg" alt="" id="img__view" width="150px" height="150px" >
             </div>
             <div class="edit__button">
                    <input name="image" type="file" id="file" accept="image/*"  onchange="viewImage(event)" required> 
