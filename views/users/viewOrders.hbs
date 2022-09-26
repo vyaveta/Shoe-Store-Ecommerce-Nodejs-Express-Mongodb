@@ -26,11 +26,11 @@
     flex-direction: row;
     justify-content: space-evenly;
     padding: 20px;
-    height: 35vh;
+    height: 20vh;
     border-radius: 15px;
-    color:white;
-    background-color: green;
-    border: 2px solid white;
+     background-color:white;
+   color: green;
+    border: 2px solid green;
     /* box-shadow:2px 2px 1px .5px rgba(255, 255, 255, 0.624),-2px -2px 1px .5px rgba(255, 255, 255, 0.9); */
 }
 .left{
@@ -56,17 +56,18 @@
 }
 .view__products button{
     border: none;
-    color: #5cdb95;
-    background-color: white;
-    padding: 10px 15px;
-    border-radius: 20px;
+    color: white;
+    background-color:green;
+    padding: 8px 20px;
+    border-radius: 8px;
     font-weight: 700;
     cursor: pointer;
     transition: .15s;
+    font-size: 13px;
 }
 .view__products button:hover{
     color: white;
-    background-color: #5cdb95;
+    background-color: rgb(9, 192, 9);
     transition: .15s;
     box-shadow: 2px 2px 5px .5px rgba(255, 255, 255, 0.624),-2px -2px 5px .5px rgba(255, 255, 255, 0.9);
 }
@@ -155,6 +156,10 @@
                 <div class="total__amount">
                     <h3>Total Amount</h3>
                     <span> Rs. {{this.total__amount}} </span>
+                </div>
+                <div class="total__amount">
+                    <h5>Payment method</h5>
+                    <span>{{this.payment__method}} </span>
                 </div>
                 <div class="status">
                     <h3>Status</h3>

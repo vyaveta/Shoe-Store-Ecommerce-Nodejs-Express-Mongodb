@@ -2,7 +2,7 @@
 body{
     margin: 0;
     padding: 0;
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Work Sans', sans-serif;
     transition: .5s;
    
 }
@@ -243,6 +243,7 @@ a{
         margin: 40px;
         position: relative;
         width: 1200px;
+        
         /* max-width: 1200px; */
         display: grid;
         /* grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); */
@@ -265,6 +266,7 @@ a{
     .the__container .the__card{
         width: 100%;
         max-width: 450px;
+        
         /* margin: 30px; */
         /* min-width: 400px; */
         /* background:yellowgreen; */
@@ -310,7 +312,7 @@ a{
         margin-bottom:5px ;  
         /* font-family: 'Roboto Mono', monospace; */
         /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
-        font-family: 'Satisfy', cursive;
+        font-family: 'Work Sans', sans-serif;
 
         text-align: center;
     }
@@ -324,7 +326,8 @@ a{
     .the__card h2{
         font-size: 20px;
         /* font-family: 'Aboreto', cursive; */
-        font-family: 'Cookie', cursive;
+        /* font-family: 'Cookie', cursive; */
+        font-family: 'Work Sans', sans-serif;
         font-weight:500;
     }
     .rating .fa{
@@ -413,7 +416,8 @@ a{
 }
 .signup__box{
     color: goldenrod;
-    font-family: 'IBM Plex Mono', monospace;
+    /* font-family: 'IBM Plex Mono', monospace; */
+    font-family: 'Work Sans', sans-serif;
     font-weight: 700;
     padding: 15px;
 }

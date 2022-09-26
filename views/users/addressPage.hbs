@@ -42,16 +42,20 @@
         <form action="/users/placeOrder" class="signin__form" id="checkout-form" method="post" >
             <div class="product__details">
                 <div class="input__box">
+                    <span class="details">Country</span>
+                    <input type="text" name="country" id="country__input"  required>
+                </div>
+                <div class="input__box">
                     <span class="details">State</span>
-                    <input type="text" name="state" id="company__name"  required>
+                    <input type="text" name="state" id="state__input"  required>
                 </div>
                 <div class="input__box">
                     <span class="details">Pincode</span>
-                    <input type="number" name="pincode" id="model"  required>
+                    <input type="number" name="pincode" id="pincode__input"  required>
                 </div>
                 <div class="input__box">
                     <span class="details">Address</span>
-                    <textarea name="address" required></textarea>
+                    <textarea name="address" id="address__input" required></textarea>
                 </div>
                 
                 <div class="input__box">
@@ -67,7 +71,7 @@
                     <p style="color: green; font-weight:800">Choose Address</p>
            {{#each address}}
              <label class="radio-inline" for="">
-                <input type="radio" name="choosen-address" value=""> {{this.title}}
+                <input type="radio" name="choosen-address" value="" onclick="loadAddress()"> {{this.title}}
                 <p class="hidden__address" id="address">{{this.address}}</p>
                 <p class="hidden__address" id="state">{{this.state}}</p>
                 <p class="hidden__address" id="pincode">{{this.pincode}}</p>
@@ -96,6 +100,7 @@
              <a href="/users"><button class="home__button for__the__button"> Home</button></a>
     </div>
     </div>
+    <script src="/javascripts/loadAddress.js"></script>
      <script>
         $('#checkout-form').submit((e)=>{
             e.preventDefault()
