@@ -122,8 +122,16 @@
                     else if(response.flag == 'razorpay'){
                         razorpayPayment(response.order)
                     }
-                    else if (response.flag == 'paypal'){
-                        res.send('this feature will soon be available')
+                    else {
+                        console.log('got inside the else condition og the ajaxfghj')
+                        console.log(response.links)
+                         for(let i = 0;i < response.links.length;i++){
+                            console.log(response.links[i].rel)
+        if(response.links[i].rel === 'approval_url'){
+            location.href = response.links[i].href
+        //  res.redirect(response.links[i].href);
+        }
+      }
                     }
                 }
             })

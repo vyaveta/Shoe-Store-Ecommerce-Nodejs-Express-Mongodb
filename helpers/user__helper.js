@@ -6,6 +6,13 @@ const { response } = require('express');
 const objectId = require('mongodb').ObjectId
 const Razorpay = require('razorpay')
 const crypto = require('crypto')
+const paypal = require('paypal-rest-sdk');
+ 
+paypal.configure({
+  'mode': 'sandbox', //sandbox or live
+  'client_id': 'AQFcDqeYJQK2LZ0YbKFrh0r_PAFSShbgK5XTOJ25YxjtAWnq3QpYDNfoDuAHu9EzB-lCVTdUMK3kP3MS',
+  'client_secret': 'EB_f8QlJSFuW6zRueNatOW4x6UJC13AjZfFrHeZS6UMwqYbp-cWOuX9OVJVeUGMj6p_5qP7bg0_EHNxZ'
+});
 var instance = new Razorpay({
     key_id:'rzp_test_BSsgMe3aOTLBnC',
     key_secret:'liUTofbWu4r68kbcSxU51Wmm',
@@ -363,6 +370,52 @@ module.exports={
                 resolve()
             })
         })
+    },
+    paypal:(total__amount)=>{
+        console.log('paypal function called!!!')
+        var amount = total__amount / 80
+        return new Promise((resolve,reject)=>{
+            const create_payment_json = {
+                "intent": "sale",
+                "payer": {
+                    "payment_method": "paypal"
+                },
+                "redirect_urls": {
+                    "return_url": "http://localhost:3000/success",
+                    "cancel_url": "http://localhost:3000/cancel"
+                },
+                "transactions": [{
+                    "item_list": {
+                        "items": [{
+                            "name": "Red Sox Hat",
+                            "sku": "001",
+                            "price": amount,
+                            "currency": "USD",
+                            "quantity": 1
+                        }]
+                    },
+                    "amount": {
+                        "currency": "USD",
+                        "total": amount
+                    },
+                    "description": "Hat for the best team ever"
+                }]
+            };
+             
+            paypal.payment.create(create_payment_json, function (error, payment) {
+             try{
+                if (error) {
+                    throw error;
+                } else {
+                    console.log('gonna resolve the payment')
+                    resolve(payment)
+                }
+             }catch(err){
+                console.log(err,'is the error occured while paypal integration')
+             }
+            });
+             
+            });
     }
     // add__to__wishlist:(pro__id,user__email)=>{
     //     return new Promise (async(resolve,reject)=>{

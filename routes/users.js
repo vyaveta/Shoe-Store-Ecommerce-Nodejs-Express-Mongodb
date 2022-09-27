@@ -5,6 +5,7 @@ const user__helper = require('../helpers/user__helper')
 const auth = require('../helpers/user__auth');
 // const { token } = require('morgan');
 
+
 const print = console.log
 const table = console.table
 let token
@@ -15,7 +16,9 @@ let user__details
 //twilio
 // const client = require('twilio')(accountSid,authtoken)
 const product__helper = require('../helpers/product__helper');
+const controller = require('../controllers/controller')
 const { response } = require('express');
+const { sign } = require('crypto');
 require('dotenv').config()
 const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID ,process.env.TWILIO_AUTH_TOKEN)
 
@@ -293,6 +296,20 @@ router.post('/placeOrder',async(req,res)=>{
       res.json(signal)
     })
   }
+  else{
+    console.log('above the paypal function call')
+    user__helper.paypal(total__price).then((payment)=>{
+      console.log('gonna send the payment to the ajax')
+      let signal ={}
+      signal.flag = 'paypal'
+      signal.order = payment
+      console.log(signal)
+      payment.flag = "paypal"
+    res.json(payment)
+    }).catch((err)=>{
+      console.log(err,'is the error that happended while integrating paypal payment')
+    })
+  }
  })
   console.log(req.body)
 })
@@ -366,6 +383,16 @@ console.log(order__details)
     res.json({status:false})
   })
  })
+
+
+
+
+router.post('/updateProfile/:id',controller.update__user__profile)
+
+
+
+
+
 // logout///
 router.get('/logout',(req,res)=>{
   res.clearCookie('usertoken')
