@@ -14,3 +14,16 @@ function loadAddress(){
     country__input.value = country.innerHTML
     pincode__input.value = pincode.innerHTML
 }
+
+// // some code for the razorpay 
+// let online = document.getElementById('online__payment')
+// let place__order__button = document.getElementById('place__order')
+// let rpay__button = document.getElementById('rpay__button')
+// let paypay__button = document.getElementById('paypay__button')
+
+// online.onclick = () =>{
+//     place__order__button.style.display = 'none'
+//     rpay__button.style.visibility = 'visible'
+//     paypay__button.style.visibility = 'visible'
+
+// }

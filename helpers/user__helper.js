@@ -317,15 +317,17 @@ module.exports={
             resolve({success:true})
         })
     },generateRazorpay:(order__id,total)=>{
+        var to_pay = total*100
+        console.log('got inside the generate generaterazorpay ')
         return new Promise (async(resolve,reject)=>{
           var options = {
-            amount:total*100,
+            amount:to_pay,
             currency:"INR",
             receipt:""+order__id
           };
           instance.orders.create(options,(err,order)=>{
             if(err){
-                console.log(err)
+                console.log(err,'is the error occured in the generate razorpay promise')
             }
             else{
                 console.log(order,'is the order that we got from the generate razorpay promise that is in the user helper.js')

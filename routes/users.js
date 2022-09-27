@@ -284,9 +284,13 @@ router.post('/placeOrder',async(req,res)=>{
   if(req.body['payment-method']=='COD'){
     res.json({codSuccess:true})
   }
-  else{
+  else if(req.body['payment-method']=='razorpay'){
+    console.log('now in executing the else case i.e the online payment case above the generate razorpay function call')
     user__helper.generateRazorpay(orderId,total__price).then((response)=>{
-      res.json(response)
+      let signal = {}
+      signal.order = response
+      signal.flag = 'razorpay'
+      res.json(signal)
     })
   }
  })

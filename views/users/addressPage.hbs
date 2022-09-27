@@ -85,17 +85,22 @@
  <hr>
             <p style="color: green; font-weight:800">Payment Method</p>
             <label class="radio-inline" for="">
-                <input type="radio" name="payment-method" value="COD"> COD
+                <input type="radio" name="payment-method" value="COD" checked="checked"> COD
             </label> <br>
             <label class="radio-inline mt-2" for="">
-                <input type="radio" name="payment-method" value="online" checked="checked"> Online Payment
+                <input type="radio" name="payment-method" id="online__payment" value="razorpay" > Razorpay
+            </label> <br>
+            <label class="radio-inline mt-2" for="">
+                <input type="radio" name="payment-method" id="online__payment" value="paypal" > Paypal
             </label>
             <input type="text" name="user__id" id="" value="{{user__details._id}}" hidden>
             <hr>
             
 <br>
              <div class="title">Total Price Rs.{{total}}</div>
-            <input class="button for__the__button" type="submit" value="Place Order">
+             {{!-- <input type="submit" class="btn btn-primary text-light mt-4" id="rpay__button" value="Razorpay" style="visibility: hidden; font-weight:800; width:100%">
+              <input type="submit" class="btn btn-light text-primary " id="paypay__button" value="Paypal" style="visibility: hidden; font-weight:800; width:100%"> --}}
+            <input class="button for__the__button" id="place__order" type="submit" value="Place Order">
         </form>
              <a href="/users"><button class="home__button for__the__button"> Home</button></a>
     </div>
@@ -114,8 +119,11 @@
                     if(response.codSuccess){
                         location.href='/users/showOrders'
                     }
-                    else{
-                        razorpayPayment(response)
+                    else if(response.flag == 'razorpay'){
+                        razorpayPayment(response.order)
+                    }
+                    else if (response.flag == 'paypal'){
+                        res.send('this feature will soon be available')
                     }
                 }
             })
