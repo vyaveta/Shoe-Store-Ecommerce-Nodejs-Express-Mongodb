@@ -1,0 +1,91 @@
+<style> 
+    .pay__cover{
+        background-color: #f2f2f2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 30px;
+    }
+    .pay__box{
+        margin-top: 70px;
+        border-radius: 10px;
+        box-shadow: 1px 1px 10px 10px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        padding: 30px;
+    }
+    .pay__cover .pay__box .imgbox img{
+      max-width: 300px;
+      object-fit: cover;
+    }
+    @media screen and (max-width:700px){
+        .pay__cover .pay__box .imgbox img{
+      max-width: 200px;
+      object-fit: cover;
+    } 
+    }
+    @media screen and (max-width:500px){
+        .pay__cover .pay__box .imgbox img{
+      max-width: 100px;
+      object-fit: cover;
+    }
+    }
+    .pay__cover .pay__box .box h2{
+        color: green;
+    }
+    .box{
+        text-align: center;
+        width: 100%;
+    }
+    .pay__cover .pay__box .box .full{
+        cursor: pointer;
+        width: 100%;
+        outline: none;
+        border: none;
+        padding:10px 15px;
+        background-color: green;
+        color: white;
+        border-radius: 7px;
+        font-weight: 700;
+    }
+    .pay__cover .pay__box .box .view{
+        cursor: pointer;
+        margin-top: 10px;
+        width: 100%;
+        outline: none;
+        border: none;
+        padding:10px 15px;
+        background-color: white;
+        color: green;
+        border-radius: 7px;
+        font-weight: 700;
+    }
+     .pay__cover .pay__box .box .view:active{
+        color: white;
+        background-color: green;
+    }
+    .pay__cover .pay__box .box .view:active  .pay__cover .pay__box .box .full{
+        background-color: white;
+    }
+</style>
+<body>
+    <div class="pay__cover">
+        <div class="pay__box">
+            <div class="imgbox">
+                <img src="/public/images/users/greenCheck.png" alt="">
+            </div>
+            <div class="box">
+                <h2>Successfuly Placed Order</h2>
+            </div>
+            <div class="box">
+                <button onclick="window.location.href='/users'" class="full">Go back to Home</button>
+                <button onclick="window.location.href='/users/showOrders'" class="view">View Orders</button>
+            </div>
+        </div>
+    </div>
+</body>

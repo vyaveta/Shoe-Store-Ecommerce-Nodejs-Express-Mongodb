@@ -416,7 +416,7 @@ console.log(order__details)
           console.log(JSON.stringify(payment));
           user__helper.change__payment__status(order__id).then((response)=>{
             print('paypal done!')
-            res.send('Success');
+            res.render('users/orderPlaced')
           })
       }
   });
