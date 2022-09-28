@@ -1,13 +1,18 @@
-   <link rel="stylesheet" href="/stylesheets/users/header.css">
-   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="/stylesheets/users/header.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Changa:wght@400;600;700;800&family=Cookie&family=Exo:wght@400;500;600;800;900&family=IBM+Plex+Mono:ital,wght@0,700;1,700&family=Righteous&family=Roboto+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
- <link rel="stylesheet" href="/stylesheets/users/profilePage.css">
-  <div class="container">
+<link
+    href="https://fonts.googleapis.com/css2?family=Aboreto&family=Changa:wght@400;600;700;800&family=Cookie&family=Exo:wght@400;500;600;800;900&family=IBM+Plex+Mono:ital,wght@0,700;1,700&family=Righteous&family=Roboto+Mono:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<link rel="stylesheet" href="/stylesheets/users/profilePage.css">
+<link rel="stylesheet" href="/stylesheets/users/profilePopup.css">
+<div class="container">
     <div class="main">
         <div class="topbar">
+
             <a href="/users/logout">logout</a>
             <a href="/users/">back to Home</a>
         </div>
@@ -15,11 +20,14 @@
             <div class="col-md-4 mt-1">
                 <div class="card text-center sidebar">
                     <div class="card__body  profile__pic">
-                   <center>  <img src='/userProfile/{{user__details._id}}.jpg' alt='image here' id="image" width="150px" height="150px"/></center>   
+                        <center> <img src='/userProfile/{{user__details._id}}.jpg' alt='image here' id="image"
+                                width="150px" height="150px" /></center>
                         <div class="mt-3">
-                             <center><h3>{{user__details.name}}</h3></center> 
-                             <button id="pop__signal" class = 'the__button mb-4'>Edit Pic</button><br>
-                             <button class="the__button" id="dark" > dark mode</button>
+                            <center>
+                                <h3>{{user__details.name}}</h3>
+                            </center>
+                            <button id="pop__signal" class='the__button mb-4'>Edit Pic</button><br>
+                            <button class="the__button" id="dark"> dark mode</button>
                         </div>
                     </div>
                 </div>
@@ -56,14 +64,16 @@
                         </div>
                         <div class="row">
                             <div class="col-md-3">
-                                <h5>address</h5>
+                                {{#if user__details.is_member}}
+                                <button class="the__button"> Chat with Admin</button>
+                                {{/if}}
                             </div>
                             <div class="col-md-9 text-secondary">
-                               <button class="the__button" id="address__button"> Add address</button>
+                                <button class="the__button" id="address__button"> Add address</button>
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
             </div>
             <div class="card mb-3 content actions">
                 <div class="row">
@@ -71,235 +81,127 @@
                         <h1 class="m-3">Address list</h1>
                         <hr>
                     </div>
-                    
-                   <div class="col-md-3">
-                     <a href="/users/showOrders"><button class="my-4 the__button">My orders</button></a>
-                   </div>
+
                     <div class="col-md-3">
-                     <a href="/users/cart__page"><button class="my-4 the__button">My S-storeCart</button></a>
-                   </div>
+                        <a href="/users/showOrders"><button class="my-4 the__button">My orders</button></a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="/users/cart__page"><button class="my-4 the__button">My S-storeCart</button></a>
+                    </div>
                 </div>
             </div>
             <div class="card-body">
-                <ol> 
-                {{#each address}}
-                    <li class="mb-3" id="{{this.title}}">{{this.title}}  &nbsp; &nbsp; - {{this.address}}  <button  onclick="remove__address('{{this.title}}')" class="the__button ms-4">Delete</button></li>
+                <ol>
+                    {{#each address}}
+                    <li class="mb-3" id="{{this.title}}">{{this.title}} &nbsp; &nbsp; - {{this.address}} <button
+                            onclick="remove__address('{{this.title}}')" class="the__button ms-4">Delete</button></li>
                     {{/each}}
                 </ol>
             </div>
         </div>
     </div>
-      <!-- Now some code for the pop up box -->
+    <!-- Now some code for the pop up box -->
 
-       <style>
-        .pop__up{
-           max-width: 550px;
-            height: 300px;
-            position: absolute;
-            left: 0; 
-            right: 0; 
-            top: 30%;
-            margin: auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            align-items: center;
-            background-color: #f0f0f0;
-            border-radius: 20px;
-            box-shadow: 2px 2px 2px 1px rgba(0,0,0,0.5),-2px -2px 2px 1px rgba(0,0,0,0.5);
-            visibility: hidden;
-            position: fixed;
-        }
-        .pop__up__box{
-            display: flex;
-            flex-direction:row;
-            justify-content: space-between;
-            width: 450px;
-            min-width: 200px;
-            align-items: center;
-            padding: 20px 30px 20px;
-        }
-        .profile__pic img{
-            border-radius: 50%;
-            object-fit: cover !important;
-        }
-        .close__button{
-            width: 100%;
-            display: flex;
-            justify-content: flex-end;
-            align-items: flex-end;
-            padding-right: 20px;
-        }
-        .edit__button{
-            width: 150px;  
-        }
-        .edit__button input{
-           visibility: hidden;
-        }
-        .hide{
-            visibility: hidden;
-        }
-       .address__popup{
-        padding: 10px;
-        left: 30%; 
-        right: 0; 
-        top: 30%;
-        position:absolute;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 100%;
-        align-items: center;
-        max-width: 40%;
-        min-width: 100px;
-        padding: 10px;
-        background-color: green;
-        color: white;
-        border-radius: 15px;
-        box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.4), -1px -1px 5px 1px rgba(0,0,0,0.4);
-       }
-       .address__popup textarea{
-        padding: 10px;
-        width: 80%;
-        outline: none;
-        border: none;
-        height: 100%;
-        border-radius: 10px;
-        
-        margin-bottom: 10px;
-       }
-       .input__div{
-        height: 100%;
-       }
-       .input__div input{
-        outline: none;
-        width: 100%;
-        border:none;
-        border-radius: 8px;
-        margin-bottom: 10px;
-        padding: 10px;
-       }
-       .submit__btn{
-        padding: 2px 30px;
-        color: green;
-        background-color: white;
-        border-radius: 10px;
-        outline: none;
-        border: none;
-       
-        font-weight: 700;
-        margin-bottom: 10px;
-       }
-       .blur{
-        filter: blur(20px);
-        pointer-events: none;
-        user-select: none;
-       }
-       @media  screen and (max-width:768px){
-       
-        .address__popup{
-            top:90%;
-            left:10%;
-           min-width: 80% ;
-        }
-        .address__popup textarea{
-            width: 80%;
-        }
-       }
-       
-       </style>
-
-    <form action="/users/updateProfile/{{user__details._id}}" method="post" enctype="multipart/form-data" >
-       <div class="pop__up" id="pop__up">
-        <div class="close__button">
-                <svg id="close__button" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                  </svg>
-        </div>
-        <div class="pop__up__box">
-            <div class="profile__pic">
-                <img src="/userProfile/{{user__details._id}}.jpg" alt="" id="img__view" width="150px" height="150px" >
+    <form action="/users/updateProfile/{{user__details._id}}" method="post" enctype="multipart/form-data">
+        <div class="pop__up" id="pop__up">
+            <div class="close__button">
+                <svg id="close__button" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-x-lg" viewBox="0 0 16 16">
+                    <path
+                        d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                </svg>
             </div>
-            <div class="edit__button">
-                   <input name="image" type="file" id="file" accept="image/*"  onchange="viewImage(event)" required> 
-                   <label class="the__button" for="file" required>
-                    Edit pic
-                   </label>     
+            <div class="pop__up__box">
+                <div class="profile__pic">
+                    <img src="/userProfile/{{user__details._id}}.jpg" alt="" id="img__view" width="150px"
+                        height="150px">
+                </div>
+                <div class="edit__button">
+                    <input name="image" type="file" id="file" accept="image/*" onchange="viewImage(event)" required>
+                    <label class="the__button" for="file" required>
+                        Edit pic
+                    </label>
+                </div>
+            </div>
+            <div class="pop__up__bottom">
+                <button type="submit" class="the__button">Save Changes</button>
             </div>
         </div>
-        <div class="pop__up__bottom">
-            <button  type="submit" class="the__button">Save Changes</button>
-        </div>
-       </div>
     </form>
 
-{{!-- now the code for the address pop up  --}}
+    {{!-- now the code for the address pop up --}}
 
-  </div>
-  
+</div>
+
 <div class="address__popup hide">
     <form action="/users/add__address/{{user__details.email}}" method="post">
-    <div class="title">
-        <center><h3>Add address</h3></center>
-    </div>
-    <div class="input__div">
-       <center><textarea name="address" id="" cols="30" rows="10" required>house name, street, city/town, district, state, country</textarea></center>
-    </div>
-     <div class="input__div">
-        <input type="text" name="state" required placeholder="State">
-    </div>
-     <div class="input__div">
-        <input type="text"  name="country" required placeholder="Country">
-    </div>
-    <div class="input__div">
-        <input type="number" name="pincode"  required placeholder="Pincode">
-    </div>
-    <div class="input__div">
-        <input type="text" name="title" required placeholder="Address title eg. home/office">
-    </div>
-    <div class="input__div">
-        <center><input type="submit" class="submit__btn" value="Add Address"></center> </form> 
-    </div>
-    <div class="input__div">
-        <button class="back submit__btn">Go back</button>
-    </div>
-  </div>
+        <div class="title">
+            <center>
+                <h3>Add address</h3>
+            </center>
+        </div>
+        <div class="input__div">
+            <center><textarea name="address" id="" cols="30" rows="10"
+                    required>house name, street, city/town, district, state, country</textarea></center>
+        </div>
+        <div class="input__div">
+            <input type="text" name="state" required placeholder="State">
+        </div>
+        <div class="input__div">
+            <input type="text" name="country" required placeholder="Country">
+        </div>
+        <div class="input__div">
+            <input type="number" name="pincode" required placeholder="Pincode">
+        </div>
+        <div class="input__div">
+            <input type="text" name="title" required placeholder="Address title eg. home/office">
+        </div>
+        <div class="input__div">
+            <center><input type="submit" class="submit__btn" value="Add Address"></center>
+    </form>
+</div>
+<div class="input__div">
+    <button class="back submit__btn">Go back</button>
+</div>
+</div>
 
-  <script src="/javascripts/addAddress.js"></script>
-  <script>
+<script src="/javascripts/addAddress.js"></script>
+<script>
     // js file
-//const img = document.getElementById("image")
-img.addEventListener("error", function(event) {
-  event.target.src = '/adminProfile/630f90df1f1aa1db962fc455.jpg' 
-  event.onerror = null
-})
-const img2 = document.getElementById('img__view')
-img2.addEventListener('error',(e)=>{
-    e.target.src ='/adminProfile/630f90df1f1aa1db962fc455.jpg' // if image doesnt load, the default image will display
-    e.onerror = null
-})
-
-// some ajax code for deleting the address 
-function remove__address(title){
-    
-    console.log('got inside the ajax of delete address ')
-    $.ajax({
-        url:'/users/delete__address',
-        data:{
-            title:title
-        },
-        method:'post',
-        success:(response)=>{
-            let list__item = document.getElementById(title)
-            list__item.style.display = 'none'
-            alert('deleted the address')
-
-        }
+    //const img = document.getElementById("image")
+    img.addEventListener("error", function (event) {
+        event.target.src = '/adminProfile/630f90df1f1aa1db962fc455.jpg'
+        event.onerror = null
     })
-}
-  </script>
-  <script src="/javascripts/admin__profile.js"></script>
-   <script src="/javascripts/imageChange.js"></script>
-  <script src="/javascripts/darkMode.js"></script>
-  <!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    const img2 = document.getElementById('img__view')
+    img2.addEventListener('error', (e) => {
+        e.target.src = '/adminProfile/630f90df1f1aa1db962fc455.jpg' // if image doesnt load, the default image will display
+        e.onerror = null
+    })
+
+    // some ajax code for deleting the address 
+    function remove__address(title) {
+
+        console.log('got inside the ajax of delete address ')
+        $.ajax({
+            url: '/users/delete__address',
+            data: {
+                title: title
+            },
+            method: 'post',
+            success: (response) => {
+                let list__item = document.getElementById(title)
+                list__item.style.display = 'none'
+                alert('deleted the address')
+
+            }
+        })
+    }
+</script>
+<script src="/javascripts/admin__profile.js"></script>
+<script src="/javascripts/imageChange.js"></script>
+<script src="/javascripts/darkMode.js"></script>
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+    crossorigin="anonymous"></script>
