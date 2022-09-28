@@ -15,7 +15,7 @@ close.addEventListener('click',(e)=>{
     hideAlertBox()
     clearTimeout()
 })
-function  showAlertBox(){
+function  showAlertBox(msg){
 console.log('im show alert box')
     alertBox.classList.remove('hide')
     alertBox.classList.add('show')

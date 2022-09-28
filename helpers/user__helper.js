@@ -418,17 +418,35 @@ module.exports={
             });
              
             });
+    },
+    add__to__wishlist:(pro__id,user__email,user__id)=>{
+        let proObj = {
+            item:objectId(pro__id),
+        }
+        return new Promise (async(resolve,reject)=>{
+            try{
+                let user__wishlist = await db.get().collection(collection.WISHLIST__COLLECTION).findOne({user__email:user__email})
+            if (user__wishlist){
+                db.get().collection(collection.WISHLIST__COLLECTION).updateOne({user__email:user__email},
+                {
+                        $push:{products:proObj}
+                }).then((response)=>{
+                    resolve('successfully added to wishlist')
+                })
+            }else{
+                wishlist = {
+                    user:objectId(user__id),
+                    user__email:user__email,
+                    products:[proObj]
+                }
+                await db.get().collection(collection.WISHLIST__COLLECTION).insertOne(wishlist).then((response)=>{
+                    resolve('successfully added to wishlist')
+                })
+            }
+            }catch(err){
+                reject(err)
+                console.log(err,'is the error that occured in the user__helpers.js while executing the add to wishlist function !!')
+            }
+        })
     }
-    // add__to__wishlist:(pro__id,user__email)=>{
-    //     return new Promise (async(resolve,reject)=>{
-    //         try{
-    //             let user__wishlist = await db.get().collection(collection.WISHLIST__COLLECTION).findOne({user:user__email})
-    //         if (user__wishlist){
-    //             if()
-    //         }
-    //         }catch(err){
-    //             console.log(err,'is the error that occured in the user__helpers.js while executing the add to wishlist function !!')
-    //         }
-    //     })
-    // }
 }

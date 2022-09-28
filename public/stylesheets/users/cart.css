@@ -1,0 +1,25 @@
+body{
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+   
+  }
+  a{
+    text-decoration: none;
+  }
+  a:hover{
+    text-decoration:none;
+  }
+  .quantity__change{
+    border:none;
+    background-color: green;
+    color:white;
+    font-weight: 800;
+    outline: none;
+    border-radius: 5px;
+    padding:0px 10px ;
+    box-shadow: 1px 1px 5px 1px slategrey,-1px -1px 5px 1px slategrey;
+  }
+  .text-danger{
+    cursor: pointer;
+  }

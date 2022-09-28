@@ -176,5 +176,47 @@ module.exports={
         console.log('an error occoured in find user cart promise',err)
         resolve('no__cart')
        }
-    }
+    },find__the__user__wish:(Uemail)=>{
+        try{
+         return new Promise (async(resolve,reject)=>{
+             let user__wish = await db.get().collection(collection__list.WISHLIST__COLLECTION).aggregate([
+                 {
+                     $match:{user__email:Uemail}
+                 },
+                 {
+                     $unwind:'$products'
+                 },
+                 {
+                     $project:{
+                         item:'$products.item',
+                     }
+                 },
+                 {
+                     $lookup:{
+                         from:collection__list.PRODUCTS__COLLECTIONS,
+                         localField:'item',
+                         foreignField:'_id',
+                         as:'product'
+                     }
+                 },
+                 {
+                     $project:{
+                         item:1,product:{$arrayElemAt:['$product',0]}
+                     }
+                 }
+             ]).toArray()
+             console.table(user__wish)
+             if(!user__wish || user__wish==null || user__wish==''){
+ 
+                 resolve('no__wish')
+             }
+             
+             resolve(user__wish)
+             
+         })
+        }catch(err){
+         console.log('an error occoured in find user cart promise',err)
+         resolve('no__wish')
+        }
+     }
 }

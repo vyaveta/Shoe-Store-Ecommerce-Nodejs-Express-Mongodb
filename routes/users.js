@@ -213,7 +213,6 @@ router.get('/add__to__cart/',auth.usercookieJWTAuth,(req,res)=>{
     res.redirect('/users/login')
   }
   print(req.query.product__id)
-  print('got the call from ajax')
    user__details = auth.get__user__details()
   if(user__details==null){
     print('user__Details is null')
@@ -360,18 +359,32 @@ console.log(order__details)
  })
 
  ///////////////////////////////////// NOW SOME CODE FOR THE ADD TO WISHLIST  ////////////////////////
- router.post('/add__to__wishlist',auth.usercookieJWTAuth,(req,res)=>{
+ router.get('/add__to__wishlist/:proId',auth.usercookieJWTAuth,(req,res)=>{
   try{
-    print(req.body)
+    print(req.params.proId,'is the product id that we got in add to wishlist router')
     user__details = auth.get__user__details()
     print(user__details)
-    user__helper.add__to__wishlist(req.body.product,user__details.email).then((response)=>{
+    user__helper.add__to__wishlist(req.params.proId,user__details.email,user__details._id).then((response)=>{
       res.json({status:true})
+    }).catch((err)=>{
+      print(err,'err in add to wisglist router')
     })
   }catch(err){
     console.log(err,'is the error that occured in the users.js while executing the code of the add to wishlist router!')
   }
  })
+
+ //////////////// some code for the wishlist products to display ///////////
+ router.get('/showWishlist',auth.usercookieJWTAuth,async(req,res)=>{
+  token = req.cookies.usertoken
+   user__details = auth.get__user__details()
+  table(user__details)
+ let wish__details = await product__helper.find__the__user__wish(user__details.email)
+   product__helper.get__cart__count(useremail).then((count)=>{
+        cart__count = count
+        res.render('users/cartPage',{wish__details,token,username,cart__count,wish:true})
+     })
+})
  //////////////////////////////   now some code for the users to delete their address //////
  router.post('/delete__address',auth.usercookieJWTAuth,(req,res)=>{
   user__details = auth.get__user__details()
