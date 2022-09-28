@@ -45,7 +45,7 @@
 
             <!--For the product card-->
             {{#each wish__details}}
-            <div class="card p-4" id="{{this.product._id}}box">
+            <div class="card p-4" id="{{this.product._id}}wish">
               <div class="row">
                 <!--Cart images div-->
 
@@ -68,7 +68,7 @@
                   <div class="row text-success ">
                     <div class="col-8 d-flex justify-content-between removean_wish">
                       <p class="text-danger"
-                        onclick="remove__from__wishlist('{{this._id}}','{{this.product._id}}')"><svg
+                        onclick="remove__from__wishlist('{{this.product._id}}')"><svg
                           xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                           class="bi bi-trash" viewBox="0 0 16 16">
                           <path
@@ -276,7 +276,6 @@
                               </div>
                             </div>
                             <!--Discount Ends here-->
-
                             <div class="mt-3 shadow p-3 bg-success text-light">
                               <div class="pt-4">
                                 <h5 class="mb-4">Expected Delevery Date</h5>
@@ -299,12 +298,17 @@
                   <!--js function for changing the product quantity-->
                   <script src="/javascripts/customAlertBox.js"></script>
                   <script>
-                    let total__product__price = document.getElementById('total__product__price')
+                   try{
+                     let total__product__price = document.getElementById('total__product__price')
                     let total__amount = document.getElementById('total_cart_amt')
                     total__amount.innerHTML = parseInt(total__product__price.innerHTML) + 100
-
+                   }catch(err){
+                    console.log(err)
+                   }
                     // js function for change product quantity                                                                                                           
                     function changeQuantity(cart__id, pro__id, count) {
+                      try{
+                        
                       let product__box = document.getElementById(pro__id + 'box')
                       let quantity = document.getElementById(pro__id).innerHTML
                       let total__product__price = document.getElementById('total__product__price')
@@ -341,6 +345,9 @@
                           }
                         }
                       })
+                      }catch(err){
+                        console.log(err)
+                      }
                     }
 
                     // now some code for the add to wishlist 
@@ -362,6 +369,25 @@
                         location.href = '/users'
                       }
                     }
+
+                    // remove from wishlist 
+                    function remove__from__wishlist(pro__id){ 
+                       try{
+                         $.ajax({
+                            url:'/users/remove__from__wishlist/'+pro__id,
+                        method:'get',
+                        success:(response)=>{
+                            alert('removed from wishlist')
+                           // location.reload()
+                           let div = document.getElementById(pro__id+'wish')
+                            div.style.display = 'none'
+                        }
+                        })
+                       }catch(err){
+                        console.log(err,'is the error occured in the remove from the wishlist ajax function')
+                        location.href='/users'
+                       }
+                         }
                   </script>
 
 

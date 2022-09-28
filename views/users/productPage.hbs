@@ -50,7 +50,7 @@
     <!-- Product Page     -->
 <section class=" container sproduct  pt-4 ">
     <div class="row mt-5 parent__of__magnifier">
-        <div class="col-12 col-md-12 col-lg-5 image__box " >
+        <div class="col-12 col-md-12 col-lg-5 image__box" >
             <img class="img-fluid w-100 img" id="mainImg" src="/product-images/{{data._id}}.jpg" alt="image__here">
             <div class="magnifier-lens"></div> 
 
@@ -80,7 +80,7 @@
                 <option value="">10</option>
             </select>
             <input type="number"name="" value="1" id="" min="1">
-            <button class="btn btn-success">Buy Now</button>
+            {{!-- <button class="btn btn-success">Buy Now</button> --}}
             <button onclick=addToCart('{{data._id}}') class="btn btn-light add__to__cart">Add to Cart</button>
             <h4>Product details</h4>
             <p></p>{{data.description}}

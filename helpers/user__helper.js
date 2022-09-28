@@ -419,15 +419,21 @@ module.exports={
              
             });
     },
-    add__to__wishlist:(pro__id,user__email,user__id)=>{
+    add__to__wishlist:(pro__id,user__details)=>{
         let proObj = {
             item:objectId(pro__id),
         }
         return new Promise (async(resolve,reject)=>{
             try{
-                let user__wishlist = await db.get().collection(collection.WISHLIST__COLLECTION).findOne({user__email:user__email})
+                let user__wishlist = await db.get().collection(collection.WISHLIST__COLLECTION).findOne({user__email:user__details.email})
             if (user__wishlist){
-                db.get().collection(collection.WISHLIST__COLLECTION).updateOne({user__email:user__email},
+                let proExists = user__wishlist.products.findIndex(product=> product.item==product__id)
+                console.log(proExists)
+                if(proExists!=-1){
+                    remove__from__wish(pro__id,user__details)
+                    console.log('redirected to remove from wishlist from add to wishlist because the products already exists in wishlist')
+                }
+                db.get().collection(collection.WISHLIST__COLLECTION).updateOne({user__email:user__details.email},
                 {
                         $push:{products:proObj}
                 }).then((response)=>{
@@ -435,11 +441,19 @@ module.exports={
                 })
             }else{
                 wishlist = {
-                    user:objectId(user__id),
-                    user__email:user__email,
+                    user:objectId(user__details._id),
+                    user__email:user__details.email,
                     products:[proObj]
                 }
-                await db.get().collection(collection.WISHLIST__COLLECTION).insertOne(wishlist).then((response)=>{
+                await db.get().collection(collection.WISHLIST__COLLECTION).insertOne(wishlist).then(async(response)=>{
+                    await db.get(collection.PRODUCTS__COLLECTIONS).updateOne({_id:objectId(pro__id)},{
+                        $set:{
+                            wishlisted:true
+                        }
+                    }
+                    ,{
+                        upsert:true
+                    })
                     resolve('successfully added to wishlist')
                 })
             }
@@ -447,6 +461,20 @@ module.exports={
                 reject(err)
                 console.log(err,'is the error that occured in the user__helpers.js while executing the add to wishlist function !!')
             }
+        })
+    },
+    remove__from__wish:(pro__id,user__details)=>{
+        console.log(pro__id, user__details,'jfdsklaa;lfdlskadfffffkjsafdkljksadfajjjjajkslfjklasfjlksajfklsjflkjfkls')
+        return new Promise(async(resolve,reject)=>{
+            await  db.get().collection(collection.WISHLIST__COLLECTION)
+            .updateOne({user__email:user__details},
+            {
+                $pull:{products:{item:objectId(pro__id)}}
+            }
+            ).then((response)=>{
+                console.log(response)
+                resolve({removeProduct:true})
+            })
         })
     }
 }

@@ -364,13 +364,25 @@ console.log(order__details)
     print(req.params.proId,'is the product id that we got in add to wishlist router')
     user__details = auth.get__user__details()
     print(user__details)
-    user__helper.add__to__wishlist(req.params.proId,user__details.email,user__details._id).then((response)=>{
+    user__helper.add__to__wishlist(req.params.proId,user__details).then((response)=>{
       res.json({status:true})
     }).catch((err)=>{
       print(err,'err in add to wisglist router')
     })
   }catch(err){
     console.log(err,'is the error that occured in the users.js while executing the code of the add to wishlist router!')
+  }
+ })
+
+ /////////////// now some code for removing from the wishlist ///////////////
+ router.get('/remove__from__wishlist/:proId',auth.usercookieJWTAuth,(req,res)=>{
+  try{
+    user__details = auth.get__user__details()
+    user__helper.remove__from__wish(req.params.proId,user__details.email).then((response)=>{
+      res.json(response)
+    })
+  }catch(err){
+    console.log(err,'is the error occured in the remove from wish list router')
   }
  })
 
