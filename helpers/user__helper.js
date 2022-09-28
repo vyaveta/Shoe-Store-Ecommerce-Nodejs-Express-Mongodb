@@ -371,7 +371,7 @@ module.exports={
             })
         })
     },
-    paypal:(total__amount)=>{
+    paypal:(total__amount,order__id)=>{
         console.log('paypal function called!!!')
         var amount = total__amount / 80
         return new Promise((resolve,reject)=>{
@@ -407,7 +407,9 @@ module.exports={
                 if (error) {
                     throw error;
                 } else {
+                    payment.order__id = order__id
                     console.log('gonna resolve the payment')
+                    console.log(payment,'logged from the paypal.payment.create')
                     resolve(payment)
                 }
              }catch(err){

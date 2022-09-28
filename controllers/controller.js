@@ -1,3 +1,7 @@
+const user__helper = require('../helpers/user__helper')
+const auth = require('../helpers/user__auth');
+
+
 exports.update__user__profile = (req,res)=>{
     try{
         let Image = req.files.image
@@ -11,4 +15,7 @@ exports.update__user__profile = (req,res)=>{
         console.log('an error occured in the first ever controller in your project and the error is ',err)
         res.redirect('/admin/profilePage')
     }
+}
+exports.paypalSuccess = (req,res)=>{
+   
 }

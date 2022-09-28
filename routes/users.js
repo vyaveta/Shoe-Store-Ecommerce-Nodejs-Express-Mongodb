@@ -4,7 +4,13 @@ const jwt = require('jsonwebtoken')
 const user__helper = require('../helpers/user__helper')
 const auth = require('../helpers/user__auth');
 // const { token } = require('morgan');
-
+const paypal = require('paypal-rest-sdk');
+ 
+paypal.configure({
+  'mode': 'sandbox', //sandbox or live
+  'client_id': 'AQFcDqeYJQK2LZ0YbKFrh0r_PAFSShbgK5XTOJ25YxjtAWnq3QpYDNfoDuAHu9EzB-lCVTdUMK3kP3MS',
+  'client_secret': 'EB_f8QlJSFuW6zRueNatOW4x6UJC13AjZfFrHeZS6UMwqYbp-cWOuX9OVJVeUGMj6p_5qP7bg0_EHNxZ'
+});
 
 const print = console.log
 const table = console.table
@@ -13,6 +19,8 @@ let error__msg
 let number
 let cart__count
 let user__details
+let total__price
+let order__id
 //twilio
 // const client = require('twilio')(accountSid,authtoken)
 const product__helper = require('../helpers/product__helper');
@@ -282,8 +290,9 @@ router.post('/placeOrder',async(req,res)=>{
   console.log('got inside the post method of router')
   user__details = auth.get__user__details()
   let products = await user__helper.get__cart__products(user__details._id)
-  let total__price = await user__helper.get__total__amount(user__details)
+   total__price = await user__helper.get__total__amount(user__details)
  user__helper.place__order(req.body,products,total__price).then((orderId)=>{
+  order__id = orderId
   if(req.body['payment-method']=='COD'){
     res.json({codSuccess:true})
   }
@@ -298,7 +307,7 @@ router.post('/placeOrder',async(req,res)=>{
   }
   else{
     console.log('above the paypal function call')
-    user__helper.paypal(total__price).then((payment)=>{
+    user__helper.paypal(total__price,orderId).then((payment)=>{
       console.log('gonna send the payment to the ajax')
       let signal ={}
       signal.flag = 'paypal'
@@ -383,15 +392,43 @@ console.log(order__details)
     res.json({status:false})
   })
  })
+ router.get('/success',(req,res)=>{
+  try{
+    print('got it pay pal success')
+    const payerId = req.query.PayerID;
+    const paymentId = req.query.paymentId;
+   
+    const execute_payment_json = {
+      "payer_id": payerId,
+      "transactions": [{
+          "amount": {
+              "currency": "USD",
+              "total": total__price / 80
+          }
+      }]
+    };
+   
+    paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
+      if (error) {
+          console.log(error.response);
+          throw error;
+      } else {
+          console.log(JSON.stringify(payment));
+          user__helper.change__payment__status(order__id).then((response)=>{
+            print('paypal done!')
+            res.send('Success');
+          })
+      }
+  });
+}catch(err){
+    console.log(err ,'is the error that caused in the paypal success route')
+}
+ })
 
-
+ router.get('/cancel', (req, res) => res.send('Cancelled'));
 
 
 router.post('/updateProfile/:id',controller.update__user__profile)
-
-
-
-
 
 // logout///
 router.get('/logout',(req,res)=>{
