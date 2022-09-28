@@ -41,17 +41,18 @@
                 {{# each orders}}
                 <tr>
                     <td>{{this.date}}</td>
-                    <td>user name here</td>
+                    <td>{{this.user__name}}</td>
                     <td>{{this.delivery__details.address}}</td>
                     <td>{{this.delivery__details.mobile}}</td>
                     <td>{{this.total__amount}}</td>
                     <td>{{this.payment__method}}</td>
                    <form action="/admin/editOrderStatus/{{this._id}}" method="post">
                         <td> <select class="select" name="status" id="">
-                            <option value="">{{this.status}}</option>
-                            <option value="Shipped">Shipped</option>
-                            <option value="Placed">Placed</option>
-                            <option value="Cancelled">Cancelled</option>
+                            <option value="{{this.status}}">{{this.status}}</option>
+                            <option value="shipped">Shipped</option>
+                            <option value="placed">Placed</option>
+                            <option value="delivered">Delivered</option>
+                            <option value="cancelled">Cancelled</option>
                         </select> </td>
                         <td><input type="submit" class="btn btn-primary" value="Save"></td>
                    </form>

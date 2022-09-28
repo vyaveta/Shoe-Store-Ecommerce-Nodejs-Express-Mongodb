@@ -286,11 +286,14 @@ router.get('/profilePage',auth.usercookieJWTAuth,(req,res)=>{
 })
 ///////////////////////////////////////////// order placing /////////////////////////////////////////////////
 router.post('/placeOrder',async(req,res)=>{
+  
   console.log('got inside the post method of router')
   user__details = auth.get__user__details()
+  let order__details = req.body
+  order__details.name = user__details.name
   let products = await user__helper.get__cart__products(user__details._id)
    total__price = await user__helper.get__total__amount(user__details)
- user__helper.place__order(req.body,products,total__price).then((orderId)=>{
+ user__helper.place__order(order__details,products,total__price).then((orderId)=>{
   order__id = orderId
   if(req.body['payment-method']=='COD'){
     res.json({codSuccess:true})
@@ -441,13 +444,17 @@ console.log(order__details)
           console.log(JSON.stringify(payment));
           user__helper.change__payment__status(order__id).then((response)=>{
             print('paypal done!')
-            res.render('users/orderPlaced')
+            res.redirect('/users/orderPlaced')
           })
       }
   });
 }catch(err){
     console.log(err ,'is the error that caused in the paypal success route')
 }
+ })
+
+ router.get('/orderPlaced',(req,res)=>{
+  res.render('users/orderPlaced',{no__partials:true})
  })
 
  router.get('/cancel', (req, res) => res.send('Cancelled'));

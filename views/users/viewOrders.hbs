@@ -158,7 +158,7 @@
                     <span> Rs. {{this.total__amount}} </span>
                 </div>
                 <div class="total__amount">
-                    <h5>Payment method</h5>
+                    <h5>Payment</h5>
                     <span>{{this.payment__method}} </span>
                 </div>
                 <div class="status">
@@ -167,7 +167,7 @@
                 </div>
                 <div class="view__products">
                     <button class="the__button" onclick="window.location.href='/users/view__ordered__products/{{this._id}}'">View Products</button>
-                   {{#if this.cancelled}}
+                   {{#if this.cancel}}
                    {{else}}
                          <button onclick="window.location.href='/users/deleteOrder/{{this._id}}'" class="the__button cancel">Cancel Order</button>
                             {{/if}}

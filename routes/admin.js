@@ -307,7 +307,6 @@ router.post('/updateProfile',auth.adminCookieJWTAuth,async(req,res)=>{
 ////////////////////////////////////////////////////// for showing users orders//////////////////////////////////
 router.get('/showOrders',(req,res)=>{
   admin__helpers.get__all__orders().then((orders)=>{
-
     res.render('admin/viewOrders',{admin__details,adminname,admin__sidemenu:true,orders:true,orders})
   })
 })

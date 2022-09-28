@@ -207,6 +207,7 @@ module.exports={
                     pincode:order__details.pincode
                 },
                 user__id:objectId(order__details.user_id),
+                user__name:order__details.name,
                 payment__method:order__details['payment-method'],
                 products:products,
                 total__amount:total,
