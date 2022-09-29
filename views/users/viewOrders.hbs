@@ -166,8 +166,13 @@
                     <span>{{this.status}}</span>
                 </div>
                 <div class="view__products">
-                    <button class="the__button" onclick="window.location.href='/users/view__ordered__products/{{this._id}}'">View Products</button>
+                    {{#if this.review}}
+                    <button class="the__button" onclick="window.location.href='/users/view__ordered__products/?proId={{this._id}}&flag=review'">View Products</button>
+                    {{else}}
+                    <button class="the__button" onclick="window.location.href='/users/view__ordered__products/?proId={{this._id}}&flag=notYet'">View Products</button>
+                   {{/if}}
                    {{#if this.cancel}}
+
                    {{else}}
                          <button onclick="window.location.href='/users/deleteOrder/{{this._id}}'" class="the__button cancel">Cancel Order</button>
                             {{/if}}

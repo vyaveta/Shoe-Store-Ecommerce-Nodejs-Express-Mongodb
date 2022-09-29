@@ -32,9 +32,6 @@
     </div>
   </div>
 
-
-
-
   {{#if wish}}
   <div class="container-fluid ">
     <div class="row ">
@@ -101,7 +98,6 @@
           {{/if}}
 
           {{!-- for viewing ordered products --}}
-
           {{#if view__ordered__products}}
           <div class="container-fluid ">
             <div class="row ">
@@ -125,7 +121,7 @@
                           <div class="row">
                             <div class="col-6 card-title">
                               <h1 class="mb-4 product_name" style="font-size:18px; color:green;font-weight:800;">
-                                {{this.model}}</h1>
+                                {{this.product.model}}</h1>
                               <p class="mb-2">{{this.product.company__name}}</p>
                               <p class="mb-2">{{this.product.category}}</p>
                               <p class="mb-3">{{this.product.description}}</p>
@@ -139,20 +135,25 @@
                           </div>
                           <!--remove-->
                           <div class="row text-success ">
-
-
                             <div class="col-4 d-flex justify-content-end price_money">
                               <h4>Rs.<span id="itemval">{{this.product.price}}</span></h4>
                             </div>
-
+                            {{#if this.review}}
+                            <button class="the__button">Review</button>
+                            {{else}}
+                            
+                            {{/if}}
                           </div>
                         </div>
-
                       </div>
                     </div>
                     {{/each}}
-
                   </div>
+                  </div>
+                  </div>
+                  </div>
+                  </div>
+                  
                   {{!-- for viewing ordered products --}}
                   {{else}}
                   {{#if cart__details}}

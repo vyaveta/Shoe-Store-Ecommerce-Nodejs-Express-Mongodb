@@ -337,9 +337,18 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
   }
  })
  ///////////////////////////////////////////  FOR VIEWING ORDERED PRODUCTS  //////////////////////////////////////////////
- router.get('/view__ordered__products/:id',auth.usercookieJWTAuth,async(req,res)=>{
- user__helper.get__ordered__products(req.params.id).then((order__details)=>{
-console.log(order__details)
+ router.get('/view__ordered__products/',auth.usercookieJWTAuth,async(req,res)=>{
+  print(req.query.proId)
+  let review__access
+  user__details =  await auth.get__user__details()
+  let order = await user__helper.get__user__orders(user__details._id)
+  user__helper.get__ordered__products(req.query.proId,req.query.flag).then((order__details)=>{
+    console.log(order__details,'is the order details')
+    print(order,'is the orders')
+ 
+  review__access = false
+ 
+
    res.render('users/cartPage',{view__ordered__products:true,order__details,token,username,cart__count})
  })
  })

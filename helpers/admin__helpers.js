@@ -282,7 +282,7 @@ module.exports = {
           .updateOne(
             { _id: objectId(order__id) },
             {
-              $set: { status: status ,cancel:false},
+              $set: { status: status ,cancel:false,review:false},
             }
           )
           .then((response) => {
@@ -293,14 +293,33 @@ module.exports = {
               reject("not updated");
             }
           });
-      } else {
+      } else if (status == 'delivered'){
+        await db
+        .get()
+        .collection(collection__list.ORDER__COLLECTION)
+        .updateOne(
+          { _id: objectId(order__id) },
+          {
+            $set: { status: status ,cancel:true,review:true},
+          }
+        )
+        .then((response) => {
+          print(response);
+          if (response) {
+            resolve("done");
+          } else {
+            reject("not updated");
+          }
+        });
+      }
+      else {
         await db
           .get()
           .collection(collection__list.ORDER__COLLECTION)
           .updateOne(
             { _id: objectId(order__id) },
             {
-              $set: { status: status ,cancel:true},
+              $set: { status: status ,cancel:true,review:false},
             },{
                 upsert:true
             }

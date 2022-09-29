@@ -236,7 +236,7 @@ module.exports={
             resolve(orders)
         })
     },
-    get__ordered__products:(order__id)=>{
+    get__ordered__products:(order__id,flag)=>{
         return new Promise(async(resolve,reject)=>{
             let order__products = await db.get().collection(collection.ORDER__COLLECTION).aggregate([
                 {
@@ -265,6 +265,15 @@ module.exports={
                     }
                 }
             ]).toArray()
+            if(flag=='review'){
+                for(var i = 0 ; i < order__products.length ; i++){
+                    order__products[i].review = true
+                }
+            }else{
+                for(var i = 0 ; i < order__products.length ; i++){
+                    order__products[i].review = false
+                }
+            }
             console.log('passed the get__ordered__products aggregation')
             resolve(order__products)
         })
@@ -428,7 +437,7 @@ module.exports={
             try{
                 let user__wishlist = await db.get().collection(collection.WISHLIST__COLLECTION).findOne({user__email:user__details.email})
             if (user__wishlist){
-                let proExists = user__wishlist.products.findIndex(product=> product.item==product__id)
+                let proExists = user__wishlist.products.findIndex(product=> product.item==product.__id)
                 console.log(proExists)
                 if(proExists!=-1){
                     remove__from__wish(pro__id,user__details)
