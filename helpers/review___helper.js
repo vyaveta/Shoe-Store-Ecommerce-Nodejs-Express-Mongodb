@@ -101,4 +101,25 @@ module.exports = {
       );
     }
   },
+  get__productreviews:(product__id)=>{
+    return new Promise(async(resolve,reject)=>{
+        let reviews = db.get().collection(collection__list.PRODUCT__REVIEW__COLLECTION).aggregate([
+            {
+                $match:{pro__id:objectId(product__id)}
+            },
+            {
+                $unwind:'$reviews'
+            },
+            {
+                $project:{
+                    user__id:'$reviews.user',
+                    user__name:'$reviews.user__name',
+                    review:'$reviews.review',
+                    rating:'$reviews.rating'
+                }
+            }
+        ]).toArray()
+        resolve(reviews)
+    })
+  }
 };

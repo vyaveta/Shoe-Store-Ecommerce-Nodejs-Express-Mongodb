@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const user__helper = require('../helpers/user__helper')
 const auth = require('../helpers/user__auth');
 // const { token } = require('morgan');
+const review__helper = require('../helpers/review___helper')
 const paypal = require('paypal-rest-sdk');
  
 paypal.configure({
@@ -129,16 +130,26 @@ router.post('/signup',(req,res)=>{
 
 
 ////////////////// Product Page ///////////
-router.get('/productPage/:id',(req,res)=>{
+router.get('/productPage/:id',async(req,res)=>{
   token = req.cookies.usertoken
   console.log(req.params.id)
   var id = req.params.id
-  product__helper.get__the__product(id).then((data)=>{
-   
-   console.log(data.total__clicks)
-   product__helper.get__cart__count(useremail).then((count)=>{
-    cart__count = count
-    res.render('users/productPage',{data,token,username,cart__count})
+  await product__helper.get__the__product(id).then(async(data)=>{
+  await product__helper.get__cart__count(useremail).then(async(count)=>{
+await review__helper.get__productreviews(id).then((reviews)=>{
+  console.log(reviews,'got it hurray aslfkjlkasjf')
+  
+  for(var i = 0; i < reviews.length; i++){
+    reviews[i].loop =[]
+    let R = reviews[i].rating
+    for(var j = 0; j < R ;j++){
+      reviews[i].loop[j] = 'star'
+    }
+  }
+  console.log(reviews,'is the end result')
+  cart__count = count
+  res.render('users/productPage',{data,token,username,cart__count,reviews})
+})
   })
 })
 })

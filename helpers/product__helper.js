@@ -164,7 +164,7 @@ module.exports={
                     }
                 }
             ]).toArray()
-            console.table(user__cart)
+            console.log(user__cart)
             if(!user__cart || user__cart==null || user__cart==''){
 
                 resolve('no__cart')

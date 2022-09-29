@@ -87,14 +87,22 @@
             <div class="reviews">
                 <div class="box">
                     <h2>Product Reviews</h2>
-                    <div class="content">
-                        
+                   {{#each reviews}}
+                     <div class="content">
                         <div class="profile__pic">
-                            <img src="" alt="profile__image" width="50px">
-                            
+                            <img src="/userProfile/{{this.user__id}}.jpg" alt="profile__image" width="50px" height="50px"> 
                         </div>
-                        <div class="comment">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Obcaecati, dignissimos?</div>
+                        <div class="comment">{{this.review}} <br> <small>review by {{this.user__name}}</small></div>
+                        <div class="space">  </div>
+                        <div> <p>rating given</p> </div>
+                        
+                        <div class="star">
+                            {{#each this.loop}}
+                                <a class="st">⭐</a>
+                            {{/each}}
+                        </div>
                     </div>
+                   {{/each}}
                 </div> 
             </div>
         </div>
