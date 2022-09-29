@@ -9,12 +9,14 @@ const table = console.table;
 
 module.exports = {
   add__review: (user__details, review__details) => {
+    let totalR
+    let rating = review__details.starCount * 1
     try {
         review = {
             user:user__details._id,
             user__name:user__details.name,
             review:review__details.userReview,
-            rating:review__details.starCount
+            rating:review__details.starCount * 1
         }
         print('reporting from above the promise function')
       return new Promise(async (resolve, reject) => {
@@ -24,19 +26,41 @@ module.exports = {
           });
         if (ProductReview) {
           db.get().collection(collection__list.PRODUCT__REVIEW__COLLECTION).updateOne({
-              pro__id: objectId(review__details.proId),
-              
+              pro__id: objectId(review__details.proId), 
             },
             {
                 $push:{reviews:review}
             });
+            // now add the total star rating in product collection 
+            let product = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).findOne({_id:objectId(review__details.proId)})
+            print(product,'from the you know it right alkfj')
+            if(product.total__ratings){
+                if(product.total__ratings == 0)
+                {
+                    totalR = 1
+                }
+                else{
+                    totalR = product.total__ratings 
+                }
+            }
+            else{
+                totalR = 1
+            }
+            await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).updateOne({_id:objectId(review__details.proId)},
+            {
+                $set:{average__rating:rating / totalR},
+                $inc:{total__ratings:1}
+            },
+            {
+                upsert:true
+            })
         }
         else{ // if the product doesnt have any reviews, we create a document for that product
             review = [{
                 user:user__details._id,
                 user__name:user__details.name,
                 review:review__details.userReview,
-                rating:review__details.starCount
+                rating:review__details.starCount * 1
             }]
             print('form the else case')
             let document = {
@@ -45,6 +69,29 @@ module.exports = {
             }
            await db.get().collection(collection__list.PRODUCT__REVIEW__COLLECTION).insertOne(document).then((res)=>{
                 print(res,'from the insert review function ')
+            })
+
+            let product = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).findOne({_id:objectId(review__details.proId)})
+            print(product,'from the you know it right alkfj')
+            if(product.total__ratings){
+                if(product.total__ratings == 0)
+                {
+                    totalR = 1
+                }
+                else{
+                    totalR = product.total__ratings 
+                }
+            }
+            else{
+                totalR = 1
+            }
+            await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).updateOne({_id:objectId(review__details.proId)},
+            {
+                $set:{average__rating:rating / totalR},
+                $inc:{total__ratings:1}
+            },
+            {
+                upsert:true
             })
         }
         resolve('done')

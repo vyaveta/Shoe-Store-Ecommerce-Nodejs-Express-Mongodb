@@ -15,6 +15,7 @@ module.exports={
             product__details.price = product__details.price * 1
             product__details.stock = product__details.stock * 1
             product__details.total__clicks = 0
+            product__details.total__ratings = 0
             // product__details.category = category__id._id
             await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).insertOne(product__details).then((data)=>{
             //    
