@@ -42,10 +42,23 @@ router.get('/',async(req, res, next)=> {
     product__helper.get__new__arrivals().then((new__products)=>{
      product__helper.get__cart__count(useremail).then((count)=>{
         cart__count = count
-      // product__helper.get__top__picked__products().then((new__products)=>{
+    try{
+      for(var i = 0; i<products.length; i++){
+        products[i].loop=[]
+        if(products[i].average__rating){
+          var R = products[i].average__rating
+          for(var j = 0;j<R;j++){
+            products[i].loop[j]='star'
+          }
+        }
+      }
+    }catch(err){
+      print(err,'is the error that occured in the / router')
+    }finally{
+      print(products,'is the final result')
       print(`the user name that is going to be displayed in the top of the website header is ${username}`)
         res.render('home1',{token,username,products,new__products,cart__count})
-      // })
+    }  
     })
     })
    })
