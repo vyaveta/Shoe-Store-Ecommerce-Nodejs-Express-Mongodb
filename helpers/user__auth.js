@@ -37,7 +37,7 @@ module.exports={
     
     // this is a simple function but very usefull when we need to get the user details at a certain point in code 
     get__user__details:()=>{
-       // table(user__details)
+       
         return user__details
     }
     

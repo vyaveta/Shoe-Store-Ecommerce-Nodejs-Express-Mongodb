@@ -471,6 +471,8 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
 
 router.post('/updateProfile/:id',controller.update__user__profile)
 
+router.get('/rateProduct',controller.rate__product)
+
 // logout///
 router.get('/logout',(req,res)=>{
   res.clearCookie('usertoken')

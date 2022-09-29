@@ -18,8 +18,6 @@ var instance = new Razorpay({
     key_secret:'liUTofbWu4r68kbcSxU51Wmm',
 })
 
-
-
 module.exports={
     //add__user is double equal to user__sign__up
     add__user:(user)=>{

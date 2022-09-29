@@ -8,5 +8,6 @@ module.exports={
     ADMIN__ACTIONS:'admin__actions',
     DELETED__ACCOUNTS:'deleted__accounts',
     ORDER__COLLECTION:'orders__ecommerce',
-    WISHLIST__COLLECTION:'wishlist__ecommerce'
+    WISHLIST__COLLECTION:'wishlist__ecommerce',
+    PRODUCT__REVIEW__COLLECTION:'product__review'
 }
