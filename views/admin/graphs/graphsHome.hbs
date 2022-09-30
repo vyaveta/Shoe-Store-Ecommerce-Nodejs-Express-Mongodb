@@ -1,0 +1,39 @@
+
+    <title>sales graph</title>
+    <link rel="stylesheet" href="/stylesheets/admin/salesGraph.css">
+    <link rel="stylesheet" href="/stylesheets/admin/admin__dashboard.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="mini__wrapper">
+      <h3>Category Sales</h3>
+      <p id="sample">sample</p>
+      <div id="piechart_3d" class="graph"></div>
+    </div>
+  </div>  
+</body>
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      var test = [
+      ['a;lsjfd', 'la;fsjdk'],
+          ['Eat',      2],
+          ['Commute',  2],
+          ['Watch TV', 2],
+          ['Sleep',    7],
+          ]
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(test);
+        console.log(data)
+        
+          console.log(test)
+        var options = {
+          title:'total categories sold',
+          is3D: true,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+        chart.draw(data, options);
+      }
+    </script>

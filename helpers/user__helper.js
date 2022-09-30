@@ -188,6 +188,7 @@ module.exports={
     },
     place__order:(order__details,products,total)=>{
         var today = new Date()
+        var order__date = new Date()
         var dd = String(today.getDate()).padStart('2',0)
         var mm = String(today.getMonth()+1).padStart('2',0)
         var yyyy = today.getFullYear()
@@ -202,7 +203,9 @@ module.exports={
                 delivery__details:{
                     mobile:order__details.Phone__number,
                     address:order__details.address,
-                    pincode:order__details.pincode
+                    pincode:order__details.pincode,
+                    country:order__details.country,
+                    state:order__details.state
                 },
                 user__id:objectId(order__details.user_id),
                 user__name:order__details.name,
@@ -210,7 +213,10 @@ module.exports={
                 products:products,
                 total__amount:total,
                 status:status,
-                date:today
+                date:today,
+                order__date:order__date,
+                country:order__details.country,
+                state:order__details.state
             }
             console.log('before insertion')
             db.get().collection(collection.ORDER__COLLECTION).insertOne(orderObj).then((response)=>{
@@ -222,10 +228,15 @@ module.exports={
         })
     },
     get__cart__products:(user__id)=>{
-        return new Promise(async(resolve,reject)=>{
-            let cart = await db.get().collection(collection.CART__COLLECTIONS).findOne({user:objectId(user__id)})
-            resolve(cart.products)
-        })
+        try{
+            return new Promise(async(resolve,reject)=>{
+                let cart = await db.get().collection(collection.CART__COLLECTIONS).findOne({user:objectId(user__id)})
+                resolve(cart.products)
+            })
+        }catch(err){
+            resolve('no')
+            console.log(err,'from the get cart products')
+        }
     },
     get__user__orders:(user__id)=>{
         return new Promise(async(resolve,reject)=>{

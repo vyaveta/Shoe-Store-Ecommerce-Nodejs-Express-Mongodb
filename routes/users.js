@@ -52,6 +52,15 @@ router.get('/',async(req, res, next)=> {
           }
         }
       }
+      for(var i = 0; i<new__products.length; i++){
+        new__products[i].loop=[]
+        if(new__products[i].average__rating){
+          var R = new__products[i].average__rating
+          for(var j = 0;j<R;j++){
+            new__products[i].loop[j]='star'
+          }
+        }
+      }
     }catch(err){
       print(err,'is the error that occured in the / router')
     }finally{
@@ -92,7 +101,8 @@ router.post('/login',(req,res)=>{
               product__helper.get__new__arrivals().then((new__products)=>{
                 username = name
                 console.log(`the user name that is going to be displayed in the top of the website header is ${username}`)
-                res.render('home1',{token,username,products,new__products,cart__count})
+                // res.render('home1',{token,username,products,new__products,cart__count})
+                res.redirect('/users')
                })
              })
            })
@@ -316,7 +326,10 @@ router.post('/placeOrder',async(req,res)=>{
   let order__details = req.body
   order__details.name = user__details.name
   let products = await user__helper.get__cart__products(user__details._id)
-   total__price = await user__helper.get__total__amount(user__details)
+  if(products=='no'){
+    res.redirect('/')
+  }else{
+    total__price = await user__helper.get__total__amount(user__details)
  user__helper.place__order(order__details,products,total__price).then((orderId)=>{
   order__id = orderId
   if(req.body['payment-method']=='COD'){
@@ -347,6 +360,7 @@ router.post('/placeOrder',async(req,res)=>{
   }
  })
   console.log(req.body)
+  } 
 })
 //////////////////////////////////////////// FOR VIEWING ORDERS //////////////////////////////////////////////////
 router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{

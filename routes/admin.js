@@ -14,6 +14,7 @@ const objectId = require('mongodb').ObjectId
 const path = require('path')
 const table = console.table
 const print = console.log
+const controller = require('../controllers/controller')
 
 require('dotenv').config()
 
@@ -320,6 +321,11 @@ router.post('/editOrderStatus/:orderId',(req,res)=>{
     print(res)
   })
 })
+
+
+router.get('/graph',controller.admingraph)
+
+
 ///////Logout Route for the admin/////////
 router.get('/logout',(req,res)=>{
   console.log('admin logout attempt detected!!')

@@ -55,14 +55,15 @@ module.exports={
         })
     },update__product:(pId,pDetails)=>{
         return new Promise(async(resolve,reject)=>{
-             var category__id = await  db.get().collection(collection__list.CATEGORY__COLLECTIONS).findOne({name:pDetails.category},{_id:1})
-            print(category__id,"is the id of  category something something")
+            //  var category__id = await  db.get().collection(collection__list.CATEGORY__COLLECTIONS).findOne({name:pDetails.category},{_id:1})
+            var category = await  db.get().collection(collection__list.CATEGORY__COLLECTIONS).findOne({name:pDetails.category})
+            // print(category__id,"is the id of  category something something")
 
             db.get().collection(collection__list.PRODUCTS__COLLECTIONS).updateOne({_id:objectId(pId)},{$set:{
                 company__name:pDetails.company__name,
                 model:pDetails.model,
                 price:pDetails.price * 1,
-                category:category__id,
+                category:category.name,
                 description:pDetails.description,
                 stock:pDetails.stock * 1
             }}).then((response)=>{

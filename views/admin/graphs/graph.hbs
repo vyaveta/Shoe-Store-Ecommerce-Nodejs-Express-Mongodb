@@ -1,0 +1,42 @@
+<html>
+    <link rel="stylesheet" href="/stylesheets/admin/admin__dashboard.css">
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  </head>
+  <body>
+    <div id="geochart-colors" style="width: 700px; height: 433px;"></div>
+  </body>
+  <script type="text/javascript">
+    google.charts.load('current', {
+      'packages':['geochart'],
+      // Note: Because this chart requires geocoding, you'll need mapsApiKey.
+      // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+      'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+    });
+    google.charts.setOnLoadCallback(drawRegionsMap);
+
+    function drawRegionsMap() {
+      var data = google.visualization.arrayToDataTable([
+        ['Country',   'Products sold'],
+        ['india', 30],
+        ['China', 10],
+        ['Japan', 40],
+        ['Nepal', 20],
+        ['Bhutan', 30],
+        ['Sri lanka', 8],
+        
+      ]);
+
+      var options = {
+        region: '142', // Asia
+        colorAxis: {colors: ['yellowgreen', 'lightseagreen', 'green']},
+        backgroundColor: '#81d4fa',
+        datalessRegionColor: 'white',
+        defaultColor: 'green',
+      };
+
+      var chart = new google.visualization.GeoChart(document.getElementById('geochart-colors'));
+      chart.draw(data, options);
+    };
+</script>
+</html>
