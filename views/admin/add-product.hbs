@@ -8,6 +8,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="/stylesheets/admin/newform.css">
     <link rel="stylesheet" href="/stylesheets/admin/profilePage.css"> 
+    {{!-- <script src="/javascripts/imagecrop.js" defer></script> --}}
     {{!-- <link rel="stylesheet" href="/cropperjs/dist/cropper.min.css">
     <script src="/cropperjs/dist/cropper.min.js" defer></script> --}}
     
@@ -120,7 +121,7 @@
             
             <input class="button" type="submit" value="Add Product">
         </form>
-             <a href="/admin"><button class="home__button">Dashboard / Home</button></a>
+             <a onclick="window.location.href='/admin'" style="width:100% !important;"><button class="home__button" >Dashboard / Home</button></a>
     </div>
     </div>
     <script>
@@ -397,7 +398,7 @@
   });
 
     </script>
-      <script src="/javascripts/imageChange.js"></script>
+      
     {{!-- <script src="https://cdn.crop.guide/loader/l.js?c=TRYDYD"></script> --}}
 </body>
 </html>

@@ -12,11 +12,11 @@
         </div>
       </div>
  <div class="header__nav">
- {{#if token}} 
+ {{#if user__details}} 
         <div class="header__option">
             <span
             class="header__optionLineOne"
-            >Hello {{username}}</span>
+            >Hello {{user__details.name}}</span>
             <!-- The signup link condition Begining -->
 
          <a class="anchor__links" href="/users/logout"><span
@@ -51,7 +51,7 @@
             class="header__optionLineTwo"
             >& orders</span>
         </div>
-        <div class="header__option">
+        <div class="header__option" onclick="window.location.href='/users/bePrime'">
         <span
             class="header__optionLineOne"
             >Your</span>
@@ -59,7 +59,7 @@
             class="header__optionLineTwo"
             >Prime</span>
         </div>
-        {{#if token}}
+        {{#if user__details}}
         <div class="header__optionBasket" onclick="window.location.href='/users/cart__page'">
             <ShoppingBasketIcon />
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart4" viewBox="0 0 16 16">

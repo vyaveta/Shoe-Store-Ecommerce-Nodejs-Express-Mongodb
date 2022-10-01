@@ -5,13 +5,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://unpkg.com/scrollreveal"></script>
     <title>Be a prime member</title>
 </head>
 <style>
+    .hide{
+        display: none;
+    }
     body {
         padding: 0;
         margin: 0;
-        color: #333;
+        background-color: #333;
+        /* color: #333; */
         /* background-color: lightskyblue; */
     }
 
@@ -49,12 +55,13 @@
     .the__cover {
         position: relative;
         overflow: hidden;
-        height: 100vh;
+        height: 90vh;
         background-color: lightskyblue;
         z-index: -7;
     }
 
     #background-wrap {
+        width: 100vw;
         left: 0;
         padding-top: 50px;
         position: fixed;
@@ -65,7 +72,7 @@
 
     @keyframes animateClouds {
         0% {
-            margin-left: -1000px
+            margin-left: -600px
         }
 
         100% {
@@ -160,50 +167,235 @@
             transform: translateY(-50%);
         }
     }
-    .part__2{
+
+    .part__2 {
         background-color: white;
     }
-    .button__div{
+
+    .button__div {
         margin-bottom: 400px;
     }
-    .m__btn{
+
+    .m__btn {
         cursor: pointer;
-        position:relative;
-        color:#000;
-        margin:auto;
+        position: relative;
+        color: #000;
+        margin: auto;
         width: 280px;
         font-size: 33px;
-        font-weight:400;
-        letter-spacing:2px;
-        background-color:white;
-        border:5px solid #000;
-        box-shadow:1px 1px 0, 2px 2px 0, 3px 3px 0, 4px 4px 0,5px 5px 0
+        font-weight: 400;
+        letter-spacing: 2px;
+        background-color: white;
+        border: 5px solid #000;
+        box-shadow: 1px 1px 0, 2px 2px 0, 3px 3px 0, 4px 4px 0, 5px 5px 0
     }
-    .m__btn::after{
-        content:'';
-        position:absolute;
-        left:0;
-        top:0;
-        height: 100%; 
-        width:100%;
+
+    .m__btn::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
         z-index: -1;
-        background-color:white;
-        transition:all 0.5s
+        background-color: white;
+        transition: all 0.5s
     }
-    .m__btn:hover{
+
+    .m__btn:hover {
         background: transparent;
     }
-    .m__btn:hover::after{
+
+    .m__btn:hover::after {
         background-color: deepskyblue !important;
     }
-    .m__btn:hover{
+
+    .m__btn:hover {
         background-color: deepskyblue;
     }
-    .m__btn:active{
-        top:5px;
-        left:5px;
-        box-shadow: rgba(0,0,0,0.2)  0px 60px  40px -7px;
+
+    .m__btn:active {
+        top: 5px;
+        left: 5px;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
     }
+
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+html{
+  scroll-behavior: smooth;
+}
+section{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 100px;
+  color: #fff;
+  
+}
+
+.container{
+    z-index: 60000;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.main-title{
+  font-size: 4em;
+  margin-bottom: 50px;
+}
+
+.content{
+  position: relative;
+  width: 1150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content .image{
+  position: relative;
+  width: 800px;
+  height: 400px;
+  overflow: hidden;
+}
+
+.content .image img{
+  z-index: 111;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.content .text-box{
+  z-index: 222;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  padding: 40px;
+  max-width: 400px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  transform: translate(-80px, 50px);
+}
+
+.content .text-box h3{
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.media-icons{
+  margin-top: 100px;
+}
+
+.media-icons a{
+  color: #fff;
+  font-size: 2em;
+  margin: 60px;
+}
+
+.section-title{
+  font-size: 3em;
+  margin-bottom: 80px;
+}
+
+.info-title{
+  font-size: 1.8em;
+  margin-bottom: 10px;
+}
+
+.info{
+  width: 700px;
+  margin-left: 50px;
+}
+.sec-03{
+  margin-bottom: 100px;
+}
+.cover__2{
+    z-index: -5;
+    background-color: #333;
+}
+
+/* now some media query code to make the site responsive */
+@media screen and (max-width:1227px){
+    .content .image{
+  width: 500px;
+  height: 400px;
+}
+.main-title{
+  font-size: 2em;
+}
+.content{
+    padding: 20px;
+    flex-direction: column;
+    width: 100vw;
+    flex-wrap: wrap;
+}
+.info {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+}
+@media screen and (max-width:800px){
+    .content .image{
+  width: 300px;
+  height: 300px;
+}
+ @media screen and (max-width:580px){
+    .info{
+        width: 100vw;
+        padding: 0px;
+        margin-left: 0;
+    }
+    .content .text-box{
+        max-width: 300px;
+    }
+ }
+
+.info {
+    /* background-color: #f1f1f1; */
+    /* width: 500px; */
+    width: 100%;
+    padding: 70px;
+    display: flex;
+    flex-wrap: wrap;
+    word-wrap: break-word !important;
+}
+.info p{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+}
+@media screen and (max-width:470px){
+    .content .text-box{
+        
+        margin-left: auto;
+        /* margin-right: auto; */
+    }
+    .main-title,.section-title{
+        font-size: 16px;
+    }
+}
+@media screen and ( max-width:400px){
+    .content .text-box{
+        margin-left:50px;
+    }
+}
 </style>
 
 <body>
@@ -247,21 +439,99 @@
             </div>
         </div>
     </div>
- <div class="part__2">
-    <div class="top__section">Scroll down to see details</div>
-    <div class="hider">revealed</div>
-    <h3>only for prime members</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus veritatis corporis, vel et neque soluta? Quisquam
-        numquam architecto molestiae voluptates fugiat. Quod dolor, quas aliquam ad odit incidunt commodi animi
-        reprehenderit tempora! Esse deleniti quas quidem ab tempore a non facilis, debitis quod dolorem similique in.
-        Molestias consectetur tempore aspernatur corporis repudiandae soluta illo sit numquam quae et! Incidunt optio,
-        dignissimos quia voluptatum sunt, illum dolore rerum delectus perferendis totam ea fugit dolores, minus saepe
-        quasi nihil! Ipsa dicta aliquam debitis a ducimus quo recusandae hic minima necessitatibus eveniet dolores
-        illum, nemo perferendis quas odit laborum nobis, aliquid accusamus suscipit!</p>
+    <center><button class="m__btn" id="hide__">Hide Clouds</button></center>
+    <div class="cover__2">
+        <section class="sec-01">
+      
+            <div class="container">
+              <h2 class="main-title">Features That Awaits You When You Become Prime</h2>
+              <div class="content">
+                <div class="image">
+                  <img src="/public/images/users/handshake.jpg" alt="">
+                </div>
+                <div class="text-box">
+                  <h3>Terms and Conditions</h3>
+                  <p>Being a Prime member is Just like Signing a contrat betweeen us 
+                    where we offer you special services which are listed below and 
+                    will even get some of the products for free for reviewing , All
+                    you have to do is to be a prime member.
+                  </p>
+                </div>
+              </div>
+              <div class="media-icons">
+                <a href="#" class="icon"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="icon"><i class="fab fa-youtube"></i></a>
+              </div>
+            </div>
+          </section>
+          <section class="sec-02">
+            <div class="container">
+              <h3 class="section-title">Special Discount Coupons</h3>
+              <div class="content">
+                <div class="image">
+                  <img src="/public/images/users/discountCat.jpg" alt="">
+                </div>
+                <div class="info">
+                  <h4 class="info-title">Special Coupons?</h4>
+                  <p>Yes special, If you are a prime member , we will send special coupon codes for you from 
+                    which you can buy products from Shoe Store 
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="sec-03">
+            <div class="container">
+              <h3 class="section-title">Super Fast Delivery</h3>
+              <div class="content">
+                <div class="info">
+                    <h4 class="info-title">So do I get my orders fastly?</h4>
+                    <p>Of course You will and thats what it means, We will prioritize your orders and 
+                        make them deliver as soon as possible at your convenience
+                    </p>
+                  </div>
+                <div class="image">
+                  <img src="/public/images/users/superfast.jpg" alt="">
+                </div>
+              </div>
+            </div>
+          </section>
+    
           <div class="button__div">
             <center><button class="m__btn">Buy Prime</button></center>
           </div>
-        </div>
+    </div>
+  
+      
 </body>
+<script>
+    const blue = document.querySelector('.the__cover')
+    const hide__btn = document.getElementById('hide__')
+    const annoying__background = document.getElementById('background-wrap')
+    hide__btn.onclick = ()=>{
+        blue.classList.toggle('hide')
+        if(hide__btn.innerHTML == 'Show Clouds'){
+            hide__btn.innerHTML = 'Hide Clouds'
+        }else{
+            hide__btn.innerHTML = 'Show Clouds'
+        }
+    }
+    //common reveal options to create reveal animations
+    ScrollReveal({
+      //reset: true,
+      distance: '60px',
+      duration: 2500,
+      delay: 400
+    });
 
+    //target elements, and specify options to create reveal animations
+    ScrollReveal().reveal('.main-title, .section-title', { delay: 200, origin: 'left' });
+    ScrollReveal().reveal('.sec-01 .image, .info', { delay: 200, origin: 'bottom' });
+    ScrollReveal().reveal('.text-box', { delay: 200, origin: 'right' });
+    ScrollReveal().reveal('.media-icons i', { delay: 200, origin: 'bottom', interval: 200 });
+    ScrollReveal().reveal('.sec-02 .image, .sec-03 .image', { delay: 200, origin: 'top' });
+    ScrollReveal().reveal('.media-info li', { delay: 200, origin: 'left', interval: 100 });
+  </script>
 </html>

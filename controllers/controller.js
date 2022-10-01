@@ -4,7 +4,7 @@ let product__helper = require('../helpers/product__helper')
 let review__helper = require('../helpers/review___helper');
 const { response } = require('express');
 const graph__helper = require('../helpers/graph__helpers')
-let user__details
+
 const print = console.log
 
 exports.update__user__profile = (req,res)=>{
@@ -22,7 +22,7 @@ exports.update__user__profile = (req,res)=>{
     }
 }
 exports.rate__product= (req,res)=>{
-  user__details = auth.get__user__details()
+   var user__details = auth.get__user__details(req)
   print(req.query)
   review__helper.add__review(user__details,req.query).then((response)=>{
     print(response,'is the response form the promise')
@@ -33,44 +33,39 @@ exports.rate__product= (req,res)=>{
   })
 }
 exports.admingraph = (req,res)=>{
-  let categorySales
-  graph__helper.get__total__category__sales().then((totalCategorySales)=>{
-    print(totalCategorySales,'dunno whats gonna happen')
-    categorySales = totalCategorySales
-    var data={}
-    var test=[]
-    var flag=[]
-    var check=[]
-    // print(j)
-    for(var i = 0; i<categorySales.length;i++){
-      flag[i]=categorySales[i].category
-      data[categorySales[i].category]=categorySales[i].category
-    }
-    print(data,'is the data')
-    print(flag,'is the flag')
-    for(i=0;i<flag.length;i++){
-      var num=0
-      checkSignal=false
-      var lock = flag[i]
-      for(var k=0;k<check.length;k++){
-        if(check[k]==flag[i]){
-          checkSignal=true
-        }
-      }
-     if(!checkSignal){
-      for(j = i;j<flag.length;j++){
-        if(flag[j]==lock){
-          num=num+1
-        }
-        
-        }
-       
-     }
-     test[i]=[flag[i],num]
-     check[i]=flag[i]
-    }
-    print(check,'is the check')
-    print(test)
+  res.status(200).render('admin/graphs/graphsHome',{admin__sidemenu:true})
+}
+
+
+exports.all__category__logic = (req,res)=>{
+  
+}
+exports.firstgraph =(req,res)=>{
+  graph__helper.findOrders().then((data)=>{
+    res.json(data)
   })
-  res.status(200).render('admin/graphs/graphsHome',{admin__sidemenu:true,categorySales})
+}
+
+exports.bePrime = (req,res) =>{
+  var user__details = auth.get__user__details(req)
+  res.render('users/bePrime',{user__details})
+}
+
+exports.becommingPrime = (req,res) =>{
+  console.log('the user is trying to become a prime member')
+  var user__details = auth.get__user__details(req)
+  user__helper.prime__razorpay(user__details._id,5000).then((order)=>{
+    res.json(order)
+  })
+}
+
+exports.verify__payment__prime = async(req,res) => {
+  print('got it inside the controller ')
+  var user__details = await auth.get__user__details(req)
+ await user__helper.verify__payment__prime(req.body).then(async()=>{
+    console.log('passed the verify payment prime')
+   await user__helper.user__becomes__prime(user__details._id).then((resp)=>{
+      res.json({status:true})
+    })
+  })
 }

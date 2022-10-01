@@ -1,0 +1,211 @@
+ <link rel="stylesheet" href="/stylesheets/users/header.css">
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Aboreto&family=Oleo+Script+Swash+Caps:wght@400;700&family=Roboto+Mono:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap"
+  rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheets/users/bePrime.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://unpkg.com/scrollreveal"></script>
+ <div class="the__cover">
+        <div id="background-wrap">
+            <div class="the__another">
+                <div class="text__box">
+                    <h2>Become A Premium Member </h2>
+                    <span></span>
+                    <h3>and unlock premium features</h3>
+                </div>
+            </div>
+            <div class="x-1">
+                <div class="cloud">
+                </div>
+            </div>
+
+            <div class="x-6">
+                <div class="cloud">
+                </div>
+            </div>
+
+            <div class="x-2">
+                <div class="cloud">
+                </div>
+            </div>
+
+            <div class="x-3">
+                <div class="cloud">
+                </div>
+            </div>
+
+            <div class="x-4">
+                <div class="cloud">
+                </div>
+            </div>
+
+            <div class="x-5">
+                <div class="cloud">
+                </div>
+            </div>
+        </div>
+    </div>
+    <center><button class="m__btn" id="hide__">Hide Clouds</button></center>
+    <div class="cover__2">
+        <section class="sec-01">
+      
+            <div class="container">
+              <h2 class="main-title">Features That Awaits You When You Become Prime</h2>
+              <div class="content">
+                <div class="image">
+                  <img src="/images/users/handshake.jpg" alt="">
+                </div>
+                <div class="text-box">
+                  <h3>Terms and Conditions</h3>
+                  <p>Being a Prime member is Just like Signing a contrat betweeen us 
+                    where we offer you special services which are listed below and 
+                    will even get some of the products for free for reviewing , All
+                    you have to do is to be a prime member.
+                  </p>
+                </div>
+              </div>
+              <div class="media-icons">
+                <a href="#" class="icon"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="icon"><i class="fab fa-youtube"></i></a>
+              </div>
+            </div>
+          </section>
+          <section class="sec-02">
+            <div class="container">
+              <h3 class="section-title">Special Discount Coupons</h3>
+              <div class="content">
+                <div class="image">
+                  <img src="/images/users/discountCat.jpg" alt="">
+                </div>
+                <div class="info">
+                  <h4 class="info-title">Special Coupons?</h4>
+                  <p>Yes special, If you are a prime member , we will send special coupon codes for you from 
+                    which you can buy products from Shoe Store 
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="sec-03">
+            <div class="container">
+              <h3 class="section-title">Super Fast Delivery</h3>
+              <div class="content">
+                <div class="info">
+                    <h4 class="info-title">So do I get my orders fastly?</h4>
+                    <p>Of course You will and thats what it means, We will prioritize your orders and 
+                        make them deliver as soon as possible at your convenience
+                    </p>
+                  </div>
+                <div class="image">
+                  <img src="/images/users/superfast.jpg" alt="">
+                </div>
+              </div>
+            </div>
+          </section>
+    
+          <div class="button__div">
+            <center><button class="m__btn" id="prime" onclick="becommingPrime('something')">Buy Prime</button></center>
+          </div>
+    </div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+    const blue = document.querySelector('.the__cover')
+    const hide__btn = document.getElementById('hide__')
+    const annoying__background = document.getElementById('background-wrap')
+    hide__btn.onclick = ()=>{
+        blue.classList.toggle('hide')
+        if(hide__btn.innerHTML == 'Show Clouds'){
+            hide__btn.innerHTML = 'Hide Clouds'
+        }else{
+            hide__btn.innerHTML = 'Show Clouds'
+        }
+    }
+    //common reveal options to create reveal animations
+    ScrollReveal({
+      //reset: true,
+      distance: '60px',
+      duration: 2500,
+      delay: 400
+    });
+
+    //target elements, and specify options to create reveal animations
+    ScrollReveal().reveal('.main-title, .section-title', { delay: 200, origin: 'left' });
+    ScrollReveal().reveal('.sec-01 .image, .info', { delay: 200, origin: 'bottom' });
+    ScrollReveal().reveal('.text-box', { delay: 200, origin: 'right' });
+    ScrollReveal().reveal('.media-icons i', { delay: 200, origin: 'bottom', interval: 200 });
+    ScrollReveal().reveal('.sec-02 .image, .sec-03 .image', { delay: 200, origin: 'top' });
+    ScrollReveal().reveal('.media-info li', { delay: 200, origin: 'left', interval: 100 });
+
+console.log('script is runnig smoothly ')
+const prime = document.getElementById('prime')
+console.log(prime.innerHTML)
+    //Now lets write some code for the razorpay
+     becommingPrime = (msg) => {
+      console.log('a;lsjjflkj',msg)
+      $.ajax({
+                url:'/users/becommingPrime',
+                method:'get',
+                success:(order)=>{
+                    console.log(order)
+                    razorPayment(order)
+                }
+            })
+     }
+     razorPayment = (order) =>{
+       var options = {
+    "key": "rzp_test_BSsgMe3aOTLBnC", // Enter the Key ID generated from the Dashboard
+    "amount":order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Vyaveta group",
+    "description": "Test Transaction",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR06JmZ8xM8rNxElD2kKc1xAEmN84bdz7hYILs3lYaapLP08E6g27-v48UQD6QplgoVKdI&usqp=CAU",
+    "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler":function (response){
+       
+        
+        verifyPayment(response,order)
+    },
+   // "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+    "prefill": {
+        "name": "Adwaith",
+        "email": "whatthe12hell@gmail.com",
+        "contact": "9999999999"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#50AA57"
+    }
+};
+    var rzp1 = new Razorpay(options);
+    rzp1.open()
+      }
+    function verifyPayment(payment,order){
+      console.log('got inside the final function')
+        $.ajax({
+            url:'/users/verify__payment__prime',
+            data:{
+                payment,
+                order
+            },
+            method:'post',
+            success:(response)=>{
+              console.log(response)
+                if(response.status){
+                  console.log('lksd;fj')
+                  location.href='/users/orderPlaced'
+                }else{
+                    alert('payment failed')
+                    location.href= '/users'
+                }
+            }
+        })
+     }
+
+  </script>

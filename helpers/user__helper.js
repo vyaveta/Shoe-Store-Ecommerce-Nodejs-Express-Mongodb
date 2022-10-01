@@ -7,6 +7,7 @@ const objectId = require('mongodb').ObjectId
 const Razorpay = require('razorpay')
 const crypto = require('crypto')
 const paypal = require('paypal-rest-sdk');
+const print = console.log
  
 paypal.configure({
   'mode': 'sandbox', //sandbox or live
@@ -363,7 +364,6 @@ module.exports={
         })
     },
     verify__payment:(details)=>{
-        console.log(details,'msg from the verufy pasfkdjkfj')
         return new Promise (async(resolve,reject)=>{
             let hmac = crypto.createHmac('sha256','liUTofbWu4r68kbcSxU51Wmm')
             hmac.update(details['payment[razorpay_order_id]']+'|'+details['payment[razorpay_payment_id]'])
@@ -494,6 +494,51 @@ module.exports={
                 console.log(response)
                 resolve({removeProduct:true})
             })
+        })
+    },
+    prime__razorpay:(user__id,price) =>{
+        return new Promise (async(resolve,reject)=>{
+            var options = {
+                amount:price * 100,
+                currency:"INR",
+                receipt:""+user__id
+              };
+              instance.orders.create(options,(err,order)=>{
+                if(err){
+                    console.log(err,'is the error occured in the generate razorpay promise')
+                }
+                else{
+                    console.log(order,'is the order that we got from the generate razorpay promise that is in the user helper.js')
+                    resolve(order)
+                }
+              })
+        })
+    },
+    verify__payment__prime:(details)=>{
+        console.log('got inside the verify payment prime promise')
+        print(details,'is hte detaisl')
+        return new Promise ((resolve,reject)=>{
+            let hmac =  crypto.createHmac('sha256','liUTofbWu4r68kbcSxU51Wmm')
+            hmac.update(details['payment[razorpay_order_id]']+'|'+details['payment[razorpay_payment_id]'])
+            hmac = hmac.digest('hex')
+            if(hmac == details['payment[razorpay_signature]']){
+                print('promise done')
+                resolve()
+            }else{
+                reject()
+            }
+        })
+    },
+    user__becomes__prime:(userId) =>{
+        return new Promise (async(resolve,reject)=>{
+            await db.get().collection(collection.USER__COLLECTIONS).updateOne({_id:objectId(userId)},
+            {
+                $set:{
+                    is_member:true
+                }
+            })
+        }).then((done)=>{
+            print(done)
         })
     }
 }

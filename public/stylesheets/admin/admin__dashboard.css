@@ -42,6 +42,7 @@ h1,h2{
     background: rgb(255, 255, 255);
 }
 .side__menu li a{
+    cursor: pointer;
     font-size:1.3rem;
     padding:10px 40px;
     color:white;
@@ -108,10 +109,12 @@ h1,h2{
     flex-direction: row;
 }
 .admin__profile img{
+    cursor: pointer;
     border-radius: 50%;
 }
 .admin__logout button a,
 .title a {
+    cursor: pointer;
     text-decoration: none;
     color:#f1f1f1;
     font-weight: 600;
@@ -120,6 +123,7 @@ h1,h2{
 }
 .admin__logout button,
 .title button{
+    cursor: pointer;
     background: rebeccapurple;
     height: 40px;
     color: white;
@@ -140,6 +144,7 @@ h1,h2{
     background: #f1f1f1;
 }
 .section__1 .card__like{
+    cursor: pointer;
     /* padding: 20px 15px; */
     margin-left: 20px;
     display: flex;
@@ -150,6 +155,7 @@ h1,h2{
     /* height: 100vh; */
 }
 .section__1 .card__like .the__card{
+    cursor: pointer;
    width: 250px;
    height: 150px;
    background: white;
@@ -172,6 +178,7 @@ h1,h2{
     background:#f1f1f1;
 }
 .section__1 .section__1_2 .recent__payments{
+    
     min-height: 50vh;
     flex: 5;
     background: white;
@@ -244,6 +251,7 @@ h1,h2{
 
 /* Now time for some css for the datkMode */
 .darkmode{
+    
     background-color: #333 !important;
     color: white;
 }

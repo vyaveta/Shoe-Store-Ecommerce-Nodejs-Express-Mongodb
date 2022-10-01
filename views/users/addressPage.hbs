@@ -115,7 +115,7 @@
                 method:'post',
                 data:$('#checkout-form').serialize(),
                 success:(response)=>{
-                    alert('successfully placed order')
+                    alert('We are Placing Your Order')
                     if(response.codSuccess){
                         location.href='/users/showOrders'
                     }
@@ -123,7 +123,8 @@
                         razorpayPayment(response.order)
                     }
                     else {
-                        console.log('got inside the else condition og the ajaxfghj')
+                        try{
+                            console.log('got inside the else condition og the ajaxfghj')
                         console.log(response.links)
                          for(let i = 0;i < response.links.length;i++){
                             console.log(response.links[i].rel)
@@ -132,6 +133,10 @@
         //  res.redirect(response.links[i].href);
         }
       }
+                        }catch(err){
+                            alert('an error occured in order Placing')
+                            location.href = '/users'
+                        }
                     }
                 }
             })
@@ -179,6 +184,7 @@
                   location.href='/users/orderPlaced'
                 }else{
                     alert('payment failed')
+                    location.href= '/users'
                 }
             }
         })

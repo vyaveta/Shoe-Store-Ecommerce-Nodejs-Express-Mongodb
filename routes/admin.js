@@ -12,6 +12,7 @@ const product__helper = require('../helpers/product__helper');
 const user__helper = require('../helpers/user__helper')
 const objectId = require('mongodb').ObjectId
 const path = require('path')
+const graph__helper = require('../helpers/graph__helpers')
 const table = console.table
 const print = console.log
 const controller = require('../controllers/controller')
@@ -22,6 +23,8 @@ router.use(function(req, res, next) {
     res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
     next();
   });
+
+
 
 
 var adminname
@@ -94,7 +97,7 @@ admin__helpers.add__admin(req.body).then((response)=>{
 })
 })
 
-
+router.use(auth.adminCookieJWTAuth)
 // route to display all users
 router.get('/showUsers',auth.adminCookieJWTAuth,(req,res)=>{
   var a = 'get__all__users'
@@ -102,14 +105,14 @@ router.get('/showUsers',auth.adminCookieJWTAuth,(req,res)=>{
   //code to get the users data from the database
   admin__helpers.get__users('get__all__users').then((response)=>{
     console.log("And the Admin.js got the data of all users from admin__helpers and now shipping it to the admin webpage")
-    res.render('admin/showUsers',{response,adminname,customers:true,admin__sidemenu:true,admin__msg})
+    res.render('admin/showUsers',{response,adminname,customers:true,admin__sidemenu:true,admin__msg,admin__details})
     admin__msg = ''
   })
 })
 router.get('/showPrimeUsers',auth.adminCookieJWTAuth,(req,res)=>{
   admin__helpers.get__users('get__prime__users').then((response)=>{
     console.log(`now printing all the prime users ${response}`)
-    res.render('admin/showPrimeUsers',{response,admin__sidemenu:true,prime__users:true})
+    res.render('admin/showPrimeUsers',{response,admin__sidemenu:true,prime__users:true,admin__details})
   })
 })
 //route for deleting a user
@@ -162,7 +165,7 @@ router.get('/showProducts',auth.adminCookieJWTAuth,(req,res)=>{
     //   response[i].image_id= response[i]._id.toString()
     // }
     console.log(response)
-    res.render('admin/show-products',{response,adminname,admin__sidemenu:true,product:true,admin__msg})
+    res.render('admin/show-products',{response,adminname,admin__sidemenu:true,product:true,admin__msg,admin__details})
     admin__msg = ''
   })
 })
@@ -171,7 +174,7 @@ router.get('/showProducts',auth.adminCookieJWTAuth,(req,res)=>{
 router.get('/addProduct',auth.adminCookieJWTAuth,(req,res)=>{
   category__helper.get__category__list().then((data)=>{
   //  console.log(data)
-    res.render('admin/add-product',{data,no__partials:true,admin__msg})
+    res.render('admin/add-product',{data,no__partials:true,admin__msg,admin__details})
     admin__msg = ''
   })
 })
@@ -215,13 +218,13 @@ router.get('/deleteProduct/:id',auth.adminCookieJWTAuth,(req,res)=>{
 
 router.get('/showCategory',auth.adminCookieJWTAuth,(req,res)=>{
   category__helper.get__category__list().then((data)=>{
-    res.render('admin/show-category',{data,adminname,admin__sidemenu:true,category:true,admin__msg})
+    res.render('admin/show-category',{data,adminname,admin__sidemenu:true,category:true,admin__msg,admin__details})
     admin__msg = ''
   })
 })
 router.get('/addCategory',auth.adminCookieJWTAuth,(req,res)=>{
   category__helper.get__category__list().then((data)=>{
-    res.render('admin/addCategory',{data,no__partials:true,admin__msg})
+    res.render('admin/addCategory',{data,no__partials:true,admin__msg,admin__details})
     admin__msg = ''
   })
 })
@@ -324,6 +327,18 @@ router.post('/editOrderStatus/:orderId',(req,res)=>{
 
 
 router.get('/graph',controller.admingraph)
+
+router.get('/getCategoryGraph',(req,res)=>{
+  let categorySales
+   graph__helper.get__total__category__sales().then((totalCategorySales)=>{
+    print(totalCategorySales,'dunno whats gonna happen')
+    categorySales = totalCategorySales
+  })
+  print('got here')
+  res.json(categorySales)
+})
+
+router.get('/getCategorySales',controller.firstgraph)
 
 
 ///////Logout Route for the admin/////////

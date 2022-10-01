@@ -66,7 +66,8 @@ router.get('/',async(req, res, next)=> {
     }finally{
       print(products,'is the final result')
       print(`the user name that is going to be displayed in the top of the website header is ${username}`)
-        res.render('home1',{token,username,products,new__products,cart__count})
+      var user__details = auth.get__user__details(req)
+        res.render('home1',{token,username,products,new__products,cart__count,user__details})
     }  
     })
     })
@@ -247,7 +248,7 @@ router.get('/add__to__cart/',auth.usercookieJWTAuth,(req,res)=>{
     res.redirect('/users/login')
   }
   print(req.query.product__id)
-   user__details = auth.get__user__details()
+   user__details = auth.get__user__details(req)
   if(user__details==null){
     print('user__Details is null')
   }else
@@ -261,7 +262,7 @@ router.get('/add__to__cart/',auth.usercookieJWTAuth,(req,res)=>{
 })
 router.get('/cart__page',auth.usercookieJWTAuth,async(req,res)=>{
   token = req.cookies.usertoken
-   user__details = auth.get__user__details()
+   user__details = auth.get__user__details(req)
   table(user__details)
   let total = await user__helper.get__total__amount(user__details)
  let cart__details = await product__helper.find__the__user__cart(user__details.email)
@@ -295,7 +296,7 @@ router.post('/changeProductQuantity',async(req,res,next)=>{
 }
 })
 router.get('/checkout',auth.usercookieJWTAuth,async(req,res)=>{
-  user__details = auth.get__user__details()
+  user__details = auth.get__user__details(req)
  let response = await product__helper.find__the__user__cart(user__details.email)
     let total = await user__helper.get__total__amount(user__details)
     let result = await user__helper.get__user__address(user__details.email)
@@ -311,9 +312,9 @@ router.get('/checkout',auth.usercookieJWTAuth,async(req,res)=>{
 
 ////////////////////////// some code for showing the user profile page //////////////////////
 router.get('/profilePage',auth.usercookieJWTAuth,(req,res)=>{
-   user__details = auth.get__user__details()
+   user__details =  auth.get__user__details(req)
    user__helper.get__user__address(user__details.email).then((addresses)=>{
-    print(addresses.address, 'is the address')
+    // print(addresses.address, 'is the address')
     let address = addresses.address
     res.render('users/userProfile',{token,username,cart__count,user__details,address})
   })
@@ -322,7 +323,7 @@ router.get('/profilePage',auth.usercookieJWTAuth,(req,res)=>{
 router.post('/placeOrder',async(req,res)=>{
   
   console.log('got inside the post method of router')
-  user__details = auth.get__user__details()
+  user__details = auth.get__user__details(req)
   let order__details = req.body
   order__details.name = user__details.name
   let products = await user__helper.get__cart__products(user__details._id)
@@ -365,7 +366,7 @@ router.post('/placeOrder',async(req,res)=>{
 //////////////////////////////////////////// FOR VIEWING ORDERS //////////////////////////////////////////////////
 router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
   try{
-    user__details = await auth.get__user__details()
+    user__details = await auth.get__user__details(req)
     print(user__details)
   let orders = await user__helper.get__user__orders(user__details._id)
    res.render('users/viewOrders',{user__details,orders,token,username})
@@ -378,7 +379,7 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
  router.get('/view__ordered__products/',auth.usercookieJWTAuth,async(req,res)=>{
   print(req.query.proId)
   let review__access
-  user__details =  await auth.get__user__details()
+  user__details =  await auth.get__user__details(req)
   let order = await user__helper.get__user__orders(user__details._id)
   user__helper.get__ordered__products(req.query.proId,req.query.flag).then((order__details)=>{
     console.log(order__details,'is the order details')
@@ -412,7 +413,7 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
  router.get('/add__to__wishlist/:proId',auth.usercookieJWTAuth,(req,res)=>{
   try{
     print(req.params.proId,'is the product id that we got in add to wishlist router')
-    user__details = auth.get__user__details()
+    user__details = auth.get__user__details(req)
     print(user__details)
     user__helper.add__to__wishlist(req.params.proId,user__details).then((response)=>{
       res.json({status:true})
@@ -427,7 +428,7 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
  /////////////// now some code for removing from the wishlist ///////////////
  router.get('/remove__from__wishlist/:proId',auth.usercookieJWTAuth,(req,res)=>{
   try{
-    user__details = auth.get__user__details()
+    user__details = auth.get__user__details(req)
     user__helper.remove__from__wish(req.params.proId,user__details.email).then((response)=>{
       res.json(response)
     })
@@ -439,7 +440,7 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
  //////////////// some code for the wishlist products to display ///////////
  router.get('/showWishlist',auth.usercookieJWTAuth,async(req,res)=>{
   token = req.cookies.usertoken
-   user__details = auth.get__user__details()
+   user__details = auth.get__user__details(req)
   table(user__details)
  let wish__details = await product__helper.find__the__user__wish(user__details.email)
    product__helper.get__cart__count(useremail).then((count)=>{
@@ -449,7 +450,7 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
 })
  //////////////////////////////   now some code for the users to delete their address //////
  router.post('/delete__address',auth.usercookieJWTAuth,(req,res)=>{
-  user__details = auth.get__user__details()
+  user__details = auth.get__user__details(req)
   user__helper.delete__address(req.body.title,user__details.email).then((response)=>{
     res.json({status:true})
   })
@@ -510,6 +511,12 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
 router.post('/updateProfile/:id',controller.update__user__profile)
 
 router.get('/rateProduct',controller.rate__product)
+
+router.get('/bePrime',controller.bePrime)
+
+router.get('/becommingPrime',controller.becommingPrime)
+
+router.post('/verify__payment__prime',controller.verify__payment__prime)
 
 // logout///
 router.get('/logout',(req,res)=>{

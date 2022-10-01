@@ -40,5 +40,39 @@ module.exports = {
             // print(total__category__sales,'got it (dunno whats gonna happen)')
             resolve(total__category__sales)
         })
+    },
+    findOrders:()=>{
+        return new Promise (async(resolve,reject)=>{
+            let data = await db.get().collection(collection__list.ORDER__COLLECTION).aggregate([
+                {
+                    $match:{
+                        order__date:{$gte:new Date(new Date - 60*60*24*1000*7)}
+                    }
+                },
+                {
+                    $unwind:'$products'
+                },
+                {
+                    $project:{
+                        year:{$year:'$order__date'},
+                        month:{$month:'$order__date'},
+                        day:{$dayOfMonth:'$order__date'},
+                        dayOfWeek:{$dayOfWeek:'$order__date'}
+                    }
+                },
+                {
+                    $group:{
+                        _id:'$dayOfWeek',
+                        count:{$sum:1},
+                        details:{$first:'$$ROOT'}
+                    }
+                },
+                {
+                    $sort:{details:1}
+                }
+            ]).toArray()
+            print(data,'is the data gotten')
+            resolve(data)
+        })
     }
 }
