@@ -4,6 +4,11 @@ body{
     background-color: white;
     font-family: 'Roboto Mono', monospace;
 }
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
 .main{
     padding: 15px;
 }

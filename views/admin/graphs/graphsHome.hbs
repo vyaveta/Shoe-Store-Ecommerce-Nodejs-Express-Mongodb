@@ -160,16 +160,35 @@ function getCategoryOrders(){
     }
     response[i].count = count
          }
-    
+         for(var i = 0;i<response.length;i++){
+            var s = true
+            for(var j = 0; j<collector.length; j++){
+                console.log(collector[j])
+                if(response[i].category == collector[j].category){
+                     s = false
+                     console.log(response[i],'repeated')
+                }
+            }
+            if(s){
+                console.log('not repeated')
+                collector.push(response[i])
+            }
+         }
+         var categoryname = []
+         var countcat = []
+         for(var i = 0; i < collector.length; i++){
+            categoryname.push(collector[i].category)
+            countcat.push(collector[i].count)
+         }
     console.log(collector,'is the collecter')
-    console.log(response,'is the final resposne')
+    console.log(categoryname,'count :',countcat)
 const myChart = new Chart(category, {
     type: 'doughnut',
     //doughnut
    data : {
-    labels: ['Red','Yellow','Blue'],
+    labels: [...categoryname],
     datasets: [{
-        data: [10, 20, 30],
+        data: [...countcat],
          backgroundColor: ['rgb(255, 99, 132)','rgb(54, 162, 235)','rgb(255, 206, 86)','rgb(75, 192, 192)','rgb(153, 102, 255)','rgb(255, 159, 64)'],
             borderColor: 'white',
             borderWidth:3
