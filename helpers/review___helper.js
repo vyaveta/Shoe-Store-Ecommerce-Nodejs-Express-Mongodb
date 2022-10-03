@@ -9,6 +9,7 @@ const table = console.table;
 
 module.exports = {
   add__review: (user__details, review__details) => {
+    var average__r
     let totalR
     let rating = review__details.starCount * 1
     try {
@@ -32,21 +33,30 @@ module.exports = {
             // now add the total star rating in product collection 
             let product = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).findOne({_id:objectId(review__details.proId)})
             print(product,'from the you know it right alkfj')
+            if(product.average__rating){
+                average__r = product.average__rating
+            }
             if(product.total__ratings){
+                print(product.total__ratings,'is the total rating ')
                 if(product.total__ratings == 0)
                 {
                     totalR = 1
                 }
                 else{
-                    totalR = product.total__ratings 
+                    totalR = product.total__ratings
                 }
             }
             else{
                 totalR = 1
             }
+            var rating_divider = totalR +1
+            var r = Number((average__r*totalR))+Number((review__details.starCount ))
+            var final =r / rating_divider
+            console.log(rating_divider,'is the rating diveider and r :',r,'final :',final)
+            print(totalR,'is the total rating and average rating is ', average__r)
             await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).updateOne({_id:objectId(review__details.proId)},
             {
-                $set:{average__rating:rating / totalR},
+                $set:{average__rating:final},
                 $inc:{total__ratings:1}
             },
             {
@@ -85,7 +95,7 @@ module.exports = {
             }
             await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).updateOne({_id:objectId(review__details.proId)},
             {
-                $set:{average__rating:rating / totalR},
+                $set:{average__rating:rating/ totalR},
                 $inc:{total__ratings:1}
             },
             {

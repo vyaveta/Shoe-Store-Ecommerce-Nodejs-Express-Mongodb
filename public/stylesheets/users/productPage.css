@@ -35,8 +35,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow-x: scroll;
-    max-height: 600px;
+    max-height: 280px;
 }
 .box{
     width: 100%;
@@ -45,13 +44,14 @@
     flex-direction: column;
     align-items:flex-start;
     justify-content: flex-start;
+    max-height: 250px;
+    overflow-x: scroll;
    
 }
 .content{
     display: flex;
     justify-content:flex-start;
     margin-bottom: 10px;
-    /* background-color: #dcdcdc; */
     width: 100%;
 }
 .profile__pic{

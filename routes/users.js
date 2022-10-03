@@ -155,6 +155,7 @@ router.post('/signup',(req,res)=>{
 
 ////////////////// Product Page ///////////
 router.get('/productPage/:id',async(req,res)=>{
+  var user__details = auth.get__user__details(req)
   token = req.cookies.usertoken
   console.log(req.params.id)
   var id = req.params.id
@@ -172,7 +173,7 @@ await review__helper.get__productreviews(id).then((reviews)=>{
   }
   console.log(reviews,'is the end result')
   cart__count = count
-  res.render('users/productPage',{data,token,username,cart__count,reviews})
+  res.render('users/productPage',{data,token,username,cart__count,reviews,user__details})
 })
   })
 })
@@ -269,7 +270,7 @@ router.get('/cart__page',auth.usercookieJWTAuth,async(req,res)=>{
 
    product__helper.get__cart__count(useremail).then((count)=>{
         cart__count = count
-        res.render('users/cartPage',{cart__details,token,username,cart__count,total})
+        res.render('users/cartPage',{cart__details,token,username,cart__count,total,user__details})
      })
 })
 router.post('/changeProductQuantity',async(req,res,next)=>{

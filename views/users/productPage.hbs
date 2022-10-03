@@ -36,6 +36,7 @@
     object-fit: cover;
    }
    
+   
 </style>
 
 <body>
@@ -90,7 +91,7 @@
                    {{#each reviews}}
                      <div class="content">
                         <div class="profile__pic">
-                            <img src="/userProfile/{{this.user__id}}.jpg" alt="" id="userP" width="50px" height="50px"> 
+                            <img src="/userProfile/{{this.user__id}}.jpg" alt="" id="userP" class="userP" width="50px" height="50px"> 
                         </div>
                         <div class="comment">{{this.review}} <br> <small>review by {{this.user__name}}</small></div>
                         <div class="space">  </div>
@@ -148,10 +149,16 @@
         }
        })
     }
-    let profile = document.getElementById('userP')
-    profile.addEventListener('error',()=>{
-        profile.src = '/images/users/userProfile.jpg'
+    let profile = document.querySelectorAll('.userP')
+    console.log(profile)
+   for (var i = 0; i<profile.length;i++){
+    console.log('count')
+    console.log(profile[i])
+     profile[i].addEventListener('error',(event)=>{
+        console.log(event)
+        event.target.src='/images/users/userProfile.jpg'
     })
+   }
 </script> 
 <script src="/javascripts/productZoom.js"></script>
 
