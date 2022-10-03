@@ -38,9 +38,10 @@ let username
 /* GET users listing. */
 router.get('/',async(req, res, next)=> {
    token = req.cookies.usertoken
+   var user__details = auth.get__user__details(req)
    product__helper.get__top__picks().then((products)=>{
     product__helper.get__new__arrivals().then((new__products)=>{
-     product__helper.get__cart__count(useremail).then((count)=>{
+     product__helper.get__cart__count(user__details.email).then((count)=>{
         cart__count = count
     try{
       for(var i = 0; i<products.length; i++){
@@ -66,7 +67,7 @@ router.get('/',async(req, res, next)=> {
     }finally{
       print(products,'is the final result')
       print(`the user name that is going to be displayed in the top of the website header is ${username}`)
-      var user__details = auth.get__user__details(req)
+     
         res.render('home1',{token,username,products,new__products,cart__count,user__details})
     }  
     })
@@ -160,7 +161,7 @@ router.get('/productPage/:id',async(req,res)=>{
   console.log(req.params.id)
   var id = req.params.id
   await product__helper.get__the__product(id).then(async(data)=>{
-  await product__helper.get__cart__count(useremail).then(async(count)=>{
+  await product__helper.get__cart__count(user__details.email).then(async(count)=>{
 await review__helper.get__productreviews(id).then((reviews)=>{
   console.log(reviews,'got it hurray aslfkjlkasjf')
   
@@ -255,7 +256,7 @@ router.get('/add__to__cart/',auth.usercookieJWTAuth,(req,res)=>{
   }else
   print(user__details,'success')
   product__helper.add__to__cart(req.query.product__id,user__details._id,user__details.email).then((response)=>{
-    product__helper.get__cart__count(useremail).then((count)=>{
+    product__helper.get__cart__count(user__details.email).then((count)=>{
       cart__count = count
       res.json({status:true,count})
    })
@@ -268,7 +269,7 @@ router.get('/cart__page',auth.usercookieJWTAuth,async(req,res)=>{
   let total = await user__helper.get__total__amount(user__details)
  let cart__details = await product__helper.find__the__user__cart(user__details.email)
 
-   product__helper.get__cart__count(useremail).then((count)=>{
+   product__helper.get__cart__count(user__details.email).then((count)=>{
         cart__count = count
         res.render('users/cartPage',{cart__details,token,username,cart__count,total,user__details})
      })
@@ -277,8 +278,9 @@ router.post('/changeProductQuantity',async(req,res,next)=>{
   print('got inside the change product quantity router !')
   console.log(req.body)
  try{
+  var user__details = auth.get__user__details(req)
  await user__helper.change__product__quantity(req.body).then(async(response)=>{
-  await  product__helper.get__cart__count(useremail).then(async(count)=>{
+  await  product__helper.get__cart__count(user__details.email).then(async(count)=>{
       // response.total = await  user__helper.get__total__amount(user__details)
     await  user__helper.get__total__amount(user__details).then(async(total)=>{
         cart__count = count  
@@ -444,7 +446,7 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
    user__details = auth.get__user__details(req)
   table(user__details)
  let wish__details = await product__helper.find__the__user__wish(user__details.email)
-   product__helper.get__cart__count(useremail).then((count)=>{
+   product__helper.get__cart__count(user__details.email).then((count)=>{
         cart__count = count
         res.render('users/cartPage',{wish__details,token,username,cart__count,wish:true})
      })
