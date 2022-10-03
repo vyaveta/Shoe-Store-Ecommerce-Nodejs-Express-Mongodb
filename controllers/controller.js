@@ -38,7 +38,13 @@ exports.admingraph = (req,res)=>{
 
 
 exports.all__category__logic = (req,res)=>{
-  
+  let categorySales
+   graph__helper.get__total__category__sales().then((totalCategorySales)=>{
+    print(totalCategorySales,'dunno whats gonna happen')
+    categorySales = totalCategorySales
+    print('got here')
+    res.json(categorySales)
+  })
 }
 exports.firstgraph =(req,res)=>{
   graph__helper.findOrders().then((data)=>{
@@ -50,15 +56,26 @@ exports.bePrime = (req,res) =>{
   var user__details = auth.get__user__details(req)
   res.render('users/bePrime',{user__details})
 }
-
 exports.becommingPrime = (req,res) =>{
   console.log('the user is trying to become a prime member')
-  var user__details = auth.get__user__details(req)
+  try{
+    var user__details = auth.get__user__details(req)
+    if(!user__details){
+      throw 'not__logged__in'
+    }
   user__helper.prime__razorpay(user__details._id,5000).then((order)=>{
     res.json(order)
   })
+  }catch(err){
+    console.log(err)
+    if(err=='not__logged__in'){
+      res.json('not__logged__in')
+    }
+    else{
+      res.json('something wrong happened')
+    }
+  }
 }
-
 exports.verify__payment__prime = async(req,res) => {
   print('got it inside the controller ')
   var user__details = await auth.get__user__details(req)

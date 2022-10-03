@@ -44,7 +44,7 @@ body {
 .the__cover {
     position: relative;
     overflow: hidden;
-    height: 90vh;
+    height: 80vh;
     background-color: lightskyblue;
     z-index: -7;
 }

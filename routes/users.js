@@ -388,7 +388,7 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
   review__access = false
  
 
-   res.render('users/cartPage',{view__ordered__products:true,order__details,token,username,cart__count})
+   res.render('users/cartPage',{view__ordered__products:true,order__details,token,user__details,cart__count})
  })
  })
  //////////////////////////////////////////////////// for cancelling  orders//////////////////////////////////////////////

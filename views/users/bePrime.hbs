@@ -108,7 +108,11 @@
           </section>
     
           <div class="button__div">
+            {{#if user__details.is_member}}
+             <center><button class="m__btn" id="prime">You Are already Prime</button></center>
+            {{else}}
             <center><button class="m__btn" id="prime" onclick="becommingPrime('something')">Buy Prime</button></center>
+            {{/if}}
           </div>
     </div>
 
@@ -134,12 +138,12 @@
     });
 
     //target elements, and specify options to create reveal animations
-    ScrollReveal().reveal('.main-title, .section-title', { delay: 200, origin: 'left' });
-    ScrollReveal().reveal('.sec-01 .image, .info', { delay: 200, origin: 'bottom' });
-    ScrollReveal().reveal('.text-box', { delay: 200, origin: 'right' });
-    ScrollReveal().reveal('.media-icons i', { delay: 200, origin: 'bottom', interval: 200 });
-    ScrollReveal().reveal('.sec-02 .image, .sec-03 .image', { delay: 200, origin: 'top' });
-    ScrollReveal().reveal('.media-info li', { delay: 200, origin: 'left', interval: 100 });
+    ScrollReveal().reveal('.main-title, .section-title', { delay: 100, origin: 'left' });
+    ScrollReveal().reveal('.sec-01 .image, .info', { delay: 100, origin: 'bottom' });
+    ScrollReveal().reveal('.text-box', { delay: 100, origin: 'right' });
+    ScrollReveal().reveal('.media-icons i', { delay: 100, origin: 'bottom', interval: 200 });
+    ScrollReveal().reveal('.sec-02 .image, .sec-03 .image', { delay: 100, origin: 'top' });
+    ScrollReveal().reveal('.media-info li', { delay: 100, origin: 'left', interval: 100 });
 
 console.log('script is runnig smoothly ')
 const prime = document.getElementById('prime')
@@ -151,8 +155,13 @@ console.log(prime.innerHTML)
                 url:'/users/becommingPrime',
                 method:'get',
                 success:(order)=>{
+                    if(order == 'not__logged__in'){
+                      alert('You have to Login First')
+                      location.href='/users/login'
+                    }else{
                     console.log(order)
                     razorPayment(order)
+                    }
                 }
             })
      }

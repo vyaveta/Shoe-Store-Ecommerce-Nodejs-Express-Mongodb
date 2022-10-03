@@ -33,11 +33,17 @@ module.exports = {
                 },
                 {
                     $project:{
-                        payment__method:1,order__date:1,status:1,total__amount:1,category:{$arrayElemAt:['$category.category',0]}
+                        // payment__method:1,order__date:1,status:1,total__amount:1,category:{$arrayElemAt:['$category.category',0]}
+                       _id:0,category:{$arrayElemAt:['$category.category',0]}
                     }
-                }
+                },
+                // {
+                //     $group:{
+                //         category:'$category'
+                //     }
+                // }
             ]).toArray()
-            // print(total__category__sales,'got it (dunno whats gonna happen)')
+            print(total__category__sales,'got it (dunno whats gonna happen)')
             resolve(total__category__sales)
         })
     },

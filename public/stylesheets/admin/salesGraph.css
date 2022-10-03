@@ -24,3 +24,17 @@ body{
     width:600px ;
     height:400px ;
 }
+.the__c{
+    height: 100%;
+    margin-right: 50px;
+    max-width: 400px !important;
+}
+.row{
+    width: 70vw !important;
+}
+.card-body{
+    height: 100% !important;
+}
+.canvas{
+    height: 80% !important;
+}

@@ -258,7 +258,8 @@ module.exports={
                 {
                     $project:{
                         item:'$products.item',
-                        quantity:'$products.quantity'
+                        quantity:'$products.quantity',
+                        reviewed:'$products.reviewed'
                     }
                 },
                 {
@@ -271,7 +272,7 @@ module.exports={
                 },
                 {
                     $project:{
-                        item:1,quantity:1,product:{$arrayElemAt:['$products',0]}
+                        item:1,quantity:1,reviewed:1,product:{$arrayElemAt:['$products',0]}
                     }
                 }
             ]).toArray()

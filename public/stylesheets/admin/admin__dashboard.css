@@ -141,6 +141,8 @@ h1,h2{
     position: relative;
     margin-top:10vh;
     min-height: 90vh;
+    height: 100vh;
+    /* padding-bottom: 1000px; */
     background: #f1f1f1;
 }
 .section__1 .card__like{

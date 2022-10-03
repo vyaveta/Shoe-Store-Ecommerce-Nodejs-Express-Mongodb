@@ -328,15 +328,7 @@ router.post('/editOrderStatus/:orderId',(req,res)=>{
 
 router.get('/graph',controller.admingraph)
 
-router.get('/getCategoryGraph',(req,res)=>{
-  let categorySales
-   graph__helper.get__total__category__sales().then((totalCategorySales)=>{
-    print(totalCategorySales,'dunno whats gonna happen')
-    categorySales = totalCategorySales
-  })
-  print('got here')
-  res.json(categorySales)
-})
+router.get('/getCategoryGraph',controller.all__category__logic)
 
 router.get('/getCategorySales',controller.firstgraph)
 

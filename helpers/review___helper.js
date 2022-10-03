@@ -18,9 +18,7 @@ module.exports = {
             review:review__details.userReview,
             rating:review__details.starCount * 1
         }
-        print('reporting from above the promise function')
       return new Promise(async (resolve, reject) => {
-       print('got inside the promise')
         let ProductReview = await db.get().collection(collection__list.PRODUCT__REVIEW__COLLECTION).findOne({
             pro__id: objectId(review__details.proId)
           });
@@ -94,6 +92,15 @@ module.exports = {
                 upsert:true
             })
         }
+        // 
+
+        await db.get().collection(collection__list.ORDER__COLLECTION) 
+        .updateOne({user__id:objectId(user__details._id),'products.item':objectId(review__details.proId)},
+        {
+            $set:{'products.$.reviewed':true},
+            
+        }  
+    )
         resolve('done')
       });
     } catch (err) {
