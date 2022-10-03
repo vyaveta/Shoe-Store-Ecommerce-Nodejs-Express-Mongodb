@@ -332,6 +332,8 @@ router.get('/getCategoryGraph',controller.all__category__logic)
 
 router.get('/getCategorySales',controller.firstgraph)
 
+router.patch('/add__offer__to__category',controller.add__offer__to__category)
+
 
 ///////Logout Route for the admin/////////
 router.get('/logout',(req,res)=>{

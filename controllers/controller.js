@@ -4,6 +4,7 @@ let product__helper = require('../helpers/product__helper')
 let review__helper = require('../helpers/review___helper');
 const { response } = require('express');
 const graph__helper = require('../helpers/graph__helpers')
+const offer__helper = require('../helpers/offer__helpers')
 
 const print = console.log
 
@@ -84,5 +85,11 @@ exports.verify__payment__prime = async(req,res) => {
    await user__helper.user__becomes__prime(user__details._id).then((resp)=>{
       res.json({status:true})
     })
+  })
+}
+
+exports.add__offer__to__category = async(req,res) =>{
+  offer__helper.add__offer__to__category(req.query.category__id,req.query.discount).then((response)=>{
+    res.json(response)
   })
 }

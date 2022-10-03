@@ -41,8 +41,11 @@ router.get('/',async(req, res, next)=> {
    var user__details = auth.get__user__details(req)
    product__helper.get__top__picks().then((products)=>{
     product__helper.get__new__arrivals().then((new__products)=>{
-     product__helper.get__cart__count(user__details.email).then((count)=>{
+    if(user__details){
+      product__helper.get__cart__count(user__details.email).then((count)=>{
         cart__count = count
+      })
+    }
     try{
       for(var i = 0; i<products.length; i++){
         products[i].loop=[]
@@ -62,6 +65,21 @@ router.get('/',async(req, res, next)=> {
           }
         }
       }
+      // this for loop is for displaying the discount price
+      // for(var i =0;i<products.length;i++){
+      //   if(products[i].offer){
+      //     var offer =Number(100-Number(products[i].offer))/100
+      //     products[i].disPrice = Number(products[i].price)*Number(offer)
+      //     print(products[i].disPrice)
+      //   }
+      // }
+      // for(var i =0;i<new__products.length;i++){
+      //   if(new__products[i].offer){
+      //     var offer =Number(100-Number(new__products[i].offer))/100
+      //     new__products[i].disPrice = Number(new__products[i].price)*Number(offer)
+      //     print(new__products[i].disPrice)
+      //   }
+      // }
     }catch(err){
       print(err,'is the error that occured in the / router')
     }finally{
@@ -70,7 +88,7 @@ router.get('/',async(req, res, next)=> {
      
         res.render('home1',{token,username,products,new__products,cart__count,user__details})
     }  
-    })
+   
     })
    })
 });
@@ -246,13 +264,11 @@ router.get('/otpiloodvaa',(req,res)=>{
   error__msg =''
 })
 router.get('/add__to__cart/',auth.usercookieJWTAuth,(req,res)=>{
-  if(token==null){
-    res.redirect('/users/login')
-  }
   print(req.query.product__id)
    user__details = auth.get__user__details(req)
   if(user__details==null){
     print('user__Details is null')
+    res.redirect('/users/login')
   }else
   print(user__details,'success')
   product__helper.add__to__cart(req.query.product__id,user__details._id,user__details.email).then((response)=>{
@@ -268,7 +284,22 @@ router.get('/cart__page',auth.usercookieJWTAuth,async(req,res)=>{
   table(user__details)
   let total = await user__helper.get__total__amount(user__details)
  let cart__details = await product__helper.find__the__user__cart(user__details.email)
-
+ var real__total =0
+try{
+  // for(var i =0;i<cart__details.length;i++){
+  //   if(cart__details[i].product.offer){
+  //     print('offer detected at ' , i)
+  //     var offer = (100-cart__details[i].product.offer)/100
+  //     cart__details[i].product.disPrice = Number(cart__details[i].product.price * offer)
+  //     real__total =real__total +cart__details[i].product.disPrice
+  //   }else{
+  //     real__total = real__total + cart__details[i].product.price
+  //   }
+  // }
+}catch(err){
+  console.log(err)
+}
+print(real__total,'is the real total')
    product__helper.get__cart__count(user__details.email).then((count)=>{
         cart__count = count
         res.render('users/cartPage',{cart__details,token,username,cart__count,total,user__details})

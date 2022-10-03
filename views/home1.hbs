@@ -88,7 +88,12 @@
                         <h3>{{this.model}}</h3>
                     </div>
                     <div class="price__rating">
+                        {{#if this.disPrice}}
+                         <h5 class="stroke">Rs.{{this.price}}</h5>
+                        <h2>Rs.{{this.disPrice}}</h2>
+                        {{else}}
                         <h2>Rs.{{this.price}}</h2>
+                        {{/if}}
                         <div class="rating">
                             {{#each this.loop}}
                                 <i class="fa fa-star"></i>
@@ -140,7 +145,12 @@
                         <h3>{{this.model}}</h3>
                     </div>
                     <div class="price__rating">
+                        {{#if this.offer}}
+                        <h5 class="stroke">Rs.{{this.price}}</h5>
+                        <h2>Rs.{{this.disPrice}}</h2>
+                        {{else}}
                         <h2>{{this.price}}</h2>
+                        {{/if}}
                         <div class="rating">
                            {{#each this.loop}}
                                 <i class="fa fa-star"></i>

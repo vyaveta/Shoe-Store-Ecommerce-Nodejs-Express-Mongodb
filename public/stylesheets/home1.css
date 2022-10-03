@@ -515,6 +515,10 @@ a{
     height: 100vh;
     background-color: green;
 }
+.stroke{
+    color: rgba(255, 255, 255, 0.687);
+    text-decoration: line-through !important;
+}
 @media screen and (max-width:800px){
     .parallax .bag{
         display: none;
@@ -527,6 +531,7 @@ a{
         left: 50vw;
     }
     .parallax .girl img{
+        
         display: none;
     }
 }
