@@ -299,7 +299,7 @@ try{
 }catch(err){
   console.log(err)
 }
-print(real__total,'is the real total')
+print(total,'is the real total')
    product__helper.get__cart__count(user__details.email).then((count)=>{
         cart__count = count
         res.render('users/cartPage',{cart__details,token,username,cart__count,total,user__details})
@@ -365,14 +365,14 @@ router.post('/placeOrder',async(req,res)=>{
     res.redirect('/')
   }else{
     total__price = await user__helper.get__total__amount(user__details)
- user__helper.place__order(order__details,products,total__price).then((orderId)=>{
+ user__helper.place__order(order__details,products,total__price.disTotal).then((orderId)=>{
   order__id = orderId
   if(req.body['payment-method']=='COD'){
     res.json({codSuccess:true})
   }
   else if(req.body['payment-method']=='razorpay'){
     console.log('now in executing the else case i.e the online payment case above the generate razorpay function call')
-    user__helper.generateRazorpay(orderId,total__price).then((response)=>{
+    user__helper.generateRazorpay(orderId,total__price.disTotal).then((response)=>{
       let signal = {}
       signal.order = response
       signal.flag = 'razorpay'
@@ -381,7 +381,7 @@ router.post('/placeOrder',async(req,res)=>{
   }
   else{
     console.log('above the paypal function call')
-    user__helper.paypal(total__price,orderId).then((payment)=>{
+    user__helper.paypal(total__price.disTotal,orderId).then((payment)=>{
       console.log('gonna send the payment to the ajax')
       let signal ={}
       signal.flag = 'paypal'

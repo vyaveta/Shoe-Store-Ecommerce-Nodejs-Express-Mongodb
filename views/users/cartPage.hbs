@@ -271,7 +271,7 @@
                               <h2 class="product_name mb-5">Total Amount</h2>
                               <div class="price_indiv d-flex justify-content-between ">
                                 <p>Product amount</p>
-                                <p>Rs. <span id="total__product__price">{{total}}</span></p>
+                                <p>Rs. <span id="total__product__price">{{total.total}}</span></p>
                               </div>
                               <div class="price_indiv d-flex justify-content-between ">
                                 <p>Shipping Charge</p>
@@ -281,7 +281,7 @@
                               <div class="total-amt d-flex justify-content-between font-weight-bold">
                                 <p>Total Price Amount (including tax)</p>
                                 <p>Rs.<span class="se" id="total_cart_amt"></span><br>
-                                Rs.<span class="" >{{real__total}}</span></p>
+                                Rs.<span class="" >{{total.disTotal}}</span></p>
                                 <p></p>
                               </div>
                               <button onclick="window.location.href='/users/checkout'"
