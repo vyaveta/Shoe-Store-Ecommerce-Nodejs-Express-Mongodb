@@ -5,6 +5,7 @@ let review__helper = require('../helpers/review___helper');
 const { response } = require('express');
 const graph__helper = require('../helpers/graph__helpers')
 const offer__helper = require('../helpers/offer__helpers')
+const coupon__helper = require('../helpers/coupon__helpers')
 
 const print = console.log
 
@@ -92,4 +93,28 @@ exports.add__offer__to__category = async(req,res) =>{
   offer__helper.add__offer__to__category(req.query.category__id,req.query.discount).then((response)=>{
     res.json(response)
   })
+}
+
+exports.show__coupons = (req,res)=>{
+  coupon__helper.find__all__coupons().then((coupons)=>{
+    res.status(200).render('admin/showCoupons',{admin__sidemenu:true,coupons:true})
+  }).catch((err)=>{
+    print('error occured in the controller.js show__coupons function')
+    res.status(500).send(err)
+  })
+}
+
+exports.add__coupon = (req,res)=>{
+ try{
+  const obj = JSON.parse(JSON.stringify(req.body));
+  print(obj)
+  offer__helper.add__coupon(obj).then((response)=>{
+    res.json(response)
+  }).catch((err)=>{
+    print('an error occured in the controller.js add__coupon function ')
+    res.json(err)
+  })
+ }catch(err){
+  print(err)
+ }
 }

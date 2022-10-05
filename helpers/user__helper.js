@@ -244,7 +244,7 @@ module.exports={
     get__user__orders:(user__id)=>{
         return new Promise(async(resolve,reject)=>{
             console.log('got inside the get user order promise in the user helper.js')
-            let orders = await db.get().collection(collection.ORDER__COLLECTION).find({user__id:objectId(user__id)}).toArray()
+            let orders = await db.get().collection(collection.ORDER__COLLECTION).find({user__id:objectId(user__id)}).sort({_id:-1}).toArray()
             resolve(orders)
         })
     },

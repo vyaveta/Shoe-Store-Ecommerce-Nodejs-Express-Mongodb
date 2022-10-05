@@ -71,6 +71,7 @@
         <div class="col-12 col-md-12 col-lg-6">
             <h6>Shoe Store</h6>
             <h3>{{data.company__name}} {{data.model}}</h3>
+            <h4>{{data.category}}</h4>
             <h2>Rs.{{data.price}}</h2>
             <select class="my-3" name="" id="">
                 <option value="">Select Size</option>
@@ -130,7 +131,13 @@
          main__img.src = small__img[2].src
          small__img[2].src = temp
     } 
-
+    console.log('script is running peacefully')
+    for (var i =0;i<small__img.length;i++){
+        small__img[i].addEventListener('error',(e)=>{
+            e.target.src = main__img.src
+        })
+    }
+console.log('the script is fine and no errors ')
 // alert box js code
  
 

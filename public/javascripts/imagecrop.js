@@ -50,7 +50,7 @@ crop_btn1.addEventListener("click", () => {
 cropper1.getCroppedCanvas().toBlob((blob) => {
   // Gets the original image data
   let fileInputElement1 = document.getElementById("image");
-  let fileInputElement2 = document.getElementById('image2')
+  // let fileInputElement2 = document.getElementById('image2')
   // Make a new cropped image file using that blob object, image_data.name will make the new file name same as original image
   let file1 = new File([blob], img_data1.name, {
     type: "image/*",

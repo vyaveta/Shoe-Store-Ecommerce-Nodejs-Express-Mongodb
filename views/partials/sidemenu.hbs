@@ -71,7 +71,11 @@
             {{/if}}
         </li>
         <li>
-            <a href="">
+            {{#if coupons}}
+            <a href="/admin/show__coupons" style="background-color:white ; color:rebeccapurple;">
+            {{else}}
+            <a href="/admin/show__coupons">
+            {{/if}}
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-ticket-perforated-fill" viewBox="0 0 16 16">
                     <path
@@ -81,7 +85,7 @@
         </li>
         <li>
             {{#if prime__users}}
-            <a href="" style="background-color:white ; color:rebeccapurple;">
+            <a href="/admin/showPrimeUsers" style="background-color:white ; color:rebeccapurple;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-person-check-fill" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"

@@ -334,6 +334,10 @@ router.get('/getCategorySales',controller.firstgraph)
 
 router.patch('/add__offer__to__category',controller.add__offer__to__category)
 
+router.get('/show__coupons',controller.show__coupons)
+
+router.post('/add__coupon',controller.add__coupon)
+
 
 ///////Logout Route for the admin/////////
 router.get('/logout',(req,res)=>{

@@ -30,3 +30,28 @@ exports.add__offer__to__category = (category__id,discount)=>{
       
     })
 }
+exports.add__coupon = (details) =>{
+  return new Promise(async(resolve,reject)=>{
+    try{
+        details.discount = details.discount * 1
+        details.min__purchase__amount = details.min__purchase__amount * 1
+        var { name,discount,min__purchase__amount } = details // this is how you should deconstruct an object !note: the variable name must match with the object key names
+       var isthere = await db.get().collection(collection__list.COUPONS__COLLECTIONS).findOne({name:name})
+       if(!isthere){
+        await db.get().collection(collection__list.COUPONS__COLLECTIONS).insertOne(details).then((response)=>{
+            if(response.acknowledged){
+                resolve('Successfully added the Coupon')
+            }else{
+                print(response)
+                reject('Coupon not Inserted You may try again with different name')
+            }
+        })
+       }else{
+        reject('Coupon already exits try adding unique name')
+       }
+      }catch(err){
+        print(err,'is the err occured in the offer__helpers.js while executing the add__coupon function')
+        reject('err occured')
+      }
+  })
+}
