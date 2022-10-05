@@ -552,6 +552,8 @@ router.get('/becommingPrime',controller.becommingPrime)
 
 router.post('/verify__payment__prime',controller.verify__payment__prime)
 
+router.get('/home2',controller.user__home2)
+
 // logout///
 router.get('/logout',(req,res)=>{
   res.clearCookie('usertoken')

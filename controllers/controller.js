@@ -118,3 +118,14 @@ exports.add__coupon = (req,res)=>{
   print(err)
  }
 }
+
+exports.user__home2 = async(req,res) => {
+  try{
+    var user__details = auth.get__user__details(req)
+   var products = await product__helper.get__all__products()
+   res.render('users/home2',{products,user__details})
+  }catch(err){
+    print(err)
+    res.status(500).render('error')
+  }
+}
