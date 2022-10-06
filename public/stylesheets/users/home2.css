@@ -5,6 +5,7 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     padding:30px;
+    width: 100vw;
 }
 .the__container .the__card{
    
@@ -61,11 +62,12 @@
 
         text-align: center;
     }
-    .the__container .the__card .content .price__rating{
+    .price__rating{
         display: flex;
         justify-content:space-between;
         color:white;
         margin: 5px;
+        /* background-color: red; */
         align-items: center;
     }
     .the__card h2{
@@ -146,19 +148,34 @@
 a{
     text-decoration:none;
 }
+h2{
+    color: white;
+}
     /* home 1 reference */
     body{
         background-color: white;
         margin:0;
         padding:0;
     }
+    .wrapper{
+        display: flex;
+        justify-content:center;
+        align-items:center;
+        padding: 30px;
+    }
     .active__category{
         border:2px solid white;
         /* box-shadow: 1px 1px 15px 1px green, -1px -1px 15px 1px green !important; */
     }
+    .stroke{
+        color: rgba(255, 255, 255, 0.687);
+        text-decoration: line-through !important;
+    }
     .the__home2{
         display:flex;
         flex-direction:column;
+        justify-content: center;
+        align-items: center;
         height: 100%;
         width: 100vw;
     }
@@ -177,6 +194,7 @@ a{
         color:green;
         font-weight: 700;
         border-radius: 7px;
+        /* color: white; */
         /* box-shadow:1px 1px 5px 1px rgba(0,0,0,0.3),-1px -1px 5px 1px rgba(0,0,0,0.3); */
         padding: 5px 10px;
     }

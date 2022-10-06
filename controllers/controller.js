@@ -122,8 +122,10 @@ exports.add__coupon = (req,res)=>{
 exports.user__home2 = async(req,res) => {
   try{
     var user__details = auth.get__user__details(req)
-   var products = await product__helper.get__all__products()
-   res.render('users/home2',{products,user__details})
+    await product__helper.get__all__products(req.params.type).then(async(products)=>{
+      var categories = await product__helper.get__category__list()
+      res.render('users/home2',{products,user__details,categories})
+    })
   }catch(err){
     print(err)
     res.status(500).render('error')

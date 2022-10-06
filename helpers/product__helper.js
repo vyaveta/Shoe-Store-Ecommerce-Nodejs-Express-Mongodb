@@ -26,11 +26,23 @@ module.exports={
                 // resolve(data._id)
             })
         })
-    },get__all__products:()=>{
+    },get__all__products:(type)=>{
         return new Promise(async(resolve,reject)=>{
-            let products = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find().toArray()
-            resolve(products)
-        })
+        try{
+            if(type == 'all__categories'){
+                print('the type is ',type)
+                let products = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find().toArray()
+                resolve(products)
+            }else{
+                let products = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find({category:type}).toArray()
+                print(products,'is the selected products')
+                resolve(products)
+            }
+        }catch(err){
+            reject(err)
+            print(err,'is the error occured in get__all__products function')
+        }
+    })
     },delete__product:(id)=>{
         console.log(id)
         return new Promise (async(resolve,reject)=>{
@@ -221,5 +233,27 @@ module.exports={
          resolve('no__wish')
         }
      },
+     get__category__list:()=>{
+         return new Promise (async(resolve,reject)=>{
+            try{
+                var categories = await db.get().collection(collection__list.CATEGORY__COLLECTIONS).aggregate([
+                    {
+                        $match:{}
+                    },
+                    {
+                        $project:{
+                            name:1,
+                            _id:1
+                        }
+                    }
+                ]).toArray()
+                print(categories,'is the categories that we got from the function get__categoriy__list')
+                resolve(categories)
+            }catch(err){
+                print('an error occured in the get__category__list function in the product helpers in line 239')
+                reject(err)
+            }
+            })
+     }
      
 }
