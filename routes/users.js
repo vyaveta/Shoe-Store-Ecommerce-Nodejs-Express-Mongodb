@@ -554,6 +554,8 @@ router.post('/verify__payment__prime',controller.verify__payment__prime)
 
 router.get('/home2/:type',controller.user__home2)
 
+router.get('/apply__coupon',controller.apply__coupon)
+
 // logout///
 router.get('/logout',(req,res)=>{
   res.clearCookie('usertoken')

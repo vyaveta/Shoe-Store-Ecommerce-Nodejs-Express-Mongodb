@@ -146,3 +146,22 @@ exports.user__home2 = async(req,res) => {
     res.status(500).render('error')
   }
 }
+
+exports.apply__coupon = async(req,res) => {
+  try{
+    var details = {}
+    var user__details =  auth.get__user__details(req)
+    offer__helper.apply__coupon(req.query.entered__code,user__details._id).then((result) => {
+      details.msg = result.msg
+      details.status = true
+      details.coupon = result.coupon
+      res.json(details)
+    }).catch((error) => {
+      details.status = false
+      details.msg = error
+      res.json(details)
+    })
+  }catch(err){
+    res.json(err)
+  }
+}
