@@ -285,20 +285,7 @@ router.get('/cart__page',auth.usercookieJWTAuth,async(req,res)=>{
   let total = await user__helper.get__total__amount(user__details)
  let cart__details = await product__helper.find__the__user__cart(user__details.email)
  var real__total =0
-try{
-  // for(var i =0;i<cart__details.length;i++){
-  //   if(cart__details[i].product.offer){
-  //     print('offer detected at ' , i)
-  //     var offer = (100-cart__details[i].product.offer)/100
-  //     cart__details[i].product.disPrice = Number(cart__details[i].product.price * offer)
-  //     real__total =real__total +cart__details[i].product.disPrice
-  //   }else{
-  //     real__total = real__total + cart__details[i].product.price
-  //   }
-  // }
-}catch(err){
-  console.log(err)
-}
+
 print(total,'is the real total')
    product__helper.get__cart__count(user__details.email).then((count)=>{
         cart__count = count
@@ -340,6 +327,7 @@ router.get('/checkout',auth.usercookieJWTAuth,async(req,res)=>{
       res.redirect('/users')
     }
     else
+    total.disTotal = req.query.totalPrice
     console.log(user__details._id,'is the user id ')
     res.render('users/addressPage',{token,username,cart__count,total,user__details,address})
 })

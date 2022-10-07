@@ -183,8 +183,8 @@
 
 
           {{!-- for viewing ordered products --}}
-          {{else}}
-          {{#if cart__details}}
+          {{/if}}
+          {{#if total}}
           <div class="container-fluid ">
             <div class="row ">
               <div class="col-md-10 col-11 mx-auto">
@@ -287,7 +287,7 @@
                       </div>
                       <p id="discount__p"> Rs.<span class="" id="distotal_cart_amt">{{total.disTotal}}</span></p>
                       <p></p>
-                      <button onclick="window.location.href='/users/checkout'"
+                      <button onclick="checkout()"
                         class="btn btn-light border-success text-success text-uppercase">CheckOut</button>
                     </div>
                     <!--discount code part-->
@@ -326,12 +326,11 @@
               </div>
             </div>
           </div>
-          {{else if wish}}
           {{else}}
-          <h2> No items in cart</h2>
+          <center><img src="/images/users/noitem.jpg" alt=""></center>
           {{/if}}
 
-          {{/if}}
+         
 </body>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
 <script src="/javascripts/rating.js"></script>

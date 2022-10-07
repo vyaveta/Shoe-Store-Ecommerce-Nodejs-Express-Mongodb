@@ -1,3 +1,4 @@
+
 var final__amount
     let total__product__price = document.getElementById('total__product__price')
     let total__dis__amount = document.getElementById('distotal_cart_amt')
@@ -9,7 +10,7 @@ var final__amount
 try {
     if (total__dis__amount.innerHTML == total__amount.innerHTML) {
       total__amount.classList.remove('se')
-      discount__p.style.visibility = 'hidden'
+      total__amount.style.visibility = 'hidden'
     }
   } catch (err) {
     console.log(err)
@@ -104,7 +105,7 @@ log('the discount coupon script is running peacefully')
 var discount__input = document.getElementById('discount_code1')
 
 discount_code = () => {
-    if(!discount__input.value) swal('Enter the coupon code you dumbass')
+    if(!discount__input.value) swal('Enter the coupon code')
     else{
         $.ajax({
             url:'/users/apply__coupon?entered__code='+discount__input.value,
@@ -117,8 +118,10 @@ discount_code = () => {
                         total__amount = multiplier*total__dis__amount.innerHTML
                         total__dis__amount.innerHTML = total__amount
                         swal(response.msg)
+                    }else if (discount__input.value){
+                        swal('You have already entered the coupon')
                     }else{
-                        swal('jsafdl')
+                        swal('The minimum price amount to use this coupon isnt crossed')
                     }
                     // swal(response.coupon.discount,'is the discount and min purchase amount is ',response.coupon.min__purchase__amount)
                 }else{
@@ -128,6 +131,10 @@ discount_code = () => {
         })
     }
 }
+    checkout = () => {
+        console.log('checkout button clickedd')
+   location.href='/users/checkout?totalPrice='+total__dis__amount.innerHTML
+    }
 }catch(err){
     swal(err)
 }
