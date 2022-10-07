@@ -96,15 +96,15 @@ exports.add__offer__to__category = async(req,res) =>{
 }
 
 exports.show__coupons = (req,res)=>{
-  coupon__helper.find__all__coupons().then((coupons)=>{
-    res.status(200).render('admin/showCoupons',{admin__sidemenu:true,coupons:true})
+  coupon__helper.find__all__coupons().then((data)=>{
+    res.status(200).render('admin/showCoupons',{admin__sidemenu:true,coupons:true,data})
   }).catch((err)=>{
     print('error occured in the controller.js show__coupons function')
     res.status(500).send(err)
   })
 }
 exports.banner = (req,res) =>{
-  
+
 }
 exports.add__coupon = (req,res)=>{
  try{
@@ -119,6 +119,18 @@ exports.add__coupon = (req,res)=>{
  }catch(err){
   print(err)
  }
+}
+
+exports.delete__coupon = (req,res) => {
+  try{
+    offer__helper.delete__coupon(req.query.coupon__id).then((response)=>{
+      res.json(response)
+    }).catch((err)=>{
+      res.json(err)
+    })
+  }catch(err){
+    res.json(err)
+  }
 }
 
 exports.user__home2 = async(req,res) => {

@@ -15,7 +15,7 @@ body{
     color: aliceblue;
     min-width: 250px;
     max-width: 40vw;
-    z-index: 10;
+    z-index: 9999999999;
     position: fixed;
     
 }

@@ -161,7 +161,7 @@
                           <!--remove-->
                           <div class="row text-success ">
                             <div class="col-4 d-flex justify-content-end price_money">
-                              <h4>Rs.<span id="itemval">{{this.product.price}} {{this.reviewed}}</span></h4>
+                              <h4>Rs.<span id="itemval">{{this.product.price}} </span></h4>
                             </div>
                           
                             {{#unless this.reviewed}}
@@ -279,11 +279,13 @@
                               </div>
                               <hr />
                               <div class="total-amt d-flex justify-content-between font-weight-bold">
-                                <p>Total Price Amount (including tax)</p>
-                                <p>Rs.<span class="se" id="total_cart_amt"></span><br>
-                                Rs.<span class="" >{{total.disTotal}}</span></p>
-                                <p></p>
+                                <p>Total Price Amount (including tax and discount)</p>
+                                <p>Rs.<span class="se" id="total_cart_amt"></span></p> 
+                                
+                               
                               </div>
+                              <p id="discount__p"> Rs.<span class="" id="distotal_cart_amt" >{{total.disTotal}}</span></p>
+                                <p></p>
                               <button onclick="window.location.href='/users/checkout'"
                                 class="btn btn-light border-success text-success text-uppercase">CheckOut</button>
                             </div>
@@ -335,16 +337,22 @@
                   <script src="/javascripts/customAlertBox.js"></script>
                   <script>
                    try{
-                     let total__product__price = document.getElementById('total__product__price')
+                    let total__product__price = document.getElementById('total__product__price')
+                    let total__dis__amount = document.getElementById('distotal_cart_amt')
                     let total__amount = document.getElementById('total_cart_amt')
+                    let discount__p = document.getElementById('discount__p')
+                    total__dis__amount.innerHTML = parseInt(total__dis__amount.innerHTML) +100
                     total__amount.innerHTML = parseInt(total__product__price.innerHTML) + 100
+                    if(total__dis__amount.innerHTML == total__amount.innerHTML){
+                       total__amount.classList.remove('se') 
+                       discount__p.style.visibility = 'hidden'
+                    }
                    }catch(err){
                     console.log(err)
                    }
                     // js function for change product quantity                                                                                                           
                     function changeQuantity(cart__id, pro__id, count) {
                       try{
-                        
                       let product__box = document.getElementById(pro__id + 'box')
                       let quantity = document.getElementById(pro__id).innerHTML
                       let total__product__price = document.getElementById('total__product__price')
@@ -371,13 +379,15 @@
                             product__box.style.display = 'none'
                             console.log("code is running smoothly i mean the js code in cart page")
                             $('#cart__count').html(response.count)
-                            $('#total__product__price').html(response.total)
-                            $('#total_cart_amt').html(response.total + 100)
+                            $('#total__product__price').html(response.total.total)
+                            $('#total_cart_amt').html(response.total.total + 100)
+                             $('#distotal_cart_amt').html(response.total.disTotal + 100)
                             console.log(response.total)
                           } else {
                             document.getElementById(pro__id).innerHTML = quantity + count
-                            $('#total__product__price').html(response.total)
-                            $('#total_cart_amt').html(response.total + 100)
+                            $('#total__product__price').html(response.total.total)
+                            $('#total_cart_amt').html(response.total.total + 100)
+                            $('#distotal_cart_amt').html(response.total.disTotal + 100)
                           }
                         }
                       })

@@ -63,6 +63,8 @@
         outline: none;
         border-radius: 7px;
         height: 35px;
+        padding: 14px;
+        text-align: center;
     }
 </style>
 
@@ -72,6 +74,7 @@
         <p style="color: rgb(23, 223, 50) ; font-size:22px;font-weight:600;">{{admin__msg}}</p>
         <button class="btn btn-success text-light" onclick="popFunction()">Add coupon</button>
         {{#if data}}
+         <table id="example" class="display" style="width:100%">
         <thead>
             <tr>
                 <th>Coupon name</th>
@@ -81,13 +84,12 @@
         </thead>
         <tbody>
             {{# each data}}
-            <tr>
+            <tr id="{{this._id}}">
                 <td>{{this.name}}</td>
                 <td>
-                    <h4 class="text-success" id="offer__display">{{this.offer}}%</h4>
+                    <h4 class="text-success" id="offer__display">{{this.discount}}%</h4>
                 </td>
-                <td><a href="/admin/deleteCoupon/{{this._id}}"><button class="btn btn-danger"
-                            onclick=" return confirm('Are you sure do you really want to delete {{this.name}} from category list')">Delete</button></a>
+                <td><button class="btn btn-danger" onclick="deleteCoupon('{{this._id}}')">Delete</button>
                 </td>
             </tr>
             {{/each}}
@@ -109,7 +111,7 @@
                 <input type="number" id="offer__input" name="offer">
             </div>
             <div class="box">
-                <input type="number" id="purchase__amount" name="purchase__amount" placeholder="Set minimum purchase amount">
+                <input type="number" id="purchase__amount" name="purchase__amount" value="0" placeholder="Set minimum purchase amount">
             </div>
             <div class="box">
                 <button class="btn btn-success" id="confirm__btn">Confirm</button>
@@ -134,19 +136,13 @@
                 
             }
             name__input.addEventListener('keyup',(e)=>{
-                if(e.target.value.includes(' ')|| e.target.value.length<4 || e.target.value.length>10){
-                    confirm__btn.style.display = 'none'
-                }else{
-                    confirm__btn.style.display = ''
-                }
+                if(e.target.value.includes(' ')|| e.target.value.length<4 || e.target.value.length>10 || !input.value) confirm__btn.style.display = 'none'
+                else confirm__btn.style.display = ''
             })
             input.addEventListener('keyup', (e) => {
                 console.log(e.target.value)
-                if (e.target.value < 100 && e.target.value > 0) {
-                    confirm__btn.style.display = ''
-                } else {
-                    confirm__btn.style.display = 'none'
-                }
+                if (e.target.value < 100 && e.target.value > 0 && name__input.value) confirm__btn.style.display = ''
+                    else confirm__btn.style.display = 'none'
             })
 
             // now adding function to confirm button
@@ -177,6 +173,19 @@
                         }else{
                             swal('something went wrong ,Coupon not added')
                         }
+                    }
+                })
+            }
+            deleteCoupon = (coupon__id) => {
+                $.ajax({
+                    url:'/admin/delete__coupon?coupon__id='+coupon__id,
+                    method:'delete',
+                    success:(resp) => {
+                        if(resp){
+                            swal(resp)
+                            document.getElementById(coupon__id).style.display = 'none'
+                        } 
+                        else swal('something went wrong')
                     }
                 })
             }

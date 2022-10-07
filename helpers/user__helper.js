@@ -182,6 +182,7 @@ module.exports={
             try{
                 console.log(total,'is the result form the get total price promise, and total[0] is :',total[0])
                 console.table(total[0].total)
+                if(total[0].disTotal == 0) total[0].disTotal = total[0].total
                 resolve(total[0])
             }catch(err){
                 console.table(err)

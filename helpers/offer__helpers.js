@@ -2,6 +2,7 @@ const db = require('../config/connection')
 const collection__list = require('../config/collection')
 const { response } = require('express')
 const { resolve, reject } = require('promise')
+const collection = require('../config/collection')
 const objectId = require('mongodb').ObjectId
 const print = console.log
 const table = console.table
@@ -53,5 +54,17 @@ exports.add__coupon = (details) =>{
         print(err,'is the err occured in the offer__helpers.js while executing the add__coupon function')
         reject('err occured')
       }
+  })
+}
+exports.delete__coupon = (coupon__id) => {
+  return new Promise(async(resolve,reject) => {
+    try{
+      await db.get().collection(collection__list.COUPONS__COLLECTIONS).deleteOne({_id:objectId(coupon__id)}).then((result) => {
+        if (result.acknowledged) resolve('Succesfully deleted the Coupon')
+        else reject('something went wrong, the coupon isnt deleted')
+      })
+    }catch(err){
+      reject(err)
+    }
   })
 }

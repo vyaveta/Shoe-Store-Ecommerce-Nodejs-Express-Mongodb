@@ -338,7 +338,9 @@ router.get('/show__coupons',controller.show__coupons)
 
 router.post('/add__coupon',controller.add__coupon)
 
-router.get('/banners')
+router.delete('/delete__coupon',controller.delete__coupon)
+
+router.get('/banners',controller.banner)
 
 
 ///////Logout Route for the admin/////////
