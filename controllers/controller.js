@@ -103,7 +103,9 @@ exports.show__coupons = (req,res)=>{
     res.status(500).send(err)
   })
 }
-
+exports.banner = (req,res) =>{
+  
+}
 exports.add__coupon = (req,res)=>{
  try{
   const obj = JSON.parse(JSON.stringify(req.body));
@@ -121,10 +123,11 @@ exports.add__coupon = (req,res)=>{
 
 exports.user__home2 = async(req,res) => {
   try{
+    var type = req.params.type
     var user__details = auth.get__user__details(req)
     await product__helper.get__all__products(req.params.type).then(async(products)=>{
       var categories = await product__helper.get__category__list()
-      res.render('users/home2',{products,user__details,categories})
+      res.render('users/home2',{products,user__details,categories,type})
     })
   }catch(err){
     print(err)

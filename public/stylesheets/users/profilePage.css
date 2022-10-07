@@ -1,18 +1,20 @@
 body{
     margin:0px;
     padding:0px;
-    background-color: white;
+    background: #e0e0e0;
     font-family: 'Roboto Mono', monospace;
 }
 .main{
     padding: 15px;
 }
 .topbar{
+    margin-bottom: 10px !important;
     background-color: green;
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 1px 1px 5px 2px rgba(45, 235, 96, 0.1),-1px -1px 6px 1px rgba(45, 235, 96, 0.1);
     padding: 20px 0px 20px;
+    z-index: 111;
 }
 .topbar a {
     float: right;
@@ -28,12 +30,14 @@ body{
     margin-right: 10px;
 }
 .sidebar{
+   
     background-color:white;
     color:rgb(24, 23, 23);
     /* height: 100%; */
     height: 95%;
-    
-    box-shadow: 1px 1px 5px 2px rgba(45, 235, 96, 0.1),-1px -1px 6px 1px rgba(45, 235, 96, 0.1);
+    box-shadow: 5px 5px 9px #a4a4a4,
+    -5px -5px 9px #ffffff;;
+    /* box-shadow: 1px 1px 5px 2px rgba(45, 235, 96, 0.1),-1px -1px 6px 1px rgba(45, 235, 96, 0.1); */
 }
 .sidebar a{
     margin-left:10px;
@@ -53,22 +57,32 @@ body{
     
 }
 .content{
-    background:white;
-    box-shadow: 1px 1px 5px 2px rgba(45, 235, 96, 0.1),-1px -1px 6px 1px rgba(45, 235, 96, 0.1);
+   
+    box-shadow:  8px 8px 18px #c7c7c7,
+             -8px -8px 18px #f9f9f9;
+    /* box-shadow: 1px 1px 5px 2px rgba(45, 235, 96, 0.1),-1px -1px 6px 1px rgba(45, 235, 96, 0.1); */
     width: 100%;
 }
 .card__body img{
     border-radius:50%;
+    background: #ffffff;
+    box-shadow:  5px 5px 8px #8f8f8f,
+                 -5px -5px 8px #8f8f8f;
 }
 .the__button{
-    color: white;
-    background-color: green;
+    color: green;
+    /* border: 1px solid #333 !important; */
+    /* background-color: green; */
+    background: #f7f7f7;
+box-shadow:  5px 5px 10px #d2d2d2,
+             -5px -5px 10px #ffffff;
+
     border-radius: 10px;
     border:none;
     padding: 7px 15px;
 }
 .the__button:hover{
-    background-color: green;
+    background-color: white;
     box-shadow: 1px 1px 5px 2px rgba(0,0,0,0.1),-1px -1px 5px 2px rgba(0,0,0,0.1);
 }
 

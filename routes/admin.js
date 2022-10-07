@@ -338,6 +338,8 @@ router.get('/show__coupons',controller.show__coupons)
 
 router.post('/add__coupon',controller.add__coupon)
 
+router.get('/banners')
+
 
 ///////Logout Route for the admin/////////
 router.get('/logout',(req,res)=>{

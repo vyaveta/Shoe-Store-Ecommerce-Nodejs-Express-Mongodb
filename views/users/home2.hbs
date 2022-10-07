@@ -51,12 +51,16 @@
     <div class="the__home2">
 <div class="category__list mb-3">
     <!-- <div class="category__list__inner"> -->
+       <div class="category__div">
+            <h2 id="all" onclick="window.location.href='/users/home2/all__categories'">All</h2>
+        </div>
       {{#each categories}}
         <div class="category__div">
-            <h2 onclick="window.location.href='/users/home2/{{this.name}}'">{{this.name}}</h2>
+            <h2 class="cat__name" onclick="window.location.href='/users/home2/{{this.name}}'">{{this.name}}</h2>
         </div>
         {{/each}}
     <!-- </div> -->
+    <div class="display__none" id="cat__type" style="display:none ;">{{type}}</div>
 </div>
 <div class="product__list__outer">
     <div class="the__container">
@@ -108,7 +112,7 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/ScrollTrigger.min.js"></script>
     <script src="/javascripts/gsapHome1.js"></script>
-    {{!-- <script src="/javascripts/showCertainCategory"></script> --}}
+    <script src="/javascripts/showCertainCategory.js"></script>
 
 {{!-- alert box code --}}
     <script src="/javascripts/customAlertBox.js"></script>

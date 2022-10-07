@@ -8,7 +8,6 @@
     width: 100vw;
 }
 .the__container .the__card{
-   
         width: 100%;
         max-width: 400px;
         margin:10px;
@@ -194,9 +193,13 @@ h2{
         color:green;
         font-weight: 700;
         border-radius: 7px;
+       
         /* color: white; */
         /* box-shadow:1px 1px 5px 1px rgba(0,0,0,0.3),-1px -1px 5px 1px rgba(0,0,0,0.3); */
         padding: 5px 10px;
+    }
+    .active{
+        border-bottom: 2px solid green;
     }
     @media screen and (max-width:950px){
        
