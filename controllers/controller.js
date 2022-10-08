@@ -1,11 +1,13 @@
 const user__helper = require('../helpers/user__helper')
 const auth = require('../helpers/user__auth');
-let product__helper = require('../helpers/product__helper')
-let review__helper = require('../helpers/review___helper');
-const { response } = require('express');
+const product__helper = require('../helpers/product__helper')
+const review__helper = require('../helpers/review___helper');
 const graph__helper = require('../helpers/graph__helpers')
 const offer__helper = require('../helpers/offer__helpers')
 const coupon__helper = require('../helpers/coupon__helpers')
+const banner__helper = require('../helpers/banner__helper')
+const fs = require('fs');
+
 
 const print = console.log
 
@@ -103,9 +105,7 @@ exports.show__coupons = (req,res)=>{
     res.status(500).send(err)
   })
 }
-exports.banner = (req,res) =>{
 
-}
 exports.add__coupon = (req,res)=>{
  try{
   const obj = JSON.parse(JSON.stringify(req.body));
@@ -139,7 +139,11 @@ exports.user__home2 = async(req,res) => {
     var user__details = auth.get__user__details(req)
     await product__helper.get__all__products(req.params.type).then(async(products)=>{
       var categories = await product__helper.get__category__list()
-      res.render('users/home2',{products,user__details,categories,type})
+     var banners = await banner__helper.get__all__banners()
+     for(var i = 0 ; i < banners.length ; i++ ){
+      banners[i].image__id = banners[i]._id.toString()
+    }
+        res.render('users/home2',{products,user__details,categories,type,banners})
     })
   }catch(err){
     print(err)
@@ -163,5 +167,59 @@ exports.apply__coupon = async(req,res) => {
     })
   }catch(err){
     res.json(err)
+  }
+}
+exports.banner = (req,res) =>{
+  try{
+    banner__helper.get__all__banners().then((banners)=>{
+      for(var i = 0 ; i < banners.length ; i++ ){
+        banners[i].image__id = banners[i]._id.toString()
+      }
+      print(banners ,'is the banners that we got from the get__all__banners function that has been called in the bannr functionsd in the controller.js')
+      res.render('admin/banner',{banners,admin__sidemenu:true})
+    }).catch((err) => {
+      print(err,'is the error occured in the banner function the controller.js')
+      res.send(err)
+    })
+  }catch(err){
+    res.send(err)
+    print(err,'is the error occured in the banner function in the controller.js')
+  }
+}
+exports.add__banner = (req,res) =>{
+  try{
+    print('got inside the add banner function')
+    print(req.body)
+    print(req.files)
+    banner__helper.add__banner(req.body).then((result) => {
+      var msg = result[1]
+      let banner__image = req.files.banner__input
+      banner__image.mv(`public/banners/${result[0]}.jpg`)
+    }).catch((error) => {
+      print(error,'is the error that occured in the add banner function in controller.js')
+    })
+    res.redirect('/admin/banners')
+  }catch(err){
+    print(err,'is the error that occured in the add__banner function in the controller.js')
+  }
+}
+
+exports.delete__banner = (req,res) => {
+  try{
+    print('got inside the delete banner function in the controller.js and the banner id that we got from the query is ',req.query.banner__id)
+    banner__helper.delete__banner(req.query.banner__id).then((result) => {
+      // try {
+      //   var path = // the path of the image to be deleted
+      //   fs.unlinkSync(path)
+      // } catch(err) {
+      //   console.error(err)
+      // }
+      res.json(result)
+    }).catch((error) => {
+      print('catched an error from the promise function that is coded in banner__helper :"from delete banner function in the controller.js"')
+      res.json(error)
+    })
+  }catch(err){
+    print(err,'is the error is the error that is occured in the delete__banner function in the controller.js')
   }
 }

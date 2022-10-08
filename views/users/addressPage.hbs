@@ -97,7 +97,7 @@
             <hr>
             
 <br>
-             <div class="title">Total Price Rs.{{total.disTotal}}</div>
+             <div id="price" class="title">Total Price Rs.{{total.disTotal}}</div>
              {{!-- <input type="submit" class="btn btn-primary text-light mt-4" id="rpay__button" value="Razorpay" style="visibility: hidden; font-weight:800; width:100%">
               <input type="submit" class="btn btn-light text-primary " id="paypay__button" value="Paypal" style="visibility: hidden; font-weight:800; width:100%"> --}}
             <input class="button for__the__button" id="place__order" type="submit" value="Place Order">
@@ -108,10 +108,11 @@
     <script src="/javascripts/loadAddress.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
      <script>
+        let price = document.getElementById('price').innerHTML
         $('#checkout-form').submit((e)=>{
             e.preventDefault()
             $.ajax({
-                url:'/users/placeOrder',
+                url:'/users/placeOrder?totalprice='+price,
                 method:'post',
                 data:$('#checkout-form').serialize(),
                 success:(response)=>{

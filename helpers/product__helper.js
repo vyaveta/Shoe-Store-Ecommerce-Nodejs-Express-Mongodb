@@ -18,12 +18,8 @@ module.exports={
             product__details.total__ratings = 0
             // product__details.category = category__id._id
             await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).insertOne(product__details).then((data)=>{
-            //    
-                    // console.log('product added')
                     console.log(data)
-                    // resolve(data.insertedId)
                     resolve([data.insertedId,`successfuly added ${product__details.company__name} ${product__details.model} to Shoe Store Site`])
-                // resolve(data._id)
             })
         })
     },get__all__products:(type)=>{

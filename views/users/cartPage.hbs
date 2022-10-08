@@ -327,7 +327,11 @@
             </div>
           </div>
           {{else}}
+          {{#unless view__ordered__products}}
+          {{#unless wish}}
           <center><img src="/images/users/noitem.jpg" alt=""></center>
+          {{/unless}}
+          {{/unless}}
           {{/if}}
 
          

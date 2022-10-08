@@ -353,7 +353,7 @@ router.post('/placeOrder',async(req,res)=>{
     res.redirect('/')
   }else{
     total__price = await user__helper.get__total__amount(user__details)
- user__helper.place__order(order__details,products,total__price.disTotal).then((orderId)=>{
+ user__helper.place__order(order__details,products,req.query.totalprice).then((orderId)=>{
   order__id = orderId
   if(req.body['payment-method']=='COD'){
     res.json({codSuccess:true})

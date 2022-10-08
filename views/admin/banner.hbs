@@ -1,0 +1,75 @@
+<link rel="stylesheet" href="/stylesheets/admin/admin__dashboard.css">
+
+<style>
+    .banner__cover {
+        margin-top: 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .button__div {
+        margin-bottom: 50px;
+    }
+
+    .the__button {
+        padding: 5px 10px;
+    }
+</style>
+
+<div class="banner__cover">
+    <form action="/admin/add__banner" enctype="multipart/form-data" method="post">
+        <div class="button__div">
+            <label class="the__button">Add Banner</label>
+            <input type="text" name="banner__name" placeholder="Enter banner name" required>
+            <input type="file" id="banner__input" name="banner__input" required>
+            <button type="submit" class="the__button"> Add</button>
+        </div>
+    </form>
+
+    {{#if banners}}
+    {{#each banners}}
+    <div class="banner__div" id="{{this.image__id}}">
+        <center>
+            <h3>{{this.banner__name}}</h3> <button class="the__button dlt"
+                onclick="deleteBanner('{{this.image__id}}')">Delete</button>
+        </center>
+        <img src="/banners/{{this.image__id}}.jpg" alt="banner image"  width="100%" height="400px">
+    </div>
+    {{/each}}
+    {{else}}
+    <center> <img src="/images/users/noitem.jpg" alt="error image" srcset=""></center>
+</div>
+{{/if}}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    const log = console.log
+    log('the script is running peacefully!')
+    // the delete funtction
+    deleteBanner = (banner__id) => {
+        swal({
+            title: "Are you sure?",
+            text: "Your edit may affect the UX and UI!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: '/admin/delete__banner?banner__id=' + banner__id,
+                        method: 'delete',
+                        success: (response) => {
+                                swal(response, {
+                                    icon: "success",
+                                });
+                                document.getElementById(banner__id).style.display = 'none'
+                            }
+                    })
+                } else {
+                    swal("Cancelled!");
+                }
+            });
+    }
+</script>

@@ -9,5 +9,6 @@ module.exports={
     DELETED__ACCOUNTS:'deleted__accounts',
     ORDER__COLLECTION:'orders__ecommerce',
     WISHLIST__COLLECTION:'wishlist__ecommerce',
-    PRODUCT__REVIEW__COLLECTION:'product__review'
+    PRODUCT__REVIEW__COLLECTION:'product__review',
+    BANNER__COLLECTION:'banner__ecommerce'
 }
