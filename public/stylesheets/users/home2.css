@@ -1,11 +1,13 @@
 body{
+    /* background-color: green !important; */
     font-family: 'Work Sans', sans-serif !important;
 }
 .the__container{
+    background-color: green;
     display: flex;
     align-items: center;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
     flex-wrap: wrap;
     padding:30px;
     width: 100vw;
@@ -20,7 +22,7 @@ body{
         height: 300px;
         /* background:yellowgreen; */
         /* background:#ffe77aff; */
-        background-color: green;
+        background-color: white;
         padding: 10px;
         border-radius: 20px;
     }
@@ -57,7 +59,8 @@ body{
      .product__name h3{
         font-size: 18px;
         font-weight: 500;
-        color:rgb(255, 255, 255);
+        /* color:rgb(255, 255, 255); */
+        color: green;
         margin-bottom:5px ;  
         /* font-family: 'Roboto Mono', monospace; */
         /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
@@ -68,7 +71,8 @@ body{
     .price__rating{
         display: flex;
         justify-content:space-between;
-        color:white;
+        /* color:white; */
+        color: green;
         margin: 5px;
         /* background-color: red; */
         align-items: center;
@@ -152,7 +156,7 @@ a{
     text-decoration:none;
 }
 h2{
-    color: white;
+    color:green;
 }
     /* home 1 reference */
     body{
@@ -160,18 +164,12 @@ h2{
         margin:0;
         padding:0;
     }
-    .wrapper{
-        display: flex;
-        justify-content:center;
-        align-items:center;
-        padding: 30px;
-    }
     .active__category{
         border:2px solid white;
         /* box-shadow: 1px 1px 15px 1px green, -1px -1px 15px 1px green !important; */
     }
     .stroke{
-        color: rgba(255, 255, 255, 0.687);
+        color: green;
         text-decoration: line-through !important;
     }
     .the__home2{
