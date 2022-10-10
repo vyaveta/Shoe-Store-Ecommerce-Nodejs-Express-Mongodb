@@ -333,9 +333,11 @@ router.get('/checkout',auth.usercookieJWTAuth,async(req,res)=>{
 })
 
 ////////////////////////// some code for showing the user profile page //////////////////////
-router.get('/profilePage',auth.usercookieJWTAuth,(req,res)=>{
-   user__details =  auth.get__user__details(req)
-   user__helper.get__user__address(user__details.email).then((addresses)=>{
+router.get('/profilePage',auth.usercookieJWTAuth,async(req,res)=>{
+   user__detail =  auth.get__user__details(req)
+   var user__details = await user__helper.get__user__details(user__detail._id)
+   print(user__details)
+   user__helper.get__user__address(user__detail.email).then((addresses)=>{
     // print(addresses.address, 'is the address')
     let address = addresses.address
     res.render('users/userProfile',{token,username,cart__count,user__details,address})
@@ -527,8 +529,7 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
   res.render('users/orderPlaced',{no__partials:true})
  })
 
- router.get('/cancel', (req, res) => res.send('Cancelled'));
-
+router.get('/cancel', (req, res) => res.send('Cancelled'))
 
 router.post('/updateProfile/:id',controller.update__user__profile)
 
@@ -543,6 +544,8 @@ router.post('/verify__payment__prime',controller.verify__payment__prime)
 router.get('/home2/:type',controller.user__home2)
 
 router.get('/apply__coupon',controller.apply__coupon)
+
+router.get('/user__chat',controller.user__chat)
 
 // logout///
 router.get('/logout',(req,res)=>{

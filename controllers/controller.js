@@ -57,8 +57,14 @@ exports.firstgraph =(req,res)=>{
 }
 
 exports.bePrime = (req,res) =>{
-  var user__details = auth.get__user__details(req)
-  res.render('users/bePrime',{user__details})
+  var user__detail = auth.get__user__details(req)
+  user__helper.get__user__details(user__detail._id).then((user__details) => {
+    print('here')
+    res.render('users/bePrime',{user__details})
+  }).catch((err) => {
+    print(err,'is the err that catched from the promise funtion in the user__helper ! from the bePrime function in the controller js')
+    res.render('user/bePrime',{user__detail})
+  })
 }
 exports.becommingPrime = (req,res) =>{
   console.log('the user is trying to become a prime member')
@@ -221,5 +227,13 @@ exports.delete__banner = (req,res) => {
     })
   }catch(err){
     print(err,'is the error is the error that is occured in the delete__banner function in the controller.js')
+  }
+}
+
+exports.user__chat = (req,res) => {
+  try{
+    res.render('users/chat/chat',{no__partials:true})
+  }catch(err){
+    print(err,'is the error that occured in the user__chat function in the controller.js')
   }
 }

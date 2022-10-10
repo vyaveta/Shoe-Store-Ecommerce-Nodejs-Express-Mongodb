@@ -92,7 +92,21 @@ module.exports={
             console.table(username)
             resolve(username.name)
         })
-    },find__the__user:(phone__number)=>{
+    },
+    get__user__details:(id) => {
+        print('here')
+        return new Promise(async(resolve,reject) => {
+            try{
+                let user = await db.get().collection(collection.USER__COLLECTIONS).findOne({_id:objectId(id)})
+                print(user)
+                resolve(user)
+            }catch(err){
+                reject(err)
+                print(err,'is the error that occured in the get__user__details function in the user__helper.js')
+            }
+        })
+    },
+    find__the__user:(phone__number)=>{
         return new Promise (async(resolve,reject)=>{
             var is__valid = null;
             var is__valid = null;

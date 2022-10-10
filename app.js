@@ -1,4 +1,6 @@
 var createError = require('http-errors');
+const http = require('http')
+const socketio = require('socket.io')
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -6,6 +8,11 @@ var logger = require('morgan');
 var fileupload = require('express-fileupload')
 var hbs = require('express-handlebars')
 const paypal = require('paypal-rest-sdk');
+var app = express();
+const server = http.createServer(app)
+const io = socketio(server) 
+// var io = require('socket.io').listen(server);
+const log = console.log
  
 paypal.configure({
   'mode': 'sandbox', //sandbox or live
@@ -25,7 +32,7 @@ db.connect((err)=>{
 })
 const port=4000
 
-var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -70,6 +77,44 @@ app.use(function(err, req, res, next) {
 app.listen(port,(err,success)=>{
   if(err) console.log('failed to load ')
   else console.log(`listening on port ${port}`)
+})
+
+
+
+
+
+    // Gonna take a risk :)
+io.on('connection', socket => {
+  log('new ws connection!')
+  socket.on('joinRoom', ({ username , room }) => {
+      const user = userJoin( socket.id ,  username , room)
+      log(user,'from the server')
+      socket.emit('message' , formatMessages(botname,'Welcome to Mini Web Chat!')) // This will only notify the user that has connected NOTICE!! - this will only send message to the connected user,so it is used to welcome the user with a welcome message ! :)
+      socket.join(user.room)
+      // This will notify everyBody else expect that user , since we dont want to notify the user that he/she has connected!  // io.emit() =>This code will notify or send message to everyone including the user 
+      socket.broadcast.to(user.room).emit( 'message' , formatMessages ( `${user.username}`,'joined the chat!' )) 
+      // Show the users list and the room info
+      io.to(user.room).emit('roomUsers',{
+          room:user.room,
+          users:getRoomUsers(user.room)
+      })
+  })
+  // Listen on chat message
+  socket.on('chatMessage' , (msg) => {
+      const user = getCurrentUser(socket.id)
+      io.to(user.room).emit('message', formatMessages ( user.username , msg ))
+      log(msg)
+  })
+  socket.on('disconnect' , () => {
+      const user = userLeave(socket.id)
+      if(user) {
+          io.to(user.room).emit('message' , formatMessages ( botname , `${user.username} has left the chat!` ))
+          io.to(user.room).emit('roomUsers',{
+              room:user.room,
+              users:getRoomUsers(user.room)
+          })
+      }
+  })
 })
 
 
