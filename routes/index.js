@@ -32,13 +32,7 @@ router.get('/productPage/:id',(req,res)=>{
   })
 })
 
-// /success?paymentId=PAYID-MMZ4PWQ56306074WJ268400F&token=EC-62V98980KT175064J&PayerID=6P4NDV2AA95E8
-router.get('/success',(req,res)=>{
-  const payerId = req.query.PayerID;
-  const token = req.query.token
-  const paymentId = req.query.paymentId;
-  res.redirect('/users/success/?paymentId='+paymentId+'&token='+token+'&PayerID='+payerId)
-})
+
 
 
 module.exports = router;
