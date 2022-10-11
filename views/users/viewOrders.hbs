@@ -9,139 +9,170 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Oleo+Script+Swash+Caps:wght@400;700&family=Roboto+Mono:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-    body{
-        margin:0;
-        padding:0;
-    }
-    .the__cover{
-     display: flex;
-     flex-direction: column;
-     justify-content:center;
-     font-family: 'Work Sans', sans-serif;
-     padding: 20px !important;
-    }
-    .the__rectangle{
-    margin-top: 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    padding: 20px;
-    height: 25vh;
-    border-radius: 15px;
-     background-color:white;
-   color: green;
-    border: 2px solid green;
-    /* box-shadow:2px 2px 1px .5px rgba(255, 255, 255, 0.624),-2px -2px 1px .5px rgba(255, 255, 255, 0.9); */
-}
-.left{
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-}
-.right{
-    display: flex;
-    flex-direction: row;
-    padding: 10px;
-    position: relative;
-}
-.total__amount,
-.status{
-    margin:10px 20px 10px;
-}
-.view__products{
-    position: absolute;
-    
-    /* left: 25px; */
-    bottom: 0;
-}
-.view__products button{
-    border: none;
-    color: white;
-    background-color:green;
-    padding: 8px 20px;
-    border-radius: 8px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: .15s;
-    font-size: 13px;
-}
-.view__products button:hover{
-    color: white;
-    background-color: rgb(9, 192, 9);
-    transition: .15s;
-    box-shadow: 2px 2px 5px .5px rgba(255, 255, 255, 0.624),-2px -2px 5px .5px rgba(255, 255, 255, 0.9);
-}
-.view__products .cancel:hover{
-    background-color: red;
-    color: white;
-}
-@media screen and (max-width:1000px){
-    
-    .the__rectangle{
+       body{
+           margin:0;
+           padding:0;
+       }
+       .the__cover{
+        display: flex;
         flex-direction: column;
-        height: 45vh;
-    }
-    .the__cover h3{
-        margin: 0;
-    }
-    .view__products {
-        align-self: center;
-        position: relative;
-        margin:0px auto 0px;
-        font-size: 15px;
-    }
-     .view__products button{
-        margin-top: 10px;
-        padding: 5px 10px;
-    }
-
-}
-@media screen and (max-width:560px){
-    .the__cover{
-        padding: 0 !important;
-    }
-    body{
-        background-color: white;
-    }
-    .the__rectangle{
-        padding: 0;
-        height: 45vh;
-    }
-    .the__rectangle .left .date h3,
-    .the__rectangle .left .address h3{
-        font-size: 16px;
-    }
-   
-    .view__products{
+        justify-content:center;
+        font-family: 'Work Sans', sans-serif;
+        padding: 20px !important;
+       }
+       .box{
+        background-color:white;
+        border:2px solid green;
+        border-radius: 15px;
+        width: 100%;
+        margin-bottom: 7px;
+       }
+       .the__rectangle{
+       margin-top: 20px;
+       display: flex;
+       flex-direction: row;
+       justify-content: space-evenly;
+       /* padding: 20px; */
+       height: 100%;
+       border-radius: 15px;
+        background-color:white;
+      color: green;
+       /* border: 2px solid green; */
+       /* box-shadow:2px 2px 1px .5px rgba(255, 255, 255, 0.624),-2px -2px 1px .5px rgba(255, 255, 255, 0.9); */
+   }
+   .left{
+       display: flex;
+       flex-direction: column;
+       padding: 10px;
+   }
+   .right{
+       display: flex;
+       flex-direction: row;
+       padding: 10px;
        position: relative;
+   }
+   .total__amount,
+   .status{
+       margin:10px 20px 10px;
+   }
+   .view__products{
+       display: flex;
+       justify-content: space-around;
+       /* left: 25px; */
        bottom: 0;
-       font-size: 15px;
-    }
-    .view__products button{
-        margin-top: 10px;
-        padding: 5px 10px;
-    }
+   }
+   .button__div{
+    margin: 0 10px 10px;
+   }
+   .bottom__rectangle{
+    display: flex;
+    justify-content: flex-end;
+   }
+   .view__products button{
+       border: none;
+       color: white;
+       background-color:green;
+       padding: 8px 20px;
+       border-radius: 8px;
+       font-weight: 700;
+       cursor: pointer;
+       transition: .15s;
+       font-size: 13px;
+   }
+   .view__products button:hover{
+       color: white;
+       background-color: rgb(9, 192, 9);
+       transition: .15s;
+       box-shadow: 2px 2px 5px .5px rgba(255, 255, 255, 0.624),-2px -2px 5px .5px rgba(255, 255, 255, 0.9);
+   }
+   .view__products .cancel:hover{
+       background-color: red;
+       color: white;
+   }
+   @media screen and (max-width:1000px){
+       
+       .the__rectangle{
+           flex-wrap: wrap;
+           flex-direction: column;
+           height: 100%;
+       }
+       .the__cover h3{
+           margin: 0;
+       }
+       .view__products {
+           align-self: center;
+           position: relative;
+           margin:0px auto 0px;
+           font-size: 15px;
+       }
+        .view__products button{
+           margin-top: 10px;
+           padding: 5px 10px;
+       }
+       .box{
+        width: 100%;
+       }
    
-    hr{
-        display: none;
+   }
+   
+   @media screen and (max-width:560px){
+    .box{
+        width: 100%;
+        margin-bottom: 5px;
     }
-    /* .the__rectangle > div{
-        display: inline-flex;
-  flex-wrap: wrap;
-  gap: 12px;
-    } */
-}
-@media screen and (min-width:800px){
-    .the__cover{
-        padding: 0;
-    }
-    body{
-        background-color: whitesmoke;
-    }
-}
-</style>      
+       .the__cover{
+           padding: 0 !important;
+       }
+       body{
+           background-color: white;
+       }
+       .the__rectangle{
+           padding: 0;
+           height: 100%;
+       }
+       .the__rectangle .left .date h3,
+       .the__rectangle .left .address h3{
+           font-size: 16px;
+       }
+      
+       .view__products{
+          position: relative;
+          bottom: 0;
+          font-size: 15px;
+       }
+       .view__products button{
+           margin-top: 10px;
+           padding: 5px 10px;
+       }
+      
+       hr{
+           display: none;
+       }
+       .right{
+        margin: 0;
+        flex-wrap: wrap;
+       }
+       .cover{
+        height: 100%;
+       }
+       /* .the__rectangle > div{
+           display: inline-flex;
+     flex-wrap: wrap;
+     gap: 12px;
+       } */
+   }
+   @media screen and (min-width:800px){
+       .the__cover{
+           padding: 0;
+       }
+       body{
+           background-color: whitesmoke;
+       }
+   }
+   </style>      
     <div class="the__cover">
         {{#each orders}}
+        <div class="box">
         <div class="the__rectangle">
             <div class="left">
                 <div class="date">
@@ -165,19 +196,22 @@
                     <h3>Status</h3>
                     <span>{{this.status}}</span>
                 </div>
-                <div class="view__products">
+            </div>
+        </div>
+        <div class="bottom__rectangle">
+            <div class="view__products">
                     {{#if this.review}}
-                    <button class="the__button" onclick="window.location.href='/users/view__ordered__products/?proId={{this._id}}&flag=review'">View Products</button>
+                   <div class="button__div"> <button class="the__button" onclick="window.location.href='/users/view__ordered__products/?proId={{this._id}}&flag=review'">View Products</button></div>
                     {{else}}
-                    <button class="the__button" onclick="window.location.href='/users/view__ordered__products/?proId={{this._id}}&flag=notYet'">View Products</button>
+                    <div class="button__div"><button class="the__button" onclick="window.location.href='/users/view__ordered__products/?proId={{this._id}}&flag=notYet'">View Products</button></div>
                    {{/if}}
                    {{#if this.cancel}}
 
                    {{else}}
-                         <button onclick="window.location.href='/users/deleteOrder/{{this._id}}'" class="the__button cancel">Cancel Order</button>
+                        <div class="button__div"> <button onclick="window.location.href='/users/deleteOrder/{{this._id}}'" class="the__button cancel">Cancel Order</button></div>
                             {{/if}}
                 </div>
-            </div>
+        </div>
         </div>
         {{/each}}
     </div>
