@@ -16,6 +16,7 @@
             <a href="/users/logout" class="mt-2">logout</a>
             <a href="/users/" class="mt-2">back to Home</a>
             <a href="/users/showWishlist" class="mt-2">My Wishlist</a>
+            <a  class="mt-2">My Wallet</a>
             {{!-- <a href="/users/showWishlist" class="mt-2">My coupons</a> --}}
         </div>
         <div class="row">
@@ -48,6 +49,19 @@
                         </div>
                         <hr>
                         <div class="row">
+                            <div class="col-md3">
+                                <h4>Wallet balance</h4>
+                            </div>
+                            <div class="col-md-9 text-secondary">
+                               {{#if user__details.wallet}}
+                               {{user__details.wallet}}
+                               {{else}}
+                               0.00
+                               {{/if}}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
                             <div class="col-md-3">
                                 <h5>email</h5>
                             </div>
@@ -65,11 +79,11 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            {{!-- <div class="col-md-3">
                                 {{#if user__details.is_member}}
                                 <button onclick="window.location.href='/users/user__chat'" class="the__button"> Chat with Admin</button>
                                 {{/if}}
-                            </div>
+                            </div> --}}
                             <div class="col-md-9 text-secondary">
                                 <button class="the__button" id="address__button"> Add address</button>
                             </div>
@@ -131,7 +145,7 @@
         </div>
     </form>
 
-    {{!-- now the code for the address pop up --}}
+    
 
 </div>
 
@@ -161,11 +175,11 @@
         <div class="input__div">
             <center><input type="submit" class="submit__btn" value="Add Address"></center>
     </form>
+    <div class="input__div">
+    <center><button class="back submit__btn">Go back</button></center>
 </div>
-<div class="input__div">
-    <button class="back submit__btn">Go back</button>
 </div>
-</div>
+
 
 <script src="/javascripts/addAddress.js"></script>
 <script>

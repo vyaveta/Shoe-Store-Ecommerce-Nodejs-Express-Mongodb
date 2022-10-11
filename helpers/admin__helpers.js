@@ -266,8 +266,9 @@ module.exports = {
       let orders = await db
         .get()
         .collection(collection__list.ORDER__COLLECTION)
-        .find()
+        .find().sort({order__date:1}) // this sort is not working properly ! 
         .toArray();
+        console.log(orders)
       // let user__name = await db.get().collection(collection__list.USER__COLLECTIONS).find().toArray()
       console.log(orders[0].user__id);
       resolve(orders);
@@ -300,7 +301,7 @@ module.exports = {
         .updateOne(
           { _id: objectId(order__id) },
           {
-            $set: { status: status ,cancel:true,review:true},
+            $set: { status: status ,cancel:true,review:true,return:true},
           }
         )
         .then((response) => {

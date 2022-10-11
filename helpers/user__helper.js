@@ -276,7 +276,8 @@ module.exports={
                     $project:{
                         item:'$products.item',
                         quantity:'$products.quantity',
-                        reviewed:'$products.reviewed'
+                        reviewed:'$products.reviewed',
+                        returned:'$products.returned'
                     }
                 },
                 {
@@ -289,13 +290,14 @@ module.exports={
                 },
                 {
                     $project:{
-                        item:1,quantity:1,reviewed:1,product:{$arrayElemAt:['$products',0]}
+                        item:1,quantity:1,reviewed:1,returned:1,return:1,product:{$arrayElemAt:['$products',0]}
                     }
                 }
             ]).toArray()
             if(flag=='review'){
                 for(var i = 0 ; i < order__products.length ; i++){
                     order__products[i].review = true
+                    order__products[i].return = true
                 }
             }else{
                 for(var i = 0 ; i < order__products.length ; i++){
@@ -303,6 +305,7 @@ module.exports={
                 }
             }
             console.log('passed the get__ordered__products aggregation')
+            print(order__products,'ljfds')
             resolve(order__products)
         })
     },
@@ -557,6 +560,31 @@ module.exports={
             })
         }).then((done)=>{
             print(done)
+        })
+    },
+    return__product:(user__details,pro__id,order__id) => {
+        console.log(pro__id,'is the product id')
+        return new Promise (async(resolve,reject) => {
+            try{
+                await db.get().collection(collection.ORDER__COLLECTION).updateOne({_id:objectId(order__id)},{
+                    $set:{status:'returned'}
+                })
+                let product = await db.get().collection(collection.PRODUCTS__COLLECTIONS).findOne({_id:objectId(pro__id)})
+                await db.get().collection(collection.ORDER__COLLECTION) 
+                .updateOne({user__id:objectId(user__details._id),'products.item':objectId(pro__id)},
+                {
+                    $set:{'products.$.returned':true},
+                    
+                }  
+            )
+            await db.get().collection(collection.USER__COLLECTIONS).updateOne({_id:objectId(user__details._id)},{
+                $inc:{wallet:product.disPrice}
+            })
+                resolve('done')
+            }catch(err){
+                reject('Oops something went wrong')
+                print(err,'is the error that occured in the return__product function in the user__helper.js')
+            }
         })
     }
 }

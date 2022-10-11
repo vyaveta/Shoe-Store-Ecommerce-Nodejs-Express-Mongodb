@@ -101,6 +101,9 @@
  pointer-events: none;
  user-select: none;
 }
+.wallet{
+    height: 700px;
+}
 @media  screen and (max-width:768px){
 
  .address__popup{

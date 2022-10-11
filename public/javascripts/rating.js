@@ -4,6 +4,7 @@ let starWrapper = document.querySelector('.stars')
 let stars = document.querySelectorAll(".stars a")
 let textArea = document.getElementById('review__text')
 let rate = document.querySelectorAll('.rate')
+let returnButton = document.querySelectorAll('.return__button')
 let starCount = 0
 let userReview
 let proId 
@@ -54,4 +55,37 @@ function submitReview(){
             alert(response)
         }
     })
+}
+
+for(var i = 0; i<returnButton.length ; i++){
+    console.log(returnButton[i])
+    returnButton[i].addEventListener('click',(e) => {
+        returnButtonClick(e.target.id)
+    })
+}
+returnButtonClick = (id) => {
+    var order__id = document.getElementById('order__id').innerHTML
+    console.log(order__id,'is the order id')
+    swal({
+        title: "Are you sure?",
+        text: "Do you really Want to return this Product",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+         
+          $.ajax({
+            url:'/users/return__product?pro__id='+id+'&order__id='+order__id,
+            method:'patch',
+            success:(response) => {
+                if(response)  swal("You will get shoeStore coins after our staff collects your Product", {  icon: "success",});
+                else swal('Oops something went wrong! ')
+            }
+          })
+        } else {
+          swal("Cancelled");
+        }
+      });
 }

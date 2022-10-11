@@ -7,6 +7,7 @@ const offer__helper = require('../helpers/offer__helpers')
 const coupon__helper = require('../helpers/coupon__helpers')
 const banner__helper = require('../helpers/banner__helper')
 const fs = require('fs');
+const { query } = require('express');
 
 
 const print = console.log
@@ -235,5 +236,17 @@ exports.user__chat = (req,res) => {
     res.render('users/chat/chat',{no__partials:true})
   }catch(err){
     print(err,'is the error that occured in the user__chat function in the controller.js')
+  }
+}
+
+exports.return__product = (req,res) => {
+  try{
+    var user__details = auth.get__user__details(req)
+    user__helper.return__product(user__details,req.query.pro__id,req.query.order__id).then((result) => {
+      res.json(true)
+    }).catch((err)=>{res.json(false)})
+  }catch(err){
+    res.json(false)
+    print(err,'is the error that occured in the return product function in the controller . js')
   }
 }

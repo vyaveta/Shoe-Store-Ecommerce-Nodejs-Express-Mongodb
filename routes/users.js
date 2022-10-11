@@ -407,12 +407,9 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
   let order = await user__helper.get__user__orders(user__details._id)
   user__helper.get__ordered__products(req.query.proId,req.query.flag).then((order__details)=>{
     console.log(order__details,'is the order details')
-    print(order,'is the orders')
- 
   review__access = false
- 
-
-   res.render('users/cartPage',{view__ordered__products:true,order__details,token,user__details,cart__count})
+  var view__ordered__products = order__details[0]._id
+   res.render('users/cartPage',{view__ordered__products,order__details,token,user__details,cart__count})
  })
  })
  //////////////////////////////////////////////////// for cancelling  orders//////////////////////////////////////////////
@@ -546,6 +543,8 @@ router.get('/home2/:type',controller.user__home2)
 router.get('/apply__coupon',controller.apply__coupon)
 
 router.get('/user__chat',controller.user__chat)
+
+router.patch('/return__product',controller.return__product)
 
 // logout///
 router.get('/logout',(req,res)=>{
