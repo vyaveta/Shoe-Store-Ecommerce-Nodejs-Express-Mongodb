@@ -106,6 +106,7 @@ log('the discount coupon script is running peacefully')
 var discount__input = document.getElementById('discount_code1')
 
 discount_code = () => {
+  var dis__div = document.querySelector('.dis__div')
   if(!discount__input.value) swal('Enter the coupon code')
   else{
       $.ajax({
@@ -119,6 +120,7 @@ discount_code = () => {
                       total__amount = multiplier*total__dis__amount.innerHTML
                       total__dis__amount.innerHTML = total__amount
                       swal(response.msg)
+                      dis__div.style.display = 'none'
                   }else if (discount__input.value){
                       swal('You have already entered the coupon')
                   }else{

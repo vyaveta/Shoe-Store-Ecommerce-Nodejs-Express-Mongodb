@@ -59,6 +59,10 @@ exports.firstgraph =(req,res)=>{
 
 exports.bePrime = (req,res) =>{
   var user__detail = auth.get__user__details(req)
+  print (user__detail)
+  if (user__detail == null ) {
+    res.redirect('/users/login')
+  }else{
   user__helper.get__user__details(user__detail._id).then((user__details) => {
     print('here')
     res.render('users/bePrime',{user__details})
@@ -66,6 +70,7 @@ exports.bePrime = (req,res) =>{
     print(err,'is the err that catched from the promise funtion in the user__helper ! from the bePrime function in the controller js')
     res.render('user/bePrime',{user__detail})
   })
+}
 }
 exports.becommingPrime = (req,res) =>{
   console.log('the user is trying to become a prime member')
@@ -168,6 +173,7 @@ exports.apply__coupon = async(req,res) => {
       details.coupon = result.coupon
       res.json(details)
     }).catch((error) => {
+      print(error,'from apply coupon in the controller')
       details.status = false
       details.msg = error
       res.json(details)

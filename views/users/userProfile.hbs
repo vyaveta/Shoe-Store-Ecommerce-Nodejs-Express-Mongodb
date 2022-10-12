@@ -9,6 +9,8 @@
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 <link rel="stylesheet" href="/stylesheets/users/profilePage.css">
 <link rel="stylesheet" href="/stylesheets/users/profilePopup.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="/javascripts/addAddress.js" defer></script>
 <div class="container">
     <div class="main">
         <div class="topbar">
@@ -29,7 +31,13 @@
                                 <h3>{{user__details.name}}</h3>
                             </center>
                             <button id="pop__signal" class='the__button mb-4'>Edit Pic</button><br>
-                            <button class="the__button" id="dark"> dark mode</button>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop">
+                                Launch static backdrop modal
+                            </button>
+                            {{!-- <button class="the__button" id="dark"> dark mode</button> --}}
+
                         </div>
                     </div>
                 </div>
@@ -43,7 +51,8 @@
                                 <h4>Referal Code</h4>
                             </div>
                             <div class="col-md-9 text-secondary">
-                                <span id="referal__id">{{user__details._id}} </span> <button class="the__button" id="copyButton"> Copy </button>
+                                <span id="referal__id">{{user__details._id}} </span> <button class="the__button"
+                                    id="copyButton"> Copy </button>
                             </div>
                         </div>
                         <hr>
@@ -52,11 +61,11 @@
                                 <h4>Wallet balance</h4>
                             </div>
                             <div class="col-md-9 text-secondary">
-                               {{#if user__details.wallet}}
-                               {{user__details.wallet}}
-                               {{else}}
-                               0.00
-                               {{/if}}
+                                {{#if user__details.wallet}}
+                                {{user__details.wallet}}
+                                {{else}}
+                                0.00
+                                {{/if}}
                             </div>
                         </div>
                         <hr>
@@ -80,7 +89,8 @@
                         <div class="row">
                             {{!-- <div class="col-md-3">
                                 {{#if user__details.is_member}}
-                                <button onclick="window.location.href='/users/user__chat'" class="the__button"> Chat with Admin</button>
+                                <button onclick="window.location.href='/users/user__chat'" class="the__button"> Chat
+                                    with Admin</button>
                                 {{/if}}
                             </div> --}}
                             <div class="col-md-9 text-secondary">
@@ -114,7 +124,50 @@
                 </ol>
             </div>
         </div>
+
+        <!--  Now some code for the bootstrap popUp-->
+
+        <!-- Modal -->
+        <div class="modal fade mt-5" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5 the__button" id="staticBackdropLabel">Update Profile</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- the form starts here -->
+                        {{!-- <form> --}}
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">New User name</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" value="{{user__details.name}}">
+
+                            </div>
+                            <div class="mb-4">
+                                <label for="exampleInputPassword1" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="exampleInputPassword1">
+                            </div>
+                            <div class="mb-3 new__pass__div" style="display:none ;">
+                                <label for="exampleInputPassword2" class="form-label">New password</label>
+                                <input type="password" class="form-control" id="exampleInputPassword2">
+                            </div>
+                            <button class="the__button mb-2" id="change__password">Change Password</button>
+                        <div id="emailHelp" class="form-text mb-3">Change password if you want to </div>
+                        <!-- The Form ends here-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="the__button" data-bs-dismiss="modal">Cancel</button>
+                        <button class="the__button" id="update__profile">Update</button>
+                    </div>
+                    {{!-- </form> --}}
+                </div>
+            </div>
+        </div>
+
     </div>
+
     <!-- Now some code for the pop up box -->
 
     <form action="/users/updateProfile/{{user__details._id}}" method="post" enctype="multipart/form-data">
@@ -144,7 +197,7 @@
         </div>
     </form>
 
-    
+
 
 </div>
 
@@ -175,12 +228,11 @@
             <center><input type="submit" class="submit__btn" value="Add Address"></center>
     </form>
     <div class="input__div">
-    <center><button class="back submit__btn">Go back</button></center>
-</div>
+        <center><button class="back submit__btn">Go back</button></center>
+    </div>
 </div>
 
 
-<script src="/javascripts/addAddress.js"></script>
 <script>
     // js file
     const img = document.getElementById("image")
@@ -216,25 +268,26 @@
     // Now some   code for the copy button
     var copyButton = document.getElementById('copyButton')
     copyButton.onclick = (e) => {
-       
-  // Get the text field
-  var copyText = document.getElementById("referal__id").innerText;
-    console.log(copyText)
-  // Select the text field
-  //copyText.select();
-  //copyText.setSelectionRange(0, 99999); // For mobile devices
 
-   // Copy the text inside the text field
-  navigator.clipboard.writeText(copyText);
+        // Get the text field
+        var copyText = document.getElementById("referal__id").innerText;
+        console.log(copyText)
+        // Select the text field
+        //copyText.select();
+        //copyText.setSelectionRange(0, 99999); // For mobile devices
 
-  // Alert the copied text
-  e.target.innerText = 'Copied!'
+        // Copy the text inside the text field
+        navigator.clipboard.writeText(copyText);
+
+        // Alert the copied text
+        e.target.innerText = 'Copied!'
 
     }
 </script>
 <script src="/javascripts/admin__profile.js"></script>
 <script src="/javascripts/imageChange.js"></script>
-<script src="/javascripts/darkMode.js"></script>
+{{!--
+<script src="/javascripts/darkMode.js"></script> --}}
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"

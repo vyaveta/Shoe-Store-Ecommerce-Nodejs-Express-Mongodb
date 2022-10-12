@@ -18,7 +18,8 @@ const table = console.table
 let token
 let error__msg
 let number
-let cart__count
+var cart__count
+
 let user__details
 let total__price
 let order__id
@@ -37,13 +38,14 @@ let username
 
 /* GET users listing. */
 router.get('/',async(req, res, next) => {
+  let cart__count
    token = req.cookies.usertoken
    var user__details = auth.get__user__details(req)
    product__helper.get__top__picks().then((products)=>{
-    product__helper.get__new__arrivals().then((new__products)=>{
+    product__helper.get__new__arrivals().then(async(new__products)=>{
     if(user__details){
-      product__helper.get__cart__count(user__details.email).then((count)=>{
-        cart__count = count
+      await product__helper.get__cart__count(user__details.email).then((count)=>{
+         cart__count = count
       })
     }
     try{
@@ -391,7 +393,9 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
     user__details = await auth.get__user__details(req)
     print(user__details)
   let orders = await user__helper.get__user__orders(user__details._id)
-   res.render('users/viewOrders',{user__details,orders,token,username})
+  await product__helper.get__cart__count(user__details.email).then((cart__count)=>{
+    res.render('users/viewOrders',{user__details,orders,token,username,cart__count})
+  })
   }catch(err){
     console.log(err)
     res.redirect('/users')
@@ -403,11 +407,13 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
   let review__access
   user__details =  await auth.get__user__details(req)
   let order = await user__helper.get__user__orders(user__details._id)
-  user__helper.get__ordered__products(req.query.proId,req.query.flag).then((order__details)=>{
+  user__helper.get__ordered__products(req.query.proId,req.query.flag).then(async(order__details)=>{
     console.log(order__details,'is the order details')
   review__access = false
   var view__ordered__products = order__details[0]._id
-   res.render('users/cartPage',{view__ordered__products,order__details,token,user__details,cart__count})
+  await product__helper.get__cart__count(user__details.email).then((cart__count)=>{
+    res.render('users/cartPage',{view__ordered__products,order__details,token,user__details,cart__count})
+  })
  })
  })
  //////////////////////////////////////////////////// for cancelling  orders//////////////////////////////////////////////
