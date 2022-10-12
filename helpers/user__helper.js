@@ -586,5 +586,44 @@ module.exports={
                 print(err,'is the error that occured in the return__product function in the user__helper.js')
             }
         })
+    },
+    referal:(refferalid) => {
+        return new Promise (async(resolve,reject) => {
+            try{
+                var user = await db.get().collection(collection.USER__COLLECTIONS).findOne({_id:objectId(refferalid)})
+                if(user){
+                    await db.get().collection(collection.USER__COLLECTIONS).updateOne({_id:objectId(refferalid)},{
+                        $inc:{wallet:500}
+                    })
+                    resolve('referral successfull')
+                }else{
+                    reject('user not found')
+                }
+            }catch(err){
+                print(err,'is the error occured in the referal function in the user__helper')
+                reject(err)
+            }
+        })
+    },
+    wallet__payment:(user__id,total__amount) => {
+        return new Promise(async(resolve,reject) => {
+            try{
+                let user = await db.get().collection(collection.USER__COLLECTIONS).findOne({_id:objectId(user__id)})
+                if(user.wallet > (total__amount-1)){
+                    await db.get().collection(collection.USER__COLLECTIONS).updateOne({_id:objectId(user__id)},{
+                        $inc:{wallet:-total__amount}
+                    }).then((result) => {
+                        print(result,'from mongodb in wallet payment function in the user__helper.js')
+                        if(result.acknowledged) resolve('payment Successful !')
+                        else reject('Something went Wrong')
+                    })
+                }else{
+                    reject('Insufficient money in Wallet')
+                }
+            }catch(err){
+                reject('Oops Something went wrong')
+                print(err,'error from wallet payment function in the user__helper')
+            }
+        })
     }
 }

@@ -16,7 +16,6 @@
             <a href="/users/logout" class="mt-2">logout</a>
             <a href="/users/" class="mt-2">back to Home</a>
             <a href="/users/showWishlist" class="mt-2">My Wishlist</a>
-            <a  class="mt-2">My Wallet</a>
             {{!-- <a href="/users/showWishlist" class="mt-2">My coupons</a> --}}
         </div>
         <div class="row">
@@ -41,10 +40,10 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md3">
-                                <h4>User Id</h4>
+                                <h4>Referal Code</h4>
                             </div>
                             <div class="col-md-9 text-secondary">
-                                {{user__details._id}}
+                                <span id="referal__id">{{user__details._id}} </span> <button class="the__button" id="copyButton"> Copy </button>
                             </div>
                         </div>
                         <hr>
@@ -212,6 +211,25 @@
 
             }
         })
+    }
+
+    // Now some   code for the copy button
+    var copyButton = document.getElementById('copyButton')
+    copyButton.onclick = (e) => {
+       
+  // Get the text field
+  var copyText = document.getElementById("referal__id").innerText;
+    console.log(copyText)
+  // Select the text field
+  //copyText.select();
+  //copyText.setSelectionRange(0, 99999); // For mobile devices
+
+   // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText);
+
+  // Alert the copied text
+  e.target.innerText = 'Copied!'
+
     }
 </script>
 <script src="/javascripts/admin__profile.js"></script>

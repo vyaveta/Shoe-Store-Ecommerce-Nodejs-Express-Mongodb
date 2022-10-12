@@ -39,7 +39,7 @@
         top: 20%;
         left: 30%;
         padding: 10px;
-        width: 50vw;
+        width: 40vw;
         background-color: aliceblue;
         border: 2px solid rebeccapurple;
         border-radius: 7px;
@@ -58,11 +58,11 @@
     }
 
     .box input {
-        width: 60%;
+        width: 100%;
         border: 2px solid rebeccapurple;
         outline: none;
         border-radius: 7px;
-        height: 35px;
+        height: 45px;
         padding: 14px;
         text-align: center;
     }
@@ -105,10 +105,10 @@
                 <h4>Add a new Coupon</h4>
             </div>
             <div class="box">
-                <input type="text" id="coupon__name" name="name">
+                <input type="text" id="coupon__name" placeholder="coupon name" name="name">
             </div>
             <div class="box">
-                <input type="number" id="offer__input" name="offer">
+                <input type="number" id="offer__input" placeholder="offer in %" name="offer">
             </div>
             <div class="box">
                 <input type="number" id="purchase__amount" name="purchase__amount" value="0" placeholder="Set minimum purchase amount">
@@ -116,7 +116,7 @@
             <div class="box">
                 <button class="btn btn-success" id="confirm__btn">Confirm</button>
             </div>
-            <button class="btn btn-light" id="cancel">Cancel</button>
+            <button class="btn btn-light" style="border:2px solid rebeccapurple ;" id="cancel">Cancel</button>
         </div>
         <script src="/javascripts/darkMode.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script> 

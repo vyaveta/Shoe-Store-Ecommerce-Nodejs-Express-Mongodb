@@ -36,7 +36,7 @@ let username
 
 
 /* GET users listing. */
-router.get('/',async(req, res, next)=> {
+router.get('/',async(req, res, next) => {
    token = req.cookies.usertoken
    var user__details = auth.get__user__details(req)
    product__helper.get__top__picks().then((products)=>{
@@ -65,21 +65,6 @@ router.get('/',async(req, res, next)=> {
           }
         }
       }
-      // this for loop is for displaying the discount price
-      // for(var i =0;i<products.length;i++){
-      //   if(products[i].offer){
-      //     var offer =Number(100-Number(products[i].offer))/100
-      //     products[i].disPrice = Number(products[i].price)*Number(offer)
-      //     print(products[i].disPrice)
-      //   }
-      // }
-      // for(var i =0;i<new__products.length;i++){
-      //   if(new__products[i].offer){
-      //     var offer =Number(100-Number(new__products[i].offer))/100
-      //     new__products[i].disPrice = Number(new__products[i].price)*Number(offer)
-      //     print(new__products[i].disPrice)
-      //   }
-      // }
     }catch(err){
       print(err,'is the error that occured in the / router')
     }finally{
@@ -147,6 +132,11 @@ router.post('/signup',(req,res)=>{
   var name = req.body.name
   console.table(req.body)
  console.log('User signup action detected')
+ if(req.body.referal!=''){
+  user__helper.referal(req.body.referal).then((result) => {
+    console.log(result)
+  }).catch((err)=>print(err))
+ }
  console.log(req.body)
   user__helper.add__user(req.body).then((response)=>{
     if (response=='deleted by admin'){
@@ -317,10 +307,11 @@ router.post('/changeProductQuantity',async(req,res,next)=>{
 }
 })
 router.get('/checkout',auth.usercookieJWTAuth,async(req,res)=>{
-  user__details = auth.get__user__details(req)
- let response = await product__helper.find__the__user__cart(user__details.email)
-    let total = await user__helper.get__total__amount(user__details)
-    let result = await user__helper.get__user__address(user__details.email)
+ var  user__detail =  auth.get__user__details(req)
+  var user__details = await user__helper.get__user__details(user__detail._id)
+ let response = await product__helper.find__the__user__cart(user__detail.email)
+    let total = await user__helper.get__total__amount(user__detail)
+    let result = await user__helper.get__user__address(user__detail.email)
     let address = result.address
     console.log(address,'is the address that we got in the get checkout router')
     if(response=='no__cart'){
@@ -362,16 +353,23 @@ router.post('/placeOrder',async(req,res)=>{
   }
   else if(req.body['payment-method']=='razorpay'){
     console.log('now in executing the else case i.e the online payment case above the generate razorpay function call')
-    user__helper.generateRazorpay(orderId,total__price.disTotal).then((response)=>{
+    user__helper.generateRazorpay(orderId,req.query.totalprice).then((response)=>{
       let signal = {}
       signal.order = response
       signal.flag = 'razorpay'
       res.json(signal)
     })
   }
+  else if(req.body['payment-method']=='wallet'){
+    user__helper.wallet__payment(user__details._id,req.query.totalprice).then((result) => {
+      res.json(result)
+    }).catch((err) => {
+      res.json(err)
+    })
+  }
   else{
     console.log('above the paypal function call')
-    user__helper.paypal(total__price.disTotal,orderId).then((payment)=>{
+    user__helper.paypal(req.query.totalprice,orderId).then((payment)=>{
       console.log('gonna send the payment to the ajax')
       let signal ={}
       signal.flag = 'paypal'

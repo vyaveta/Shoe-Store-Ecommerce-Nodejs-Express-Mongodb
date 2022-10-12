@@ -33,6 +33,10 @@
     width: 100%;
     background: linear-gradient(135deg,yellowgreen, green, yellowgreen);
 }
+.disabled{
+    user-select: none;
+    pointer-events: none;
+}
    </style>
 <body class="the__class">
     <div class="topper__container">
@@ -67,6 +71,10 @@
                     <span class="details">Phone Number</span>
                     <input type="number" name="Phone__number" id="model"  required>
                 </div>
+                <div class="input__box">
+                    <span class="details">Wallet Balance </span>
+                    <span id="wallet__balance">{{user__details.wallet}}</span>
+                </div>
                 <div class="input__bo">
                     <p style="color: green; font-weight:800">Choose Address</p>
            {{#each address}}
@@ -85,7 +93,10 @@
  <hr>
             <p style="color: green; font-weight:800">Payment Method</p>
             <label class="radio-inline" for="">
-                <input type="radio" name="payment-method" value="COD" checked="checked"> COD
+                <input type="radio" name="payment-method" value="COD" class="cod" checked="checked"> COD
+            </label> <br>
+            <label class="radio-inline" for="">
+                <input type="radio" name="payment-method" class="wallet__checkbox" value="wallet" > S-store Wallet
             </label> <br>
             <label class="radio-inline mt-2" for="">
                 <input type="radio" name="payment-method" id="online__payment" value="razorpay" > Razorpay
@@ -97,7 +108,7 @@
             <hr>
             
 <br>
-             <div id="price" class="title">Total Price Rs.{{total.disTotal}}</div>
+             <div id="price" class="title totalPrice__">Total Price Rs.{{total.disTotal}}</div>
              {{!-- <input type="submit" class="btn btn-primary text-light mt-4" id="rpay__button" value="Razorpay" style="visibility: hidden; font-weight:800; width:100%">
               <input type="submit" class="btn btn-light text-primary " id="paypay__button" value="Paypal" style="visibility: hidden; font-weight:800; width:100%"> --}}
             <input class="button for__the__button" id="place__order" type="submit" value="Place Order">
@@ -105,6 +116,7 @@
              <a href="/users"><button class="home__button for__the__button"> Home</button></a>
     </div>
     </div>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="/javascripts/loadAddress.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
      <script>
@@ -123,7 +135,7 @@
                     else if(response.flag == 'razorpay'){
                         razorpayPayment(response.order)
                     }
-                    else {
+                    else if(response.flag == 'paypal') {
                         try{
                             console.log('The payment method is paypal')
                         console.log(response.links)
@@ -138,6 +150,9 @@
                             alert('an error occured in order Placing')
                             location.href = '/users'
                         }
+                    }
+                    else{
+                        swal(response)
                     }
                 }
             })
