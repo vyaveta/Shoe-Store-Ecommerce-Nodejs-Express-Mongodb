@@ -194,7 +194,7 @@
                 </div>
                 <div class="status">
                     <h3>Status</h3>
-                    <span>{{this.status}}</span>
+                    <span class="order__status">{{this.status}}</span>
                 </div>
             </div>
         </div>
@@ -217,3 +217,12 @@
         </div>
         {{/each}}
     </div>
+
+    <script>
+        let order__status = document.querySelectorAll('.order__status')
+       for(var i = 0 ; i < order__status.length ; i++){
+        if(order__status[i].innerHTML=='pending') {
+            
+        }
+       }
+    </script>
