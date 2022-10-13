@@ -93,7 +93,6 @@ exports.becommingPrime = (req,res) =>{
   }
 }
 exports.verify__payment__prime = async(req,res) => {
-  print('got it inside the controller ')
   var user__details = await auth.get__user__details(req)
  await user__helper.verify__payment__prime(req.body).then(async()=>{
     console.log('passed the verify payment prime')
@@ -271,5 +270,24 @@ exports.update__profile =async (req,res) => {
     })
   }catch(err){
     res.json(err)
+  }
+}
+
+exports.get__order__details = (req,res) => {
+ try{
+  user__helper.get__order__details(req.query.order__id).then((result) => {
+    res.json(result)
+  }).catch((err)=>print(err))
+ }catch(err){
+  res.json(false)
+  print(err,'is the error occuren in the get__order__details function in the controller.js')
+ }
+}
+
+exports.verify__re__order__payment = (req,res) => {
+  try{
+    
+  }catch(err){
+    print(err,'is the error occured in the verify__re__order__payment function in the controller.js')
   }
 }

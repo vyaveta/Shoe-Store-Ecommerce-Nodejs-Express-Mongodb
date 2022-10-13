@@ -543,7 +543,7 @@ module.exports={
     },
     verify__payment__prime:(details)=>{
         console.log('got inside the verify payment prime promise')
-        print(details,'is hte detaisl')
+        print(details,'is the detaisl')
         return new Promise ((resolve,reject)=>{
             let hmac =  crypto.createHmac('sha256','liUTofbWu4r68kbcSxU51Wmm')
             hmac.update(details['payment[razorpay_order_id]']+'|'+details['payment[razorpay_payment_id]'])
@@ -658,6 +658,42 @@ module.exports={
             }catch(err){
                 reject('Oops something went wrong')
                 print(err,'err from update user promise in user__helper')
+            }
+        })
+    },
+    get__order__details:(order__id) => {
+        return new Promise (async(resolve,reject) => {
+            try{
+                var order__details = await db.get().collection(collection.ORDER__COLLECTION).aggregate([
+                    {
+                        $match:{_id:objectId(order__id)}
+                    },
+                    {
+                        $project:{
+                            total__amount:1,
+                            _id:0
+                        }
+                    }
+                ]).toArray()
+                print(order__details)
+                // 
+                var options = {
+                    amount:order__details[0].total__amount * 100,
+                    currency:"INR",
+                    receipt:""+order__id
+                  };
+                  instance.orders.create(options,(err,order)=>{
+                    if(err){
+                        console.log(err,'is the error occured in the generate razorpay promise')
+                    }
+                    else{
+                        console.log(order,'is the order that we got from the generate razorpay promise that is in the user helper.js')
+                        resolve(order)
+                    }
+                  })
+                //
+            }catch(err){
+                reject(err)
             }
         })
     }

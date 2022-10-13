@@ -554,6 +554,10 @@ router.patch('/return__product',controller.return__product)
 
 router.patch('/updateProfile',controller.update__profile)
 
+router.get('/get__order__details',controller.get__order__details)
+
+router.post('/users/verify__re__order__payment',controller.verify__re__order__payment)
+
 // logout///
 router.get('/logout',(req,res)=>{
   res.clearCookie('usertoken')

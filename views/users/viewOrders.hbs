@@ -59,7 +59,7 @@
        display: flex;
        justify-content: space-around;
        /* left: 25px; */
-       bottom: 0;
+       
    }
    .button__div{
     margin: 0 10px 10px;
@@ -78,6 +78,7 @@
        cursor: pointer;
        transition: .15s;
        font-size: 13px;
+       margin:0px 10px 0
    }
    .view__products button:hover{
        color: white;
@@ -181,6 +182,9 @@
                 <div class="address">
                     <h3> Address :{{this.delivery__details.address}} </h3>
                 </div>
+                <div class="id">
+                   <span style="font-size:10px ;">Order Id <span class="order__ids">{{this._id}}</span></span>
+                </div>
             </div>
             <hr>
             <div class="right">
@@ -217,12 +221,99 @@
         </div>
         {{/each}}
     </div>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
+        let order__ids = document.querySelectorAll('.order__ids')
+        let view__products = document.querySelectorAll('.view__products')
         let order__status = document.querySelectorAll('.order__status')
        for(var i = 0 ; i < order__status.length ; i++){
         if(order__status[i].innerHTML=='pending') {
-            
+            let payBtn = document.createElement('button')
+            payBtn.innerHTML = `pay <span>`
+            payBtn.classList.add('payBtn')
+            payBtn.id = order__ids[i].innerText
+            console.log(payBtn)
+            let button__div = document.createElement('div')
+            button__div.appendChild(payBtn)
+            view__products[i].appendChild(button__div)  // logic  1.creates a button with innerText pay and a div (just to match css styling) if the order status is pending and attach it to another div just to match the styling and then attaches the div to the view products 
         }
        }
+       
+        // now registering events for the payBtns
+       try{
+        let payBtns = document.querySelectorAll('.payBtn')
+        for(var i = 0 ; i < payBtns.length ; i++){
+            payBtns[i].addEventListener('click',(e) => {
+              getOrderDetails(e.target.id)
+            })
+        }
+       }catch(err){
+        console.log(err,'error means that no orders have the status pending !, seems the user is so smart dont ya !')
+       }
+
+       getOrderDetails = (id) => {
+        $.ajax({
+            url:'/users/get__order__details?order__id='+id,
+            method:'get',
+            success:(order) => {
+                if(order) {
+                    swal('first step done')
+                   razorPay(order)
+                }
+                else swal('No response from the backend !')
+            }
+        })
+       }
+       
+       razorPay = (order) => {
+         var options = {
+    "key": "rzp_test_BSsgMe3aOTLBnC", // Enter the Key ID generated from the Dashboard
+    "amount":order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Vyaveta group",
+    "description": "Test Transaction",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR06JmZ8xM8rNxElD2kKc1xAEmN84bdz7hYILs3lYaapLP08E6g27-v48UQD6QplgoVKdI&usqp=CAU",
+    "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler":function (response){
+
+        verifyPayment(response,order)
+    },
+   // "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+    "prefill": {
+        "name": "Adwaith",
+        "email": "whatthe12hell@gmail.com",
+        "contact": "9999999999"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#50AA57"
+    }
+};
+    var rzp1 = new Razorpay(options);
+    rzp1.open()
+       }
+       function verifyPayment(payment,order){
+
+      console.log('got inside the final function')
+        $.ajax({
+            url:'/users/verify__payment',
+            data:{
+                payment,
+                order
+            },
+            method:'post',
+            success:(response)=>{
+              console.log(response)
+                if(response.status){
+                  location.href='/users/orderPlaced'
+                  swal('Payment successfull')
+                }else{
+                    swal('Something went wrong !')
+                }
+            }
+        })
+     }
     </script>
