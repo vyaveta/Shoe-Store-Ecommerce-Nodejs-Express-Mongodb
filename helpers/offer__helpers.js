@@ -80,16 +80,16 @@ exports.apply__coupon = (code,user__id) => {
         print(coupon ,' is what we got from the apply__coupon function in the offer helper.js')
         if(coupon){
           // await db.get().collection(collection__list.)
-          // await db.get().collection(collection__list.USER__COLLECTIONS).findOneAndUpdate({_id:objectId(user__id)},{
-          //   $push:{
-          //     used__coupons:{coupon__name:code}
-          //   }
-          // }).then((data) => {
+          await db.get().collection(collection__list.USER__COLLECTIONS).findOneAndUpdate({_id:objectId(user__id)},{
+            $push:{
+              used__coupons:{coupon__name:code}
+            }
+          }).then((data) => {
             var resolveObj = {}
             resolveObj.msg = 'Hurray!'
             resolveObj.coupon = coupon
             resolve(resolveObj)
-          // })
+          })
         }else{
           print('no such coupon')
           reject('No such Coupon')
