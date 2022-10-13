@@ -244,12 +244,17 @@ module.exports={
                 console.log(response.insertedId)
                 resolve(response.insertedId)
             })
+            await db.get().collection(collection.USER__COLLECTIONS).updateOne({_id:objectId(order__details.user__id)},{
+                $inc:{total_purchase:1}
+            })
         })
+       
     },
     get__cart__products:(user__id)=>{
         try{
             return new Promise(async(resolve,reject)=>{
                 let cart = await db.get().collection(collection.CART__COLLECTIONS).findOne({user:objectId(user__id)})
+                console.log(cart,'is the user cart')
                 resolve(cart.products)
             })
         }catch(err){

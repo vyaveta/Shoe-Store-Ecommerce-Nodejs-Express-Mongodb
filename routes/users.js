@@ -327,12 +327,13 @@ router.get('/checkout',auth.usercookieJWTAuth,async(req,res)=>{
 
 ////////////////////////// some code for showing the user profile page //////////////////////
 router.get('/profilePage',auth.usercookieJWTAuth,async(req,res)=>{
-   user__detail =  auth.get__user__details(req)
+   var user__detail =  auth.get__user__details(req)
    var user__details = await user__helper.get__user__details(user__detail._id)
    print(user__details)
-   user__helper.get__user__address(user__detail.email).then((addresses)=>{
+   user__helper.get__user__address(user__detail.email).then(async(addresses)=>{
     // print(addresses.address, 'is the address')
     let address = addresses.address
+    var cart__count = await product__helper.get__cart__count(user__details.email)
     res.render('users/userProfile',{token,username,cart__count,user__details,address})
   })
 })
@@ -394,6 +395,7 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
     print(user__details)
   let orders = await user__helper.get__user__orders(user__details._id)
   await product__helper.get__cart__count(user__details.email).then((cart__count)=>{
+    print(orders)
     res.render('users/viewOrders',{user__details,orders,token,username,cart__count})
   })
   }catch(err){

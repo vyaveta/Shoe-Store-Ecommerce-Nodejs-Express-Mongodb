@@ -169,11 +169,11 @@
                             <button class="the__button" id="{{this.product._id}}">Review</button>
                             {{/if}}
                             {{/unless}}
-                            {{#unless this.returned}}
-              
+                            {{#if this.return}}
+                              {{#unless this.returned}}
                               <button class="return__button" id="{{this.product._id}}">Return</button>
-                            
                            {{/unless}}
+                            {{/if}}
                           </div>
                         </div>
                       </div>

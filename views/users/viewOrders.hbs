@@ -208,7 +208,9 @@
                    {{#if this.cancel}}
                  
                    {{else}}
-                        <div class="button__div"> <button onclick="window.location.href='/users/deleteOrder/{{this._id}}'" class="the__button cancel">Cancel Order</button></div>
+                        {{#unless this.cancelled}}
+                            <div class="button__div"> <button onclick="window.location.href='/users/deleteOrder/{{this._id}}'" class="the__button cancel">Cancel Order</button></div>
+                        {{/unless}}
                             {{/if}}
                 </div>
         </div>
