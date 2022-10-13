@@ -138,11 +138,13 @@ h1,h2{
     box-shadow: 0 4px 8px 0 rgba(0,0,0, 0.2);
 }
 .section__1{
+    margin-top: 500px !important;
+    width: 100vw !important;
     position: relative;
     margin-top:10vh;
     min-height: 90vh;
-    height: 100vh;
-    /* padding-bottom: 1000px; */
+    height: 100% !important;
+    padding-bottom: 1000px;
     background: #f1f1f1;
 }
 .section__1 .card__like{
@@ -178,6 +180,8 @@ h1,h2{
     align-items: flex-start;
     flex-wrap:wrap;
     background:#f1f1f1;
+    height: 100%;
+    
 }
 .section__1 .section__1_2 .recent__payments{
     
