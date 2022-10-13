@@ -7,6 +7,7 @@ const objectId = require('mongodb').ObjectId
 const Razorpay = require('razorpay')
 const crypto = require('crypto')
 const paypal = require('paypal-rest-sdk');
+const { stat } = require('fs');
 const print = console.log
  
 paypal.configure({
@@ -623,6 +624,35 @@ module.exports={
             }catch(err){
                 reject('Oops Something went wrong')
                 print(err,'error from wallet payment function in the user__helper')
+            }
+        })
+    },
+    update__user:(user__details,req__query) => {
+        return new Promise (async(resolve,reject) => {
+            try{
+                bcrypt.compare(req__query.current__pass,user__details.password).then(async(status) => {
+                    if(status){
+                        await db.get().collection(collection.USER__COLLECTIONS).updateOne({_id:objectId(user__details._id)},
+                {
+                    $set:{name:req__query.new__name}
+                })
+                if(req__query.update__pass=='true'){
+                    print('the user is trying to update password')
+                    req__query.newpass = await bcrypt.hash(req__query.newpass,10)
+                    print(req__query.newpass,'is the new passs')
+                    await db.get().collection(collection.USER__COLLECTIONS).updateOne({_id:objectId(user__details._id)},
+                    {
+                        $set:{password:req__query.newpass}
+                    })
+                }
+                resolve('succesfully updated !')
+                    }else{
+                        reject('Enter your password Currectly !')
+                    }
+                })
+            }catch(err){
+                reject('Oops something went wrong')
+                print(err,'err from update user promise in user__helper')
             }
         })
     }

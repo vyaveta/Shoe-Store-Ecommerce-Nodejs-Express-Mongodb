@@ -256,3 +256,20 @@ exports.return__product = (req,res) => {
     print(err,'is the error that occured in the return product function in the controller . js')
   }
 }
+
+exports.update__profile =async (req,res) => {
+  print(req.query)
+  try{
+    var user__details = await auth.get__user__details(req)
+    var updated__Udetails =await user__helper.get__user__details(user__details._id)
+    console.log(updated__Udetails,'is the updated user details')
+    user__helper.update__user(updated__Udetails,req.query).then((response) => {
+      res.json(response)
+    }).catch((err) => {
+      res.json(err)
+      print(err)
+    })
+  }catch(err){
+    res.json(err)
+  }
+}

@@ -1,3 +1,4 @@
+
 let pop__up = document.querySelector('.address__popup')
 let trigger__button = document.getElementById('address__button')
 let cover = document.querySelector('.container')
@@ -16,6 +17,7 @@ var changePass = false
 var change__password = document.getElementById('change__password')
 var new__pass__div = document.querySelector('.new__pass__div')
 var update__profile = document.getElementById('update__profile')
+var close__button = document.querySelector('.btn-close')
 change__password.onclick = (e) => {
     changePass = true
     console.log('clicked')
@@ -31,6 +33,15 @@ try{
    if(changePass){
     if(new__password.trim()=="" || new__password.lenght>3 || new__password.lenght < 20) throw "Invalid Format for password"
    }
+   $.ajax({
+    url:'/users/updateProfile?update__pass='+changePass+'&new__name='+new__user__name+'&newpass='+new__password+'&current__pass='+current__password,
+    method:'patch',
+    success:(response) => {
+        swal(response)
+    }
+  })  
+  changePass = false
+  close__button.click()
 }catch(err){
     console.log(err)
     swal(err)

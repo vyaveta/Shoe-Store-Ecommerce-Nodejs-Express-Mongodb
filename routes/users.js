@@ -550,6 +550,8 @@ router.get('/user__chat',controller.user__chat)
 
 router.patch('/return__product',controller.return__product)
 
+router.patch('/updateProfile',controller.update__profile)
+
 // logout///
 router.get('/logout',(req,res)=>{
   res.clearCookie('usertoken')
