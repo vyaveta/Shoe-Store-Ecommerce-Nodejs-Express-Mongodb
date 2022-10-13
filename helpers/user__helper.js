@@ -599,7 +599,7 @@ module.exports={
                 var user = await db.get().collection(collection.USER__COLLECTIONS).findOne({_id:objectId(refferalid)})
                 if(user){
                     await db.get().collection(collection.USER__COLLECTIONS).updateOne({_id:objectId(refferalid)},{
-                        $inc:{wallet:500}
+                        $inc:{wallet:1500}
                     })
                     resolve('referral successfull')
                 }else{

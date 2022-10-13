@@ -18,13 +18,14 @@ function loadAddress(){
 let wallet__checkbox = document.querySelector('.wallet__checkbox')
 let cod = document.querySelector('.cod')
 let wallet__balance = document.getElementById('wallet__balance').innerText
-let total__price = document.querySelector('.totalPrice__').innerText
+let total__price = document.getElementById('price').innerText
 wallet__checkbox.onclick = (e) => {
     if(total__price > wallet__balance)
-    swal('Insufficient Balance in Wallet')
+    {
+        swal('Insufficient Balance in Wallet')
     cod.click()
+    }
 }
-
 // // some code for the razorpay 
 // let online = document.getElementById('online__payment')
 // let place__order__button = document.getElementById('place__order')
