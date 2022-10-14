@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/stylesheets/users/header.css">
     <link rel="stylesheet" href="/stylesheets/home1.css"> 
     <link rel="stylesheet" href="/stylesheets/users/alert.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" href="/stylesheets/users/home1Popup.css">
    
     <!-- bootstrap growl -->
@@ -307,7 +308,7 @@
                           url: '/users/add__to__wishlist/'+pro__id,
                           method: 'get',
                           success: (response) => {
-                            alert('added to wishlist')
+                            swal('added to wishlist')
                             let span = document.getElementById(pro__id+'add')
                             span.innerHTML = 'Remove from Wishlist'
                           }
@@ -329,7 +330,7 @@
                             url:'/users/remove__from__wishlist/'+pro__id,
                         method:'get',
                         success:(response)=>{
-                            alert('removed from wishlist')
+                            swal('removed from wishlist')
                             let span = document.getElementById(pro__id+'add')
                             span.innerHTML = 'Add to WishList'
                         }

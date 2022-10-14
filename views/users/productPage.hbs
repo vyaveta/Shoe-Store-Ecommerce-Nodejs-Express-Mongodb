@@ -62,7 +62,7 @@
                 <div class="small-img-col">
                     <img src="/product-images/{{data._id}}3.jpg" alt=""  width="150px" height="150px" class="small-img" srcset="">
                 </div>
-                <div class="small-img-col">
+                <div id="small_img_3rd" class="small-img-col">
                     <img src="/product-images/{{data._id}}4.jpg" alt="" width="150px" height="150px" class="small-img" srcset="">
                 </div>
             </div>
@@ -111,11 +111,88 @@
         <div class="magnified__image"></div>
     </div>
 </section>
-<script src="/javascripts/customAlertBox.js"></script>
-<script>
+
+ <div class="new__arrivals" id="card">
+        <h3>You may also like</h3>
+    </div>
+ <div class="the__products">
+        <div class="the__container snaps__inline" >
+            {{#each rec__products}}
+            <div class="the__card" >
+                <div class="imgbx"><a href="/users/productPage/{{this._id}}" style="text-decoration:none ;">
+                        <img src="/product-images/{{this._id}}.jpg" alt="image__here" width="500px"></a>
+                    <ul class="action">
+                        <li>
+                            
+                             <i class="fa fa-heart" onclick="add__to__wishlist('{{this._id}}')"></i>
+                            <span id="{{this._id}}add" >Add to WishList</span>
+                           
+                        </li>
+                        <li>
+                           
+                            <i class="fa fa-shopping-cart" onclick=addToCart('{{this._id}}')></i>
+                            <span >Add to Cart</span>
+                        </li>
+                        <li>
+                            <i class="fa fa-eye"></i>
+                            <span>View Product</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="content__home">
+                    <div class="product__name">
+                        <h3>{{this.model}}</h3>
+                    </div>
+                    <div class="price__rating">
+                        {{#if this.disPrice}}
+                         <h5 class="stroke">Rs.{{this.price}}</h5>
+                        <h2>Rs.{{this.disPrice}}</h2>
+                        {{else}}
+                        <h2>Rs.{{this.price}}</h2>
+                        {{/if}}
+                        <div class="rating">
+                            {{#each this.loop}}
+                                <i class="fa fa-star"></i>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+            <div class="button__div" style="padding:40px ;  width:190px">
+                <a href="/users/home2/all__categories"> <button class="button__more" style="margin:0px 30px 0px ;"> View More<svg xmlns="http://www.w3.org/2000/svg" width="34"
+                            fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                        </svg></button> </a>
+            </div>
+        </div>
+    </div>
+    <script>
+let profile = document.querySelectorAll('.userP')
+    console.log(profile.length,'is the length')
+   for (var i = 0; i<profile.length;i++){
+    console.log('count')
+   
+     profile[i].addEventListener('error',(event)=>{
+        console.log('error occured')
+        console.log(event)
+        event.target.src='/images/users/userProfile.jpg'
+    })
+   }
+
     var temp
     var main__img = document.getElementById('mainImg')
     var small__img = document.getElementsByClassName('small-img')
+
+ console.log(small__img.length)
+    for(var i = 0 ; i < small__img.length ; i++){
+        small__img[i].addEventListener('error' , (e) => {
+            console.log('error pic load')
+            e.target.src = main__img.src
+        } )
+    }
+
     small__img[0].onclick=()=>{
          temp = main__img.src
          main__img.src = small__img[0].src
@@ -137,9 +214,16 @@
             e.target.src = main__img.src
         })
     }
+    </script>
+<script src="/javascripts/wishlist.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="/javascripts/customAlertBox.js"></script>
+<script>
+   
 console.log('the script is fine and no errors ')
 // alert box js code
  
+  
 
     function addToCart(proId){
        $.ajax({
@@ -156,16 +240,7 @@ console.log('the script is fine and no errors ')
         }
        })
     }
-    let profile = document.querySelectorAll('.userP')
-    console.log(profile.length,'is the length')
-   for (var i = 0; i<profile.length;i++){
-    console.log('count')
-    console.log(profile[i])
-     profile[i].addEventListener('error',(event)=>{
-        console.log(event)
-        event.target.src='/images/users/userProfile.jpg'
-    })
-   }
+   
 </script> 
 <script src="/javascripts/productZoom.js"></script>
 

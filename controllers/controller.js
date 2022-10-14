@@ -63,9 +63,10 @@ exports.bePrime = (req,res) =>{
   if (user__detail == null ) {
     res.redirect('/users/login')
   }else{
-  user__helper.get__user__details(user__detail._id).then((user__details) => {
+  user__helper.get__user__details(user__detail._id).then(async(user__details) => {
+    var cart__count = await product__helper.get__cart__count(user__details.email)
     print('here')
-    res.render('users/bePrime',{user__details})
+    res.render('users/bePrime',{user__details,cart__count})
   }).catch((err) => {
     print(err,'is the err that catched from the promise funtion in the user__helper ! from the bePrime function in the controller js')
     res.render('user/bePrime',{user__detail})

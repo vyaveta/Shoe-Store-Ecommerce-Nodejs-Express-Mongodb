@@ -114,3 +114,8 @@
         display: none;
     }
   }
+  @media only screen and (max-width:490px){
+    #small_img_3rd{
+        display: none;
+    }
+  }

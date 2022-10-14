@@ -88,7 +88,18 @@ module.exports={
             let top__picks = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find({stock: {$gt:0}}).sort({total__clicks:-1}).limit(10).toArray()
             resolve(top__picks)
         })
-    },add__to__cart:(product__id,user__id,user__email)=>{
+    },get__rec__products:(category__name) => {
+        return new Promise (async(resolve,reject) => {
+            try{
+                var products = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find({category:category__name}).toArray()
+                resolve(products)
+            }catch(err){
+                reject(false)
+                print(err,'is the error that occured in the product__helper.js get__rec__products function')
+            }
+        })
+    },
+    add__to__cart:(product__id,user__id,user__email)=>{
         let proObj = {
             item:objectId(product__id),
             quantity:1

@@ -1,14 +1,16 @@
+var final__amount
+let total__product__price = document.getElementById('total__product__price')
+let total__dis__amount = document.getElementById('distotal_cart_amt')
+let total__amount = document.getElementById('total_cart_amt')
+let discount__p = document.getElementById('discount__p')
+total__dis__amount.innerHTML = parseInt(total__dis__amount.innerHTML) + 100
+total__amount.innerHTML = parseInt(total__product__price.innerHTML) + 100
+final__amount = total__dis__amount.innerHTML
 try{
-  
-  var final__amount
-  let total__product__price = document.getElementById('total__product__price')
-  let total__dis__amount = document.getElementById('distotal_cart_amt')
-  let total__amount = document.getElementById('total_cart_amt')
-  let discount__p = document.getElementById('discount__p')
-  total__dis__amount.innerHTML = parseInt(total__dis__amount.innerHTML) + 100
-  total__amount.innerHTML = parseInt(total__product__price.innerHTML) + 100
-  final__amount = total__dis__amount.innerHTML
-try {
+// }catch(err){
+//   console.log(err,'form discount coupon.js')
+// }
+// try {
   if (total__dis__amount.innerHTML == total__amount.innerHTML) {
     total__amount.classList.remove('se')
     total__amount.style.visibility = 'hidden'
@@ -70,7 +72,7 @@ function add__to__wishlist(pro__id) {
       url: '/users/add__to__wishlist/' + pro__id,
       method: 'get',
       success: (response) => {
-        alert('added to wishlist')
+        swal('added to wishlist')
       }
     })
   } catch (err) {
@@ -86,7 +88,7 @@ function remove__from__wishlist(pro__id) {
       url: '/users/remove__from__wishlist/' + pro__id,
       method: 'get',
       success: (response) => {
-        alert('removed from wishlist')
+        swal('removed from wishlist')
         // location.reload()
         let div = document.getElementById(pro__id + 'wish')
         div.style.display = 'none'
@@ -140,7 +142,4 @@ discount_code = () => {
   }
 }catch(err){
   swal(err)
-}
-}catch(err){
-  console.log(err,'form discount coupon.js')
 }

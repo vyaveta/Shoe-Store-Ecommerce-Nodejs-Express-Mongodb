@@ -172,9 +172,24 @@ router.get('/productPage/:id',async(req,res)=>{
   var id = req.params.id
   await product__helper.get__the__product(id).then(async(data)=>{
   await product__helper.get__cart__count(user__details.email).then(async(count)=>{
+    var rec__products = await product__helper.get__rec__products(data.category)
 await review__helper.get__productreviews(id).then((reviews)=>{
-  console.log(reviews,'got it hurray aslfkjlkasjf')
-  
+  // console.log(reviews,'got it hurray aslfkjlkasjf')
+  for(var i = 0; i<rec__products.length; i++){
+    if(rec__products[i].name==data.name&&rec__products[i].company__name==data.company__name){
+      console.log('same detected')
+      rec__products.splice(i,1)
+    }else{
+      rec__products[i].loop=[]
+      if(rec__products[i].average__rating){
+        var R = rec__products[i].average__rating
+        for(var j = 0;j<R;j++){
+          rec__products[i].loop[j]='star'
+        }
+      }
+    }
+   
+  }
   for(var i = 0; i < reviews.length; i++){
     reviews[i].loop =[]
     let R = reviews[i].rating
@@ -182,9 +197,9 @@ await review__helper.get__productreviews(id).then((reviews)=>{
       reviews[i].loop[j] = 'star'
     }
   }
-  console.log(reviews,'is the end result')
+  // console.log(reviews,'is the end result')
   cart__count = count
-  res.render('users/productPage',{data,token,username,cart__count,reviews,user__details})
+  res.render('users/productPage',{data,token,username,cart__count,reviews,user__details,rec__products})
 })
   })
 })
