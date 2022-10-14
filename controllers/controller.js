@@ -291,3 +291,15 @@ exports.verify__re__order__payment = (req,res) => {
     print(err,'is the error occured in the verify__re__order__payment function in the controller.js')
   }
 }
+
+exports.get__user__details = async (req,res) => {
+  try{
+    
+    var user = auth.get__user__details(req)
+   var user__details = await user__helper.get__user__details(user._id)
+   res.json(user__details)
+  }catch(err){
+    res.json(false)
+    print(err,'is the error that occured in the get__user__details function in the controller.js')
+  }
+}

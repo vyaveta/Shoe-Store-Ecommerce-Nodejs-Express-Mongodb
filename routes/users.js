@@ -558,6 +558,8 @@ router.get('/get__order__details',controller.get__order__details)
 
 router.post('/users/verify__re__order__payment',controller.verify__re__order__payment)
 
+router.get('/get__user__details',controller.get__user__details)
+
 // logout///
 router.get('/logout',(req,res)=>{
   res.clearCookie('usertoken')

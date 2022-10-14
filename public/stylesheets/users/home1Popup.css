@@ -3,9 +3,7 @@
     padding: 0px;
 }
 
-body {
-    /* background-color: lightgreen; */
-}
+
 
 
 .popup {
@@ -63,10 +61,9 @@ body {
 .contentBox .content h3 {
     color: #333;
     line-height: 1em;
-    font-weight: 400;
+    font-weight: 800;
     font-size: 2em;
 }
-
 .contentBox .content h2 {
     font-size: 4em;
     color: #ff4d54;
