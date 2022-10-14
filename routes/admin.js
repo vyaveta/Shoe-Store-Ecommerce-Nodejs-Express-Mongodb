@@ -346,6 +346,8 @@ router.post('/add__banner',controller.add__banner)
 
 router.delete('/delete__banner',controller.delete__banner)
 
+router.get('/sales__report',controller.sales__report)
+
 
 ///////Logout Route for the admin/////////
 router.get('/logout',(req,res)=>{

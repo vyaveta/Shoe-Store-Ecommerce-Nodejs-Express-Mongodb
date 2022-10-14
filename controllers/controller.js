@@ -7,7 +7,7 @@ const offer__helper = require('../helpers/offer__helpers')
 const coupon__helper = require('../helpers/coupon__helpers')
 const banner__helper = require('../helpers/banner__helper')
 const fs = require('fs');
-const { query } = require('express');
+const admin__helpers = require('../helpers/admin__helpers');
 
 
 const print = console.log
@@ -302,5 +302,14 @@ exports.get__user__details = async (req,res) => {
   }catch(err){
     res.json(false)
     print(err,'is the error that occured in the get__user__details function in the controller.js')
+  }
+}
+
+exports.sales__report = async (req,res) => {
+  try{
+    var orders = await admin__helpers.get__all__orders()
+    res.render('admin/salesReport',{orders,admin__sidemenu:true})
+  }catch(err){
+    print(err,'is  the error that occured in the sales report function in the controller.js')
   }
 }
