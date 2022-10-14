@@ -594,16 +594,20 @@ module.exports={
         })
     },
     referal:(refferalid) => {
+        refferalid = refferalid.split(' ').join('')
         return new Promise (async(resolve,reject) => {
             try{
                 var user = await db.get().collection(collection.USER__COLLECTIONS).findOne({_id:objectId(refferalid)})
-                if(user){
+                if(user.is_member){
+                    print(user,'the refferal actually works!')
                     await db.get().collection(collection.USER__COLLECTIONS).updateOne({_id:objectId(refferalid)},{
                         $inc:{wallet:1500}
                     })
                     resolve('referral successfull')
                 }else{
-                    reject('user not found')
+                    await db.get().collection(collection.USER__COLLECTIONS).updateOne({_id:objectId(refferalid)},{
+                        $inc:{wallet:150}
+                    })
                 }
             }catch(err){
                 print(err,'is the error occured in the referal function in the user__helper')
