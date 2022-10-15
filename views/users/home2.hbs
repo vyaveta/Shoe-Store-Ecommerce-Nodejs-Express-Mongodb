@@ -93,7 +93,7 @@
                         {{/if}}
                         {{#if average__rating}}
                         <div class="rating">
-                           <span class="badge text-bg-warning text-light p-2">{{this.average__rating}} <i class="fa fa-star text-light"></i></span>
+                           <span class="badge text-bg-warning text-light p-2"><span class="product__rating">{{this.average__rating}}</span> <i class="fa fa-star text-light"></i></span>
                         </div>
                         {{/if}}
                     </div>
@@ -115,6 +115,14 @@
 {{!-- alert box code --}}
     <script src="/javascripts/customAlertBox.js"></script>
        <script>
+
+
+        var prA = document.querySelectorAll('.product__rating')
+        for(var i = 0 ; i < prA.length ; i++){
+          prA[i].innerHTML = Math.round(prA[i].innerHTML)
+        }
+
+
        console.log('script is running')
     function addToCart(proId){
         showAlertBox()

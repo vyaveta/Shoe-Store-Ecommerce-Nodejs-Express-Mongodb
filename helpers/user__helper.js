@@ -251,16 +251,18 @@ module.exports={
        
     },
     get__cart__products:(user__id)=>{
-        try{
-            return new Promise(async(resolve,reject)=>{
+        return new Promise(async(resolve,reject)=>{
+                try{
                 let cart = await db.get().collection(collection.CART__COLLECTIONS).findOne({user:objectId(user__id)})
                 console.log(cart,'is the user cart')
-                resolve(cart.products)
+                if(cart.products) resolve(cart.products)
+                else throw 'no products in cart'
+                
+            }catch(err){
+                resolve('no')
+                console.log(err,'from the get cart products')
+            }
             })
-        }catch(err){
-            resolve('no')
-            console.log(err,'from the get cart products')
-        }
     },
     get__user__orders:(user__id)=>{
         return new Promise(async(resolve,reject)=>{

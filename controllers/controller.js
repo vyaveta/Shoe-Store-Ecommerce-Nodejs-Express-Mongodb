@@ -155,7 +155,9 @@ exports.user__home2 = async(req,res) => {
      for(var i = 0 ; i < banners.length ; i++ ){
       banners[i].image__id = banners[i]._id.toString()
     }
-        res.render('users/home2',{products,user__details,categories,type,banners})
+    var cart__count = await product__helper.get__cart__count(user__details.email)
+    print(cart__count,'is the cart count')
+        res.render('users/home2',{products,user__details,categories,type,banners,cart__count})
     })
   }catch(err){
     print(err)
