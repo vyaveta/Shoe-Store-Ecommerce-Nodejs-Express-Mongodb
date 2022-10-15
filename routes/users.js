@@ -73,7 +73,7 @@ router.get('/',async(req, res, next) => {
       print(products,'is the final result')
       print(`the user name that is going to be displayed in the top of the website header is ${username}`)
      
-        res.render('home1',{token,username,products,new__products,cart__count,user__details})
+        res.render('home1',{token,username,products,new__products,cart__count,user__details,user__footer:true})
     }  
    
     })
@@ -199,7 +199,7 @@ await review__helper.get__productreviews(id).then((reviews)=>{
   }
   // console.log(reviews,'is the end result')
   cart__count = count
-  res.render('users/productPage',{data,token,username,cart__count,reviews,user__details,rec__products})
+  res.render('users/productPage',{data,token,username,cart__count,reviews,user__details,rec__products,user__footer:true})
 })
   })
 })

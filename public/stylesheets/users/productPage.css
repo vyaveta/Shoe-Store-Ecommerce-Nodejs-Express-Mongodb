@@ -48,9 +48,18 @@
     overflow-x: scroll;
    
 }
+.rating .fa{
+    font-size: 10px;
+    color: gold;
+}
+.st{
+    background-color: red;
+    min-width: 100px;
+    text-align: end;
+}
 .content{
     display: flex;
-    justify-content:flex-start;
+    justify-content:space-between;
     margin-bottom: 10px;
     width: 100%;
 }
