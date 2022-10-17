@@ -201,13 +201,14 @@ module.exports = {
   get__allproducts: (condition) => {
     return new Promise(async (resolve, reject) => {
       var count = await db
-        .get()
+        .get({deleted:false})
         .collection(collection__list.PRODUCTS__COLLECTIONS)
         .countDocuments();
       var products = await db
         .get()
         .collection(collection__list.PRODUCTS__COLLECTIONS)
-        .find()
+        .find({deleted:false}).hint( { $natural : -1 } )
+
         .toArray();
       if (condition == "product__count") {
         resolve(count);

@@ -1,4 +1,3 @@
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -6,150 +5,193 @@
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="/stylesheets/admin/admin__dashboard.css">
     <!--Adding datatable Style cdn -->
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-  <!-- CSS only -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-   <!--Adding Jquery CDN  -->
-   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-   <!--Adding DataTable CDN-->
-   <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-   <!--Initializing Datatable-->
-   <script>
-    $(document).ready(function () {
-    $('#example').DataTable();
-});
-   </script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <!--Adding Jquery CDN  -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <!--Adding DataTable CDN-->
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <!--Initializing Datatable-->
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
 </head>
 <style>
-    a{
+    a {
         text-decoration: none !important;
     }
-   .section__1{
-    margin-top: 150px;
-   }
-   .hide{
-    display: none !important;
-   }
-   .pop__up__category{
-    position: fixed;
-    top: 30%;
-    left:30%;
-    padding:30px;
-    background-color: aliceblue;
-    border: 2px solid rebeccapurple;
-    border-radius: 7px;
-    display: flex;
-    flex-direction:column;
-    justify-content: center;
-    align-items: center;
-   }
-   .box{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin:20px;
-   }
-   .box input{
-    width: 60%;
-    border: 2px solid rebeccapurple;
-    outline: none;
-    border-radius: 7px;
-    height: 35px;
-   }
+
+    .section__1 {
+        margin-top: 150px;
+    }
+
+    .hide {
+        display: none !important;
+    }
+
+    .pop__up__category {
+        position: fixed;
+        top: 30%;
+        left: 30%;
+        padding: 30px;
+        background-color: aliceblue;
+        border: 2px solid rebeccapurple;
+        border-radius: 7px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin: 20px;
+    }
+
+    .box input {
+        width: 60%;
+        border: 2px solid rebeccapurple;
+        outline: none;
+        border-radius: 7px;
+        height: 35px;
+    }
 </style>
 
 <body>
-    
-        <div class="section__1">
-             <p style="color: rgb(223, 23, 23) ; font-size:22px;font-weight:600;">{{admin__msg}}</p>
-         <button><a href="/admin/addCategory">Add Category</a></button>
-            {{#if data}}
-           <table id="example" class="display" style="width:100%">
-        <thead>
-            <tr>
-                <th>Category name</th>
-                <th></th>
-                <th>Offers</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-{{# each data}}
-            <tr>
-                <td>{{this.name}}</td>
-                {{#if this.offer}}
-                <td><button class="btn btn-success" onclick="popFunction('{{this._id}}')">Change</button></td>
-                <td><h4 class="text-success" id="offer__display">{{this.offer}}%</h4></td>
-                {{else}}
-                 <td><button class="btn btn-success" id="add__offer__btn" onclick="popFunction('{{this._id}}')">Add Offer</button></td>
-                <td><h4 class="text-success">No offers</h4></td>
-                {{/if}}
-                <td><a href="/admin/deleteCategory/{{this._id}}"><button class="btn btn-danger" onclick=" return confirm('Are you sure do you really want to delete {{this.name}} from category list')">Delete</button></a></td>
-            </tr>
- {{/each}}
+
+    <div class="section__1">
+        <p style="color: rgb(223, 23, 23) ; font-size:22px;font-weight:600;">{{admin__msg}}</p>
+        <button><a href="/admin/addCategory">Add Category</a></button>
+        {{#if data}}
+        <table id="example" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Category name</th>
+                    <th></th>
+                    <th>Offers</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{# each data}}
+                <tr id="{{this._id}}">
+                    <td>{{this.name}}</td>
+                    {{#if this.offer}}
+                    <td><button class="btn btn-success" onclick="popFunction('{{this._id}}')">Change</button></td>
+                    <td>
+                        <h4 class="text-success" id="offer__display">{{this.offer}}%</h4>
+                    </td>
+                    {{else}}
+                    <td><button class="btn btn-success" id="add__offer__btn" onclick="popFunction('{{this._id}}')">Add
+                            Offer</button></td>
+                    <td>
+                        <h4 class="text-success">No offers</h4>
+                    </td>
+                    {{/if}}
+                    {{!-- <td><a href="/admin/deleteCategory/{{this._id}}"><button class="btn btn-danger"
+                                onclick=" return confirm('Are you sure do you really want to delete {{this.name}} from category list')">Delete</button></a>
+                    </td> --}}
+                    <td><button class="btn btn-danger" onclick="deleteCategory('{{this._id}}')">Delete</button></td>
+                </tr>
+                {{/each}}
             </tbody>
-            </table>
-            {{else}}
-            <center> <h1>No data to show</h1></center>
-            {{/if}}
-            <div class="pop__up__category hide">
-                <div class="box">
-                    <h4>Add Offer to the Category</h4>
-                </div>
-                <div class="box">
-                    <input type="number" id="offer__input" name="category__offer">
-                </div>
-                <div class="box">
-                    <button class="btn btn-success" id="confirm__btn">Confirm</button>
-                </div>
-                <button class="btn btn-light" id="cancel">Cancel</button>
-                    <input type="text" id="category__id" name="category__offer" hidden>
+        </table>
+        {{else}}
+        <center>
+            <h1>No data to show</h1>
+        </center>
+        {{/if}}
+        <div class="pop__up__category hide">
+            <div class="box">
+                <h4>Add Offer to the Category</h4>
             </div>
+            <div class="box">
+                <input type="number" id="offer__input" name="category__offer">
+            </div>
+            <div class="box">
+                <button class="btn btn-success" id="confirm__btn">Confirm</button>
+            </div>
+            <button class="btn btn-light" id="cancel">Cancel</button>
+            <input type="text" id="category__id" name="category__offer" hidden>
         </div>
-     <script src="/javascripts/darkMode.js"></script>
+    </div>
+    <script src="/javascripts/darkMode.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
-    crossorigin="anonymous"></script>
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
 </body>
 
-<script> 
+<script>
     let add__offer__btn = document.getElementById('add__offer__btn')
     let offer__display = document.getElementById("offer__display")
     const cancel = document.getElementById('cancel')
-    let  catId = document.getElementById('category__id')
+    let catId = document.getElementById('category__id')
     let pop__up = document.querySelector('.pop__up__category')
     const input = document.getElementById('offer__input')
     const confirm__btn = document.getElementById('confirm__btn')
     confirm__btn.style.display = 'none'
-    cancel.onclick=()=>{
+    cancel.onclick = () => {
         pop__up.classList.add('hide')
     }
-    popFunction = (id)=>{
+    popFunction = (id) => {
         pop__up.classList.remove('hide')
         catId.value = id
     }
-    input.addEventListener('keyup',(e)=>{
+    input.addEventListener('keyup', (e) => {
         console.log(e.target.value)
-        if(e.target.value<100 && e.target.value>0){
-            confirm__btn.style.display=''
-            }else{
-                confirm__btn.style.display='none'
-            }
+        if (e.target.value < 100 && e.target.value > 0) {
+            confirm__btn.style.display = ''
+        } else {
+            confirm__btn.style.display = 'none'
+        }
     })
 
     // now adding function to confirm button
-    confirm__btn.onclick = ()=>{
+    confirm__btn.onclick = () => {
         cancel.click()
-        alert(catId.value,'is the category id and ',input.value ,'is the discount')
+        alert(catId.value, 'is the category id and ', input.value, 'is the discount')
         $.ajax({
-            url:'/admin/add__offer__to__category/?category__id='+catId.value+'&discount='+input.value,
-            method:'patch',
-            success:(res)=>{
+            url: '/admin/add__offer__to__category/?category__id=' + catId.value + '&discount=' + input.value,
+            method: 'patch',
+            success: (res) => {
                 alert(res)
             }
         })
     }
+
+    deleteCategory = (id) => {
+        swal({
+            title: "Are you sure?",
+            text: "Do you really want to delete this category",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: '/admin/deleteCategory/' + id,
+                        method: 'delete',
+                        success: (response) => {
+                            swal(response, {
+                                icon: 'success'
+                            })
+                            document.getElementById(id).style.display = 'none'
+                        }
+                    })
+                } else {
+                    swal("Cancelled !");
+                }
+            });
+    }
 </script>
+
 </html>

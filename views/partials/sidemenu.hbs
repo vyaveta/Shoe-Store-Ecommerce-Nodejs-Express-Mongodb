@@ -66,7 +66,7 @@
                     class="bi bi-ticket-perforated-fill" viewBox="0 0 16 16">
                     <path
                         d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5V6a.5.5 0 0 1-.5.5 1.5 1.5 0 0 0 0 3 .5.5 0 0 1 .5.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5V10a.5.5 0 0 1 .5-.5 1.5 1.5 0 1 0 0-3A.5.5 0 0 1 0 6V4.5Zm4-1v1h1v-1H4Zm1 3v-1H4v1h1Zm7 0v-1h-1v1h1Zm-1-2h1v-1h-1v1Zm-6 3H4v1h1v-1Zm7 1v-1h-1v1h1Zm-7 1H4v1h1v-1Zm7 1v-1h-1v1h1Zm-8 1v1h1v-1H4Zm7 1h1v-1h-1v1Z" />
-                </svg>&nbsp; <span>Catogery</span>
+                </svg>&nbsp; <span>Category</span>
             </a>
             {{/if}}
         </li>
@@ -107,6 +107,7 @@
 
         <li>
             {{#if orders}}
+            {{#unless sales}}
             <a href="" style="background-color:white ; color:rebeccapurple;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-cart-check-fill" viewBox="0 0 16 16">
@@ -114,6 +115,7 @@
                         d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-1.646-7.646-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708z" />
                 </svg>&nbsp; <span>Orders</span>
             </a>
+            {{/unless}}
             {{else}}
             <a href="/admin/showOrders">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -123,6 +125,7 @@
                 </svg>&nbsp; <span>Orders</span>
             </a>
             {{/if}}
+            
         </li>
 
         {{!-- <li>
@@ -136,7 +139,11 @@
             </a>
         </li> --}}
         <li>
+            {{#if banner }}
+                <a href="/admin/banners" style="background-color:white ; color:rebeccapurple;">
+            {{else}}
             <a href="/admin/banners">
+            {{/if}}
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image"
                     viewBox="0 0 16 16">
                     <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
@@ -146,7 +153,11 @@
             </a>
         </li>
         <li>
+            {{#if sales}}
+            <a href="/admin/sales__report" style="background-color:white ; color:rebeccapurple;">
+            {{else}}
             <a href="/admin/sales__report">
+            {{/if}}
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
                     <path
@@ -155,7 +166,12 @@
             </a>
         </li>
         <li>
+
+            {{#if graph}}
+             <a href="/admin/graph" style="background-color:white ; color:rebeccapurple;">
+            {{else}}
             <a href="/admin/graph">
+            {{/if}}
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-graph-up-arrow" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"

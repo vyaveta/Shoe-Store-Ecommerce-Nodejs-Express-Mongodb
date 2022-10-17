@@ -207,12 +207,13 @@ router.post('/addProduct',auth.adminCookieJWTAuth,async(req,res)=>{
 })
 
 //////////////for deleting a product /////////////////
-router.get('/deleteProduct/:id',auth.adminCookieJWTAuth,(req,res)=>{
+router.delete('/deleteProduct/:id',auth.adminCookieJWTAuth,(req,res)=>{
   let id = req.params.id
  product__helper.delete__product(id).then((response)=>{
-  admin__msg = response
+  // admin__msg = response
   console.log('passed the delete__product function and got inside the get method of delete product')
-  res.redirect('/admin/showProducts')
+  res.json(response)
+  // res.redirect('/admin/showProducts')
  })
 })
 
@@ -237,10 +238,10 @@ router.post('/addCategory',auth.adminCookieJWTAuth,(req,res)=>{
 })
 
 ///////////// For deleting a category///////////////////
-router.get('/deleteCategory/:id',auth.adminCookieJWTAuth,(req,res)=>{
+router.delete('/deleteCategory/:id',auth.adminCookieJWTAuth,(req,res)=>{
   category__helper.delete__category(req.params.id).then((response)=>{
     admin__msg = response
-    res.redirect('/admin/showCategory')
+    res.json(response)
   })
 })
 

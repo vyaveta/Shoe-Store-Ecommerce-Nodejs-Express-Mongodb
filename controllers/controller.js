@@ -38,7 +38,7 @@ exports.rate__product= (req,res)=>{
   })
 }
 exports.admingraph = (req,res)=>{
-  res.status(200).render('admin/graphs/graphsHome',{admin__sidemenu:true})
+  res.status(200).render('admin/graphs/graphsHome',{admin__sidemenu:true,graph:true})
 }
 
 
@@ -191,7 +191,7 @@ exports.banner = (req,res) =>{
         banners[i].image__id = banners[i]._id.toString()
       }
       print(banners ,'is the banners that we got from the get__all__banners function that has been called in the bannr functionsd in the controller.js')
-      res.render('admin/banner',{banners,admin__sidemenu:true})
+      res.render('admin/banner',{banners,admin__sidemenu:true,banner:true})
     }).catch((err) => {
       print(err,'is the error occured in the banner function the controller.js')
       res.send(err)
@@ -310,7 +310,7 @@ exports.get__user__details = async (req,res) => {
 exports.sales__report = async (req,res) => {
   try{
     var orders = await admin__helpers.get__all__orders()
-    res.render('admin/salesReport',{orders,admin__sidemenu:true})
+    res.render('admin/salesReport',{orders,admin__sidemenu:true,sales:true})
   }catch(err){
     print(err,'is  the error that occured in the sales report function in the controller.js')
   }

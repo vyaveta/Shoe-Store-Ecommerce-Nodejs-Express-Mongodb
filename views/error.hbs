@@ -8,37 +8,174 @@
     <title>Document</title>
 </head>
 <style>
-    body{
-        background: rebeccapurple;
+    @import url('https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Josefin+Sans:wght@100;300;400;500;600;700&family=Work+Sans:wght@400;500;600;700;800&display=swap');
+
+    .cover {
+        height: 100vh;
+        width: 100%;
+        position: relative;
+        background: url(/images/users/background.jpg);
+        background-size: cover;
+        overflow: hidden;
+        background-position: center;
     }
-    .error__heading {
-        font-size:5rem;
-        font-weight: 900;
-        color: black;
-        font-family: cursive;
+
+    .ocean {
+        height: 220px;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        left: 0;
     }
-    .error__text > p{
-        font-size:2rem;
-        color: white;
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+    .water {
+        position: absolute;
+        height: 100%;
+        right: 0;
+        animation: water 10s linear infinite;
+    }
+
+    .boat {
+        width: 350px;
+        position: absolute;
+        bottom: 200px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .boat img {
+        width: 100%;
+        -webkit-box-reflect: below 0 linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.6));
+        animation: boat 4s linear infinite;
+    }
+
+    .cloud {
+        height: 250px;
+        position: absolute;
+        right: 0;
+        animation: cloud 10s linear infinite;
+    }
+
+    .home__button {
+        margin-top: 5px;
+        padding: 10px 15px;
+        background: rgba(255, 255, 255, 0.6);
+        font-family: 'Josefin Sans', sans-serif;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        border-radius: 7px;
+        z-index: 9;
+    }
+
+    .error__txt {
+        font-size: 60px;
+        position: absolute;
+        margin-top: 40px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        font-weight: 700;
+        font-family: 'Arvo', serif;
+    }
+    .bottom{
+        width: 70vw;
+        position:absolute;
+        background:transparent;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        bottom: 30px;
+    }
+    .errmsg{
+        font-weight: 800px;
+        color: aliceblue;
+        font-family: 'Josefin Sans', sans-serif;
+        font-size: 29px;
+    }
+    .two{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    @keyframes cloud {
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(500px);
+        }
+    }
+
+    @keyframes water {
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(500px);
+        }
+    }
+
+    @keyframes boat {
+        0% {
+            transform: rotate(0deg) translateX(0) translateX(0px);
+        }
+
+        25% {
+            transform: rotate(-2deg) translateY(-5px) translateX(5px);
+        }
+
+        40% {
+            transform: rotate(0deg) translateY(0px) translateX(10px);
+        }
+
+        50% {
+            transform: rotate(1deg) translateY(5px) translateX(15px);
+        }
+
+        75% {
+            transform: rotate(2deg) translateY(7px) translateX(10px);
+        }
+
+        100% {
+            transform: rotate(0deg) translateY(0px) translateX(0px)
+        }
     }
 </style>
+
 <body>
-    <div class="error__container">
-        <div class="error__heading">
-            <center>
-                <p>404</p>
-            </center>
-        </div>
+    <div class="cover">
         <center>
-            <div class="error__text">
-                <p>Not Found!!!</p>
-                <p>The website that you are trying to access is currently unavailable <br>
-                Perhaps You should check wheather the url is correct. There is a chance that 
-                the url of the page that you are trying to access is invalid, so confirm that 
-                the url is correct.</p>
-            </div>
+            <p class="error__txt">404 NOT FOUND</p>
         </center>
+        <img src="/images/users/cloud.png" alt="" class="cloud">
+        <div class="ocean">
+            <img src="/images/users/water.png" alt="" class="water">
+            <div class="boat">
+                <img src="/images/users/boat.png" alt="">
+            </div>
+
+            <div class="bottom">
+               <div class="one">
+                 <p class="errmsg">
+                    Seems Like you got lost while surfing our Site !
+                 </p>
+               </div>
+               <div class="two">
+                <button class="home__button" onclick="window.location.href='/users'"> Go Back Home</button>
+               </div>
+            </div>
+        </div>
     </div>
 </body>
 

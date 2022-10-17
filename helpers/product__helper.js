@@ -16,6 +16,7 @@ module.exports={
             product__details.stock = product__details.stock * 1
             product__details.total__clicks = 0
             product__details.total__ratings = 0
+            product__details.deleted = false
             // product__details.category = category__id._id
             await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).insertOne(product__details).then((data)=>{
                     console.log(data)
@@ -27,10 +28,10 @@ module.exports={
         try{
             if(type == 'all__categories'){
                 print('the type is ',type)
-                let products = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find().toArray()
+                let products = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find({deleted:false}).toArray()
                 resolve(products)
             }else{
-                let products = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find({category:type}).toArray()
+                let products = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find({category:type,deleted:false}).toArray()
                 print(products,'is the selected products')
                 resolve(products)
             }
@@ -43,7 +44,9 @@ module.exports={
         console.log(id)
         return new Promise (async(resolve,reject)=>{
             console.log('got inside the delete__product promise')
-             await  db.get().collection(collection__list.PRODUCTS__COLLECTIONS).findOneAndDelete({_id:objectId(id)}).then((product)=>{
+             await  db.get().collection(collection__list.PRODUCTS__COLLECTIONS).findOneAndUpdate({_id:objectId(id)},{
+                $set:{deleted:true}
+             }).then((product)=>{
                 if(response){
                     console.log(' a product', response)
                     // var user__name = deleted__user__details.name
@@ -85,18 +88,18 @@ module.exports={
         })
     },get__new__arrivals:()=>{
         return new Promise(async(resolve,reject)=>{
-            let new__products = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find({stock: {$gt:0}}).sort({$natural:-1}).limit(10).toArray()
+            let new__products = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find({stock: {$gt:0},deleted:false}).sort({$natural:-1}).limit(10).toArray()
             resolve(new__products)
         })
     },get__top__picks:()=>{
         return new Promise(async(resolve,reject)=>{
-            let top__picks = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find({stock: {$gt:0}}).sort({total__clicks:-1}).limit(10).toArray()
+            let top__picks = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find({stock: {$gt:0},deleted:false}).sort({total__clicks:-1}).limit(10).toArray()
             resolve(top__picks)
         })
     },get__rec__products:(category__name) => {
         return new Promise (async(resolve,reject) => {
             try{
-                var products = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find({category:category__name}).toArray()
+                var products = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find({category:category__name,deleted:false}).toArray()
                 resolve(products)
             }catch(err){
                 reject(false)
