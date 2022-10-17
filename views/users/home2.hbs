@@ -6,6 +6,7 @@
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!--Google Fonts-->
  <link rel="preconnect" href="https://fonts.googleapis.com">
+ <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Oleo+Script+Swash+Caps:wght@400;700&family=Roboto+Mono:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap" rel="stylesheet">
   <!-- CSS only -->
@@ -66,9 +67,8 @@
                         <img src="/product-images/{{this._id}}.jpg" alt="image__here" width="500px"></a>
                     <ul class="action">
                         <li>
-                            <i class="fa fa-heart"></i>
-                            <span>Add to WishList
-                            </span>
+                            <i class="fa fa-heart" onclick="add__to__wishlist('{{this._id}}')"></i>
+                            <span id="{{this._id}}add">Add to WishList</span>
                         </li>
                         <li>
                           <i class="fa fa-shopping-cart" class="alert" onclick=addToCart('{{this._id}}') ></i>
@@ -154,7 +154,7 @@
                           url: '/users/add__to__wishlist/'+pro__id,
                           method: 'get',
                           success: (response) => {
-                            alert('added to wishlist')
+                            swal('added to wishlist')
                             let span = document.getElementById(pro__id+'add')
                             span.innerHTML = 'Remove from Wishlist'
                           }
@@ -176,7 +176,7 @@
                             url:'/users/remove__from__wishlist/'+pro__id,
                         method:'get',
                         success:(response)=>{
-                            alert('removed from wishlist')
+                            swal('removed from wishlist')
                             let span = document.getElementById(pro__id+'add')
                             span.innerHTML = 'Add to WishList'
                         }
