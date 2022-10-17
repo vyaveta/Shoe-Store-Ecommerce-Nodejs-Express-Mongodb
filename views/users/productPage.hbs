@@ -91,12 +91,14 @@
                     <h2>Product Reviews</h2>
                    {{#each reviews}}
                      <div class="content">
+                        <div class="first">   
                         <div class="profile__pic">
                             <img src="/userProfile/{{this.user__id}}.jpg" alt="" id="userP" class="userP" width="50px" height="50px"> 
                         </div>
                         <div class="comment">{{this.review}} <br> <small>review by {{this.user__name}}</small></div>
-                        <div class="space">  </div>
-                        <div class="space">  </div>
+                        </div>
+                        {{!-- <div class="space">  </div>
+                        <div class="space">  </div> --}}
                         
                         <div class="st">
                             {{#each this.loop}}
@@ -115,7 +117,7 @@
  <div class="new__arrivals" id="card">
         <h3>You may also like</h3>
     </div>
- <div class="the__products">
+ <div class="the__products" style="margin-bottom: 200px;">
         <div class="the__container snaps__inline" >
             {{#each rec__products}}
             <div class="the__card" >

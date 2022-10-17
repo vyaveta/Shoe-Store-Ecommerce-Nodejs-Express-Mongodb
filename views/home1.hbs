@@ -151,8 +151,8 @@
                         <img src="/product-images/{{this._id}}.jpg" alt="image__here" width="500px"></a>
                     <ul class="action">
                         <li>
-                            <i class="fa fa-heart"></i>
-                            <span>Add to WishList
+                            <i class="fa fa-heart" onclick="add__to__wishlist('{{this._id}}')"></i>
+                            <span id="{{this._id}}add">Add to WishList
                             </span>
                         </li>
                         <li>
@@ -205,7 +205,7 @@
             <h1>Signup now and get 50% off on your first order !!!!</h1>
         </div>
         <div class="signup__button">
-            <a href=""><button class="simple__gold">sign up</button></a>
+            <a href="/users/signup"><button class="simple__gold">sign up</button></a>
         </div>
     </div>
    {{/unless}}
@@ -221,12 +221,12 @@
             <div class="bag">
                 <img src="/images/users/bag.png" width="500px" id="bag">
             </div>
-            <div class="girl">
+            {{!-- <div class="girl">
                 <img src="/images/users/imgbin_shopping-woman-png.png"   width="500px" alt="Shop Caracol Silver - Shopping Girl Transparent" id="girl" />
             </div>
             <div class="red__bag">
                 <img src="/images/users/redbag-removebg-preview.png" alt="" id="redbag">
-            </div>
+            </div> --}}
             
         </section>
     </div>

@@ -53,7 +53,7 @@
     color: gold;
 }
 .st{
-    background-color: red;
+    /* background-color: red; */
     min-width: 100px;
     text-align: end;
 }
@@ -63,8 +63,17 @@
     margin-bottom: 10px;
     width: 100%;
 }
+.first{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.comment{
+    margin-left: 10px;
+}
 .profile__pic{
     margin-right: 5%;
+    margin: 0;
     object-fit: cover !important;
 }
 .profile__pic img{

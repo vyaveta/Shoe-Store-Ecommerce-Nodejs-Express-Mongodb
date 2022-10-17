@@ -171,7 +171,11 @@ router.get('/productPage/:id',async(req,res)=>{
   console.log(req.params.id)
   var id = req.params.id
   await product__helper.get__the__product(id).then(async(data)=>{
+ if(user__details){
   await product__helper.get__cart__count(user__details.email).then(async(count)=>{
+    cart__count = count
+  })
+ }
     var rec__products = await product__helper.get__rec__products(data.category)
 await review__helper.get__productreviews(id).then((reviews)=>{
   // console.log(reviews,'got it hurray aslfkjlkasjf')
@@ -198,10 +202,10 @@ await review__helper.get__productreviews(id).then((reviews)=>{
     }
   }
   // console.log(reviews,'is the end result')
-  cart__count = count
+  
   res.render('users/productPage',{data,token,username,cart__count,reviews,user__details,rec__products,user__footer:true})
 })
-  })
+
 })
 })
 
