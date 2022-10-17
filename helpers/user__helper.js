@@ -475,18 +475,28 @@ module.exports={
             try{
                 let user__wishlist = await db.get().collection(collection.WISHLIST__COLLECTION).findOne({user__email:user__details.email})
             if (user__wishlist){
-                let proExists = user__wishlist.products.findIndex(product=> product.item==product.__id)
+                let proExists = user__wishlist.products.findIndex(product=> product.item==pro__id)
                 console.log(proExists)
-                if(proExists!=-1){
-                    remove__from__wish(pro__id,user__details)
+                if(proExists!= -1){
+                    await  db.get().collection(collection.WISHLIST__COLLECTION)
+                    .updateOne({user__email:user__details},
+                    {
+                        $pull:{products:{item:objectId(pro__id)}}
+                    }
+                    ).then((response)=>{
+                        console.log(response)
+                        resolve({removeProduct:true})
+                    })
                     console.log('redirected to remove from wishlist from add to wishlist because the products already exists in wishlist')
                 }
-                db.get().collection(collection.WISHLIST__COLLECTION).updateOne({user__email:user__details.email},
-                {
-                        $push:{products:proObj}
-                }).then((response)=>{
-                    resolve('successfully added to wishlist')
-                })
+                else{
+                    db.get().collection(collection.WISHLIST__COLLECTION).updateOne({user__email:user__details.email},
+                        {
+                                $push:{products:proObj}
+                        }).then((response)=>{
+                            resolve('successfully added to wishlist')
+                        })
+                }
             }else{
                 wishlist = {
                     user:objectId(user__details._id),
@@ -512,7 +522,7 @@ module.exports={
         })
     },
     remove__from__wish:(pro__id,user__details)=>{
-        console.log(pro__id, user__details,'jfdsklaa;lfdlskadfffffkjsafdkljksadfajjjjajkslfjklasfjlksajfklsjflkjfkls')
+        console.log(pro__id, user__details,'now in remove from wishlist function in the user__helper.js')
         return new Promise(async(resolve,reject)=>{
             await  db.get().collection(collection.WISHLIST__COLLECTION)
             .updateOne({user__email:user__details},

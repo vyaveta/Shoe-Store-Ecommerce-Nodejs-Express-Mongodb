@@ -7,9 +7,9 @@ function addToCart(proId){
          if(response.status){
              let count = $('#cart__count').html()
              count=parseInt(count)+1
-             $('#cart__count').html(count)
+             $('#cart__count').html(response.count)
          }
-         alert('added to shoe store cart')
+         swal('added to shoe store cart')
      }
     })
  }

@@ -206,6 +206,9 @@ await review__helper.get__productreviews(id).then((reviews)=>{
   res.render('users/productPage',{data,token,username,cart__count,reviews,user__details,rec__products,user__footer:true})
 })
 
+}).catch((err) => {
+  // res.send(err)
+  res.redirect('/error product not found')
 })
 })
 
@@ -275,13 +278,13 @@ router.get('/otpiloodvaa',(req,res)=>{
   error__msg =''
 })
 router.get('/add__to__cart/',auth.usercookieJWTAuth,(req,res)=>{
-  print(req.query.product__id)
+  print(req.query.product__id,'is the product that is going to be added to cart')
    user__details = auth.get__user__details(req)
   if(user__details==null){
     print('user__Details is null')
     res.redirect('/users/login')
   }else
-  print(user__details,'success')
+  // print(user__details,'success')
   product__helper.add__to__cart(req.query.product__id,user__details._id,user__details.email).then((response)=>{
     product__helper.get__cart__count(user__details.email).then((count)=>{
       cart__count = count
@@ -491,7 +494,7 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
  let wish__details = await product__helper.find__the__user__wish(user__details.email)
    product__helper.get__cart__count(user__details.email).then((count)=>{
         cart__count = count
-        res.render('users/cartPage',{wish__details,token,username,cart__count,wish:true})
+        res.render('users/cartPage',{wish__details,token,user__details,cart__count,wish:true})
      })
 })
  //////////////////////////////   now some code for the users to delete their address //////

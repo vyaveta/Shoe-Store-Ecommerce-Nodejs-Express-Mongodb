@@ -56,10 +56,15 @@ module.exports={
         })
     },get__the__product:(id)=>{
         return new Promise (async(resolve,reject)=>{
+           try{
             console.log('got inside the get__prpoducts')
             var product = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).findOne({_id:objectId(id)})
             db.get().collection(collection__list.PRODUCTS__COLLECTIONS).updateOne({_id:objectId(id)},{$inc:{total__clicks:1}})
-            resolve(product)
+            if(product) resolve(product)
+            else reject(false)
+           }catch(err){
+            reject(false)
+           }
         })
     },update__product:(pId,pDetails)=>{
         return new Promise(async(resolve,reject)=>{
