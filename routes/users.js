@@ -6,11 +6,11 @@ const auth = require('../helpers/user__auth');
 // const { token } = require('morgan');
 const review__helper = require('../helpers/review___helper')
 const paypal = require('paypal-rest-sdk');
- 
+require('dotenv').config()
 paypal.configure({
   'mode': 'sandbox', //sandbox or live
-  'client_id': 'AQFcDqeYJQK2LZ0YbKFrh0r_PAFSShbgK5XTOJ25YxjtAWnq3QpYDNfoDuAHu9EzB-lCVTdUMK3kP3MS',
-  'client_secret': 'EB_f8QlJSFuW6zRueNatOW4x6UJC13AjZfFrHeZS6UMwqYbp-cWOuX9OVJVeUGMj6p_5qP7bg0_EHNxZ'
+  'client_id': process.env.client_id,
+  'client_secret': process.env.client_secret
 });
 
 const print = console.log
@@ -29,7 +29,7 @@ const product__helper = require('../helpers/product__helper');
 const controller = require('../controllers/controller')
 const { response } = require('express');
 const { sign } = require('crypto');
-require('dotenv').config()
+
 const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID ,process.env.TWILIO_AUTH_TOKEN)
 
 let useremail = null

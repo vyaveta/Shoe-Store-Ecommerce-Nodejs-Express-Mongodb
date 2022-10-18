@@ -215,7 +215,11 @@ module.exports={
         console.log('got inside the place order promise')
         return new Promise(async(resolve,reject)=>{
             console.log(order__details,products,total)
-            let status = order__details['payment-method']=='COD'?'placed': 'wallet'?'placed' : 'pending' // Here I have to add another condition if payment-method == wallet then status = place
+            let status = 'pending'
+            // let status = order__details['payment-method']=='COD'?'placed':'wallet'?'placed':'pending' // Here I have to add another condition if payment-method == wallet then status = place
+            if(order__details['payment-method']=='COD' || order__details['payment-method']=='wallet'){
+                status = 'placed'
+            }
             console.log(total, 'is the total')
             console.log(order__details,'is the order details')
             let orderObj = {

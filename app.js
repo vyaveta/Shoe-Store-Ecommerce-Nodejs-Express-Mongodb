@@ -13,11 +13,11 @@ var app = express();
 // const io = socketio(server) 
 // var io = require('socket.io').listen(server);
 const log = console.log
- 
+require('dotenv').config()
 paypal.configure({
   'mode': 'sandbox', //sandbox or live
-  'client_id': 'AQFcDqeYJQK2LZ0YbKFrh0r_PAFSShbgK5XTOJ25YxjtAWnq3QpYDNfoDuAHu9EzB-lCVTdUMK3kP3MS',
-  'client_secret': 'EB_f8QlJSFuW6zRueNatOW4x6UJC13AjZfFrHeZS6UMwqYbp-cWOuX9OVJVeUGMj6p_5qP7bg0_EHNxZ'
+  'client_id': process.env.client_id,
+  'client_secret': process.env.client_secret
 });
 
 var indexRouter = require('./routes/index');

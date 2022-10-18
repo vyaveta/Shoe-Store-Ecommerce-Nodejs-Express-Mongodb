@@ -248,6 +248,11 @@
         e.target.src = '/images/users/userProfile.jpg' // if image doesnt load, the default image will display
         e.onerror = null
     })
+ viewImage = (e) => {
+    document.getElementById('img__view').src=URL.createObjectURL(event.target.files[0])
+ }
+
+
 
     // some ajax code for deleting the address 
     function remove__address(title) {

@@ -52,7 +52,7 @@
                     <td>{{this.delivery__details.mobile}}</td>
                     <td>{{this.total__amount}}</td>
                     <td>{{this.payment__method}}</td>
-                   <form action="/admin/editOrderStatus/{{this._id}}" method="post">
+                   <form action="/admin/editOrderStatus/{{this._id}}" method="post" id="changeOSt">
                         <td> <select class="select" name="status" id="">
                             <option value="{{this.status}}">{{this.status}}</option>
                             <option value="shipped">Shipped</option>
@@ -74,11 +74,20 @@
         {{/ if}}
     </div>
     </div>
-    
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="/javascripts/darkMode.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
         crossorigin="anonymous"></script>
+
+        <script>
+            $('#changeOSt').submit((e) => {
+                e.preventDefault()
+                $ajax({
+                    url:''
+                })
+            })
+        </script>
 </body>
 
 
