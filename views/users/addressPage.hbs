@@ -128,9 +128,9 @@
                 method:'post',
                 data:$('#checkout-form').serialize(),
                 success:(response)=>{
-                    alert('We are Placing Your Order')
+                    swal('We are Placing Your Order')
                     if(response.codSuccess){
-                        location.href='/users/showOrders'
+                        location.href='/users/orderPlaced'
                     }
                     else if(response.flag == 'razorpay'){
                         razorpayPayment(response.order)
@@ -147,12 +147,14 @@
         }
       }
                         }catch(err){
-                            alert('an error occured in order Placing')
+                            swal('an error occured in order Placing')
                             location.href = '/users'
                         }
                     }
                     else{
                         swal(response)
+                        console.log(response)
+                        location.href = '/users/orderPlaced'
                     }
                 }
             })

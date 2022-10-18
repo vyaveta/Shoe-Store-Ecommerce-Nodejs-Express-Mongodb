@@ -46,13 +46,14 @@ function submitReview(){
     // and now  userReview contains the review made by the user , starCount contains the rating given by the user and the proId contains the product id thet the user has reviewed
     starWrapper.classList.remove('disabled')
     document.getElementById(proId).innerHTML = 'Review Submitted'
+    document.getElementById(proId).style.pointerEvents = 'none'
 
     // and now we have to pass the collected values to the ajax 
     $.ajax({
         url:'/users/rateProduct/?proId='+proId+'&starCount='+starCount+'&userReview='+userReview,
         method:'get',
         success:(response)=>{
-            alert(response)
+            swal(response)
         }
     })
 }
@@ -60,6 +61,7 @@ function submitReview(){
 for(var i = 0; i<returnButton.length ; i++){
     console.log(returnButton[i])
     returnButton[i].addEventListener('click',(e) => {
+        e.target.classList.add('sus')
         returnButtonClick(e.target.id)
     })
 }
@@ -80,8 +82,10 @@ returnButtonClick = (id) => {
             url:'/users/return__product?pro__id='+id+'&order__id='+order__id,
             method:'patch',
             success:(response) => {
-                if(response)  swal("You will get shoeStore coins after our staff collects your Product", {  icon: "success",});
-                else swal('Oops something went wrong! ')
+                if(response) {
+                 swal("You will get shoeStore coins after our staff collects your Product", {  icon: "success",});
+                 document.querySelector('.sus').style.display='none'
+                }else swal('Oops something went wrong! ')
             }
           })
         } else {

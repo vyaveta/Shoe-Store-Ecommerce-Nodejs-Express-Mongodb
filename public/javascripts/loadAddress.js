@@ -17,9 +17,10 @@ function loadAddress(){
 
 let wallet__checkbox = document.querySelector('.wallet__checkbox')
 let cod = document.querySelector('.cod')
-let wallet__balance = document.getElementById('wallet__balance').innerText
-let total__price = document.getElementById('price').innerText
+let wallet__balance = Number(document.getElementById('wallet__balance').innerText)
+let total__price = Number(document.getElementById('price').innerText)
 wallet__checkbox.onclick = (e) => {
+    console.log(total__price, wallet__balance)
     if(total__price > wallet__balance)
     {
         swal('Insufficient Balance in Wallet')

@@ -215,7 +215,7 @@ module.exports={
         console.log('got inside the place order promise')
         return new Promise(async(resolve,reject)=>{
             console.log(order__details,products,total)
-            let status = order__details['payment-method']=='COD'?'placed':'pending'
+            let status = order__details['payment-method']=='COD'?'placed': 'wallet'?'placed' : 'pending' // Here I have to add another condition if payment-method == wallet then status = place
             console.log(total, 'is the total')
             console.log(order__details,'is the order details')
             let orderObj = {
@@ -627,7 +627,7 @@ module.exports={
             }
         })
     },
-    wallet__payment:(user__id,total__amount) => {
+    wallet__payment:(user__id,total__amount) => { // i have to change the order status here 
         return new Promise(async(resolve,reject) => {
             try{
                 let user = await db.get().collection(collection.USER__COLLECTIONS).findOne({_id:objectId(user__id)})
