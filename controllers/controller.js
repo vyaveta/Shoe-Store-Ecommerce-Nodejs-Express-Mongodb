@@ -157,7 +157,7 @@ exports.user__home2 = async(req,res) => {
     }
     var cart__count = await product__helper.get__cart__count(user__details.email)
     print(cart__count,'is the cart count')
-        res.render('users/home2',{products,user__details,categories,type,banners,cart__count})
+        res.render('users/home2',{products,user__details,categories,type,banners,cart__count,user__footer:true})
     })
   }catch(err){
     print(err)
