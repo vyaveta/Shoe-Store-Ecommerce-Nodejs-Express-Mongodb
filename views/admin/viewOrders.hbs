@@ -52,7 +52,7 @@
                     <td>{{this.delivery__details.mobile}}</td>
                     <td>{{this.total__amount}}</td>
                     <td>{{this.payment__method}}</td>
-                   <form action="/admin/editOrderStatus/{{this._id}}" method="post" id="changeOSt">
+                   <form  method="post"  class="statusForm" id="{{this._id}}">
                         <td> <select class="select" name="status" id="">
                             <option value="{{this.status}}">{{this.status}}</option>
                             <option value="shipped">Shipped</option>
@@ -81,12 +81,26 @@
         crossorigin="anonymous"></script>
 
         <script>
-            $('#changeOSt').submit((e) => {
-                e.preventDefault()
-                $ajax({
-                    url:''
+            var form = document.querySelectorAll('.statusForm')
+            for(var i = 0 ; i < form.length ; i++){
+                form[i].addEventListener('submit', (e) => {
+                    e.preventDefault()
+                 //   console.log(e.target.id)
+                    changeOrderStatus(e.target.id)
                 })
-            })
+            }
+            changeOrderStatus = (id) => {
+                swal('got inside the ajax')
+
+                $.ajax({
+                    url:'/admin/editOrderStatus/'+id,
+                    data:$('#'+id).serialize(),
+                    method:'post',
+                    success:(response) => {
+                        swal(response)
+                    }
+                })
+            }
         </script>
 </body>
 

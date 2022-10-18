@@ -319,10 +319,10 @@ router.get('/showOrders',(req,res)=>{
 router.post('/editOrderStatus/:orderId',(req,res)=>{
   admin__helpers.change__order__status(req.params.orderId,req.body.status).then((response)=>{
     if(response){
-      res.redirect('/admin/showOrders')
+      res.json('Done !')
     }
   }).catch((res)=>{
-    print(res)
+    res.json('Oops something went wrong !')
   })
 })
 
