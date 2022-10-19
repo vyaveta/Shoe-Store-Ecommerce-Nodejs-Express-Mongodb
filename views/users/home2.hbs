@@ -75,7 +75,7 @@
                             <span>Add to Cart</span>
                         </li>
                         <li>
-                            <i class="fa fa-eye"></i>
+                            <i class="fa fa-eye" onclick="window.location.href='/users/productPage/{{this._id}}'"></i>
                             <span>View Product</span>
                         </li>
                     </ul>
@@ -102,7 +102,7 @@
         {{/each}}
     </div>
 {{!-- <div class="sample" style="height:600px ;background:red;"></div> --}}
-<nav aria-label="Page navigation example" >
+{{!-- <nav aria-label="Page navigation example" >
   <ul class="pagination center">
     <li class="page-item">
       <a class="page-link" href="#" aria-label="Previous">
@@ -118,7 +118,7 @@
       </a>
     </li>
   </ul>
-</nav>
+</nav> --}}
 </div>
     </div>
    
@@ -137,7 +137,8 @@
 
         var prA = document.querySelectorAll('.product__rating')
         for(var i = 0 ; i < prA.length ; i++){
-          prA[i].innerHTML = Math.round(prA[i].innerHTML)
+          prA[i].innerHTML = Math.round(prA[i].innerHTML *10) /10
+       // prA[i].innerHTML = prA[i].innerHTML.toFixed(2)
         }
 
 

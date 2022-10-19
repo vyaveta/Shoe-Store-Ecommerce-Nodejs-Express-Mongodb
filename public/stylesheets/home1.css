@@ -46,10 +46,8 @@ a{
 }
 /* my edits */
 @media screen and (max-width:700px ){
-    .header__logo{
-        display: none;
-    }
-    .header__search{margin-left: 10px;
+    
+    .header__search{display: none;
     }
     .add__btn p {
         display: none;
@@ -60,6 +58,17 @@ a{
     }
     .add__btn{
         left: 90% !important;
+    }
+}
+@media screen and (max-width:500px){
+    .header__optionLineOne{
+        font-size: 10px;
+        cursor: pointer;
+    }
+    .header__optionLineTwo{
+        font-size:10px;
+        font-weight:700;
+        cursor: pointer;
     }
 }
 /* my edits ends here */
