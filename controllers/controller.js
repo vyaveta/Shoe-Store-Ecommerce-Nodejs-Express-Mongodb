@@ -105,7 +105,16 @@ exports.verify__payment__prime = async(req,res) => {
 
 exports.add__offer__to__category = async(req,res) =>{
   offer__helper.add__offer__to__category(req.query.category__id,req.query.discount).then((response)=>{
-    res.json(response)
+    let sent = {
+      msg: response,
+      offer:req.query.discount
+    }
+    res.json(sent)
+  }).catch((err) => {
+    let e = {
+      msg:err
+    }
+    res.json(e)
   })
 }
 
@@ -314,4 +323,23 @@ exports.sales__report = async (req,res) => {
   }catch(err){
     print(err,'is  the error that occured in the sales report function in the controller.js')
   }
+}
+
+exports.edit__category = (req,res) => {
+ try{
+  let {new__name , old__name , id } =req.body
+// print(new__name,old__name,id, 'that thing uuh object deconstructor')
+ product__helper.edit__category(new__name,old__name,id).then((response) => {
+  var send ={
+    msg:response,
+    new__name:new__name
+  }
+  res.json(send)
+ }).catch((err) => {
+  res.json(err)
+ })
+ }catch(err){
+  print(err,'is the error that occured in the edit__category function in the controller.js')
+ }
+ // res.json('done and dusty !')
 }

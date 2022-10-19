@@ -12,7 +12,7 @@ body{
     flex-wrap: wrap;
     padding:30px;
     width: 100vw;
-    margin-bottom: 400px;
+    
 }
 .the__container .the__card{
     font-family: 'Work Sans', sans-serif !important;
@@ -183,6 +183,7 @@ h2{
         align-items: center;
         height: 100%;
         width: 100vw;
+        margin-bottom: 400px;
     }
     .category__list{
         display:flex;
@@ -206,6 +207,15 @@ h2{
     }
     .active{
         border-bottom: 2px solid green;
+    }
+
+
+    .center{
+        margin: auto;
+        /* background:red; */
+        display: flex;
+        justify-content: center;
+        align-items:center;
     }
     @media screen and (max-width:950px){
        

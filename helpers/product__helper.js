@@ -269,6 +269,22 @@ module.exports={
                 reject(err)
             }
             })
+     },
+     edit__category:(new__name,old__name,id) => {
+        return new Promise (async(resolve,reject) => {
+            try{
+                let category = await db.get().collection(collection__list.CATEGORY__COLLECTIONS).findOneAndUpdate({_id:objectId(id)},
+                {
+                    $set:{name:new__name}
+                })
+                await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).updateMany({category:category.value.name},{
+                    $set:{category:new__name}
+                })
+                resolve('Done !')
+            }catch(err){
+                reject('Oops Something went Wrong !!')
+            }
+        })
      }
      
 }
