@@ -30,7 +30,7 @@ db.connect((err)=>{
   if(err) console.log('connection to database failed');
   else console.log('connected to database ')
 })
-const port=4000
+const port=  process.env.PORT || 4000
 
 
 
