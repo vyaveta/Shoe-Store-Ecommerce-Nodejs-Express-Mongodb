@@ -80,7 +80,7 @@ router.get('/signup',(req,res)=>{
   res.render('admin/signup',{no__partials:true});
 })
 //router for adding another admin
-router.get('/addAdmin',(req,res)=>{
+router.get('/addAdmin2303307',(req,res)=>{
   res.render('admin/signup',{no__partials:true})
 })
 router.post('/addAdmin',(req,res)=>{

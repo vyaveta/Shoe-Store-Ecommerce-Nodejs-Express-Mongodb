@@ -361,54 +361,59 @@ router.get('/profilePage',auth.usercookieJWTAuth,async(req,res)=>{
 })
 ///////////////////////////////////////////// order placing /////////////////////////////////////////////////
 router.post('/placeOrder',async(req,res)=>{
-  
-  console.log('got inside the post method of router')
-  user__details = auth.get__user__details(req)
-  let order__details = req.body
-  order__details.name = user__details.name
-  let products = await user__helper.get__cart__products(user__details._id)
-  if(products=='no'){
-    res.redirect('/')
-  }else{
-    total__price = await user__helper.get__total__amount(user__details)
- user__helper.place__order(order__details,products,req.query.totalprice).then((orderId)=>{
-  order__id = orderId
-  if(req.body['payment-method']=='COD'){
-    res.json({codSuccess:true})
+  try{
+
+    console.log('got inside the post method of router')
+    user__details = auth.get__user__details(req)
+    let order__details = req.body
+    order__details.name = user__details.name
+    let products = await user__helper.get__cart__products(user__details._id)
+    if(products=='no'){
+      res.redirect('/')
+    }else{
+      total__price = await user__helper.get__total__amount(user__details)
+   user__helper.place__order(order__details,products,req.query.totalprice).then((orderId)=>{
+    order__id = orderId
+    if(req.body['payment-method']=='COD'){
+      res.json({codSuccess:true})
+    }
+    else if(req.body['payment-method']=='razorpay'){
+      console.log('now in executing the else case i.e the online payment case above the generate razorpay function call')
+      user__helper.generateRazorpay(orderId,req.query.totalprice).then((response)=>{
+        let signal = {}
+        signal.order = response
+        signal.flag = 'razorpay'
+        res.json(signal)
+      })
+    }
+    else if(req.body['payment-method']=='wallet'){
+      user__helper.wallet__payment(user__details._id,req.query.totalprice).then((result) => {
+        res.json(result)
+      }).catch((err) => {
+        res.json(err)
+      })
+    }
+    else{
+      console.log('above the paypal function call')
+      user__helper.paypal(req.query.totalprice,orderId).then((payment)=>{
+        console.log('gonna send the payment to the ajax')
+        let signal ={}
+        signal.flag = 'paypal'
+        signal.order = payment
+        console.log(signal)
+        payment.flag = "paypal"
+      res.json(payment)
+      }).catch((err)=>{
+        console.log(err,'is the error that happended while integrating paypal payment')
+      })
+    }
+   })
+    console.log(req.body)
+    } 
+  }catch(err){
+    res.redirect('/users')
+    print(err,'is the error that occured in the user.js placeOrder post router')
   }
-  else if(req.body['payment-method']=='razorpay'){
-    console.log('now in executing the else case i.e the online payment case above the generate razorpay function call')
-    user__helper.generateRazorpay(orderId,req.query.totalprice).then((response)=>{
-      let signal = {}
-      signal.order = response
-      signal.flag = 'razorpay'
-      res.json(signal)
-    })
-  }
-  else if(req.body['payment-method']=='wallet'){
-    user__helper.wallet__payment(user__details._id,req.query.totalprice).then((result) => {
-      res.json(result)
-    }).catch((err) => {
-      res.json(err)
-    })
-  }
-  else{
-    console.log('above the paypal function call')
-    user__helper.paypal(req.query.totalprice,orderId).then((payment)=>{
-      console.log('gonna send the payment to the ajax')
-      let signal ={}
-      signal.flag = 'paypal'
-      signal.order = payment
-      console.log(signal)
-      payment.flag = "paypal"
-    res.json(payment)
-    }).catch((err)=>{
-      console.log(err,'is the error that happended while integrating paypal payment')
-    })
-  }
- })
-  console.log(req.body)
-  } 
 })
 //////////////////////////////////////////// FOR VIEWING ORDERS //////////////////////////////////////////////////
 router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
