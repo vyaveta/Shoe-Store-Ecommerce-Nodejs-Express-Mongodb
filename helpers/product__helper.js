@@ -2,6 +2,7 @@ const db = require('../config/connection')
 const collection__list = require('../config/collection')
 const { response } = require('express')
 const { resolve, reject } = require('promise')
+const collection = require('../config/collection')
 const objectId = require('mongodb').ObjectId
 const print = console.log
 const table = console.table
@@ -87,8 +88,12 @@ module.exports={
         })
     },get__new__arrivals:()=>{
         return new Promise(async(resolve,reject)=>{
+           if(collection__list.PRODUCTS__COLLECTIONS!=null){
             let new__products = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find({stock: {$gt:0},deleted:false}).sort({$natural:-1}).limit(10).toArray()
             resolve(new__products)
+           }else{
+            resolve(null)
+           }
         })
     },get__top__picks:()=>{
         return new Promise(async(resolve,reject)=>{
