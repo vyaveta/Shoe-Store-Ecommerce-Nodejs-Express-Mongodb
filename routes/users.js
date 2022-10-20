@@ -38,8 +38,9 @@ let username
 
 /* GET users listing. */
 router.get('/',async(req, res, next) => {
+  console.log('got inside the /')
   let cart__count
-   token = req.cookies.usertoken
+   token = req?.cookies?.usertoken
    var user__details = auth.get__user__details(req)
    product__helper.get__top__picks().then((products)=>{
     product__helper.get__new__arrivals().then(async(new__products)=>{
