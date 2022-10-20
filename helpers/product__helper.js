@@ -1,7 +1,6 @@
 const db = require('../config/connection')
 const collection__list = require('../config/collection')
 const { response } = require('express')
-const collection = require('../config/collection')
 const { resolve, reject } = require('promise')
 const objectId = require('mongodb').ObjectId
 const print = console.log
