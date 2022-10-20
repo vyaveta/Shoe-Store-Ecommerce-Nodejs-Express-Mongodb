@@ -88,12 +88,10 @@ module.exports={
         })
     },get__new__arrivals:()=>{
         return new Promise(async(resolve,reject)=>{
-           if(collection__list.PRODUCTS__COLLECTIONS!=null){
+            console.log(collection__list.PRODUCTS__COLLECTIONS,'is the product colleciton !')
             let new__products = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find({stock: {$gt:0},deleted:false}).sort({$natural:-1}).limit(10).toArray()
             resolve(new__products)
-           }else{
-            resolve(null)
-           }
+          
         })
     },get__top__picks:()=>{
         return new Promise(async(resolve,reject)=>{
