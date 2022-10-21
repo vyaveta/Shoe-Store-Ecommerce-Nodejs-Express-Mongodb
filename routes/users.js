@@ -73,7 +73,6 @@ router.get('/',async(req, res, next) => {
     }finally{
       print(products,'is the final result')
       print(`the user name that is going to be displayed in the top of the website header is ${username}`)
-     
         res.render('home1',{token,username,products,new__products,cart__count,user__details,user__footer:true})
     }  
    
@@ -528,13 +527,13 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
     print('got it pay pal success')
     const payerId = req.query.PayerID;
     const paymentId = req.query.paymentId;
-   
+   const total = req.query.total__price
     const execute_payment_json = {
       "payer_id": payerId,
       "transactions": [{
           "amount": {
               "currency": "USD",
-              "total": total__price / 80
+              "total": total
           }
       }]
     };
@@ -552,6 +551,7 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
       }
   });
 }catch(err){
+  res.redirect('/users/somethimgWentWrong')
     console.log(err ,'is the error that caused in the paypal success route')
 }
  })

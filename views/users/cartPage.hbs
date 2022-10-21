@@ -368,15 +368,15 @@
 
 
 let m = moment();
-m.add(7,'d')
+ m.add(7,'d')
 console.log(m.toString())
 $.ajax({
   url:'/users/get__user__details',
   method:'get',
   success:(user__details) =>{
-    if(user__details.is_member) m.subtract(6,'d')  
-    console.log(m.format('dddd MMM Mo YYYY'))
-    document.getElementById('date').innerText=m.format('dddd MMM Mo YYYY')
+    if(user__details.is_member)
+    console.log(m.format('dddd MMM Mo YYYY')) m.subtract(6,'d')
+    document.getElementById('date').innerText=m.format('MMMM Do, YYYY')
   }
 })
 </script>

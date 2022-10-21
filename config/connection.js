@@ -4,7 +4,8 @@ const state={
 }
 module.exports.connect=function (done) {
     //    const url="mongodb://0.0.0.0:27017/"  // the local host
-       const url = "mongodb+srv://adwaith:adwaithandhisshorestore@shoestore.kaoomxv.mongodb.net/test"
+      // const url = "mongodb+srv://adwaith:adwaithandhisshorestore@shoestore.kaoomxv.mongodb.net/test"
+      const url = "mongodb+srv://adwaith:adwaithandhisshorestore@shoestore.kaoomxv.mongodb.net/?retryWrites=true&w=majority"
     // const url='mongodb://localhost:27017'
     // const url="localhost:2701"
     const dbname='Ecommerce'
