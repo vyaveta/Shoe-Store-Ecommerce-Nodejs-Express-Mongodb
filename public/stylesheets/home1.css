@@ -266,11 +266,11 @@ a{
         
         /* max-width: 1200px; */
         display: grid;
-        /* grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); */
-        grid-template-columns: repeat(10, 300px);
+        /* grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); */
+        grid-template-columns: repeat(100, 300px);
         grid-gap: 20px;
         grid-auto-flow: column;
-        grid-auto-columns: 21%;
+        grid-auto-columns: none;
         overflow-x: auto;
         overscroll-behavior-inline: contain;
         /* grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); */
@@ -284,7 +284,7 @@ a{
         scroll-snap-align: start;
     }
     .the__container .the__card{
-        width: 100%;
+        width: 300px;
         max-width: 450px;
         
         /* margin: 30px; */

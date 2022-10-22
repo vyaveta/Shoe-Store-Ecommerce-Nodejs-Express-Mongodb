@@ -287,6 +287,20 @@ module.exports={
                 reject('Oops Something went Wrong !!')
             }
         })
+     },
+     search__product:(query) => {
+        return new Promise (async(resolve,reject) => {
+            try{
+                // var product_data = await Product.find({ "name":{ $regex: *"+search+".*"} });
+                let products = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).find({ "model":{ $regex: ".*"+query+".*",$options:'i'} }).toArray()
+                print(products,'is the product')
+                if(products!='') resolve(products)
+                else throw 'nothing found'
+            }catch(err){
+                print(err,'is the error that occured in the search product function in the product helper.js')
+                reject(err)
+            }
+        })
      }
      
 }

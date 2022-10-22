@@ -29,7 +29,7 @@ try{
     var new__user__name = document.getElementById('exampleInputEmail1').value
    var current__password = document.getElementById('exampleInputPassword1').value
    var new__password = document.getElementById('exampleInputPassword2').value
-   if(current__password=='' || new__user__name.trim()=='' || new__password.lenght<3 || new__user__name.lenght>10) throw  'Format not allowed !'
+   if(current__password=='' || new__user__name.trim()=='' || new__password.lenght<3 || new__user__name.lenght>10 || new__user__name.trim()=="") throw  'Format not allowed !'
    if(changePass){
     if(new__password.trim()=="" || new__password.lenght>3 || new__password.lenght < 20) throw "Invalid Format for password"
    }

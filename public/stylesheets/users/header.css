@@ -104,3 +104,7 @@ body{
 .start{
     margin-top: 60px;
 }
+
+.none{
+    display: none;
+}

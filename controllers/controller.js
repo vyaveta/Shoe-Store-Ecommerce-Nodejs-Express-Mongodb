@@ -343,3 +343,16 @@ exports.edit__category = (req,res) => {
  }
  // res.json('done and dusty !')
 }
+
+exports.search__product = (req,res) => {
+  try{
+    print(req.query,'is the query')
+    product__helper.search__product(req.query.query.trim()).then((result) => {
+    res.json({signal:true,products:result})
+    }).catch((err) => {
+      res.json({signal:false,msg:err})
+    })
+  }catch(err){
+    print(err,'is the error that occured in the search product function in the controller.js')
+  }
+}
