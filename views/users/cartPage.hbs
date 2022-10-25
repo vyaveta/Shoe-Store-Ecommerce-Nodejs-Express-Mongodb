@@ -303,13 +303,15 @@
                         <div class="card-body text-success">
                           <a class="d-flex justify-content-between text-success" data-toggle="collapse"
                             href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                            {{#each cart__details}}
+                            <span id="coupon__msg">
+                              {{#each cart__details}}
                             {{#if this.coupon}}
-                              Tap to Remove Coupon
+                              Coupon Applied
                             {{else}}
                             Add a discount code (optional)
                             {{/if}}
                             {{/each}}
+                            </span>
                             <span><i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                   class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                                   <path

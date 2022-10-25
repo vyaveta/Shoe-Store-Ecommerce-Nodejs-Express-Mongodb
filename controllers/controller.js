@@ -199,8 +199,9 @@ exports.apply__coupon = async(req,res) => {
 exports.remove__coupon = (req,res) => {
   try{
     let user__details = auth.get__user__details(req)
-    offer__helper.remove__coupon(user__details._id)
-    res.json('Coupon removed')
+    offer__helper.remove__coupon(user__details._id).then((total) => {
+      res.json({status:true,msg:'Coupon removed',total:total})
+    })
   }catch(err){
     res.json('Oops error occured in the backend')
     print(err,'is the error that occured in the remover coupon function in the controller.js')

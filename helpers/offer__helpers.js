@@ -110,16 +110,18 @@ exports.apply__coupon = (code,user__details) => {
 exports.remove__coupon = (user__id) => {
   return new Promise (async(resolve,reject) => {
     try{
-
       await db.get().collection(collection__list.CART__COLLECTIONS).findOneAndUpdate({user:objectId(user__id)},{
         $set:{coupon:false}
       }).then(async(data) => {
         print(data)
         await db.get().collection(collection__list.USER__COLLECTIONS).findOneAndUpdate({_id:objectId(user__id)},{
           $pull:{used__coupons:{coupon__name:data.value.coupon}}
+        }).then(async(result) => {
+          let total = await user__helper.get__total__amount(result.value)
+          print(total,' is where we get NaN ')
+          resolve(total.disTotal)
         })
-      }).then((result) => print(result))
-      resolve('Done')
+      })
     }catch(err){
       print(err,'is the error that occured in the remove__coupon function in the offer__helper.js')
       reject(err)

@@ -157,7 +157,12 @@ module.exports={
         })
     },
     get__total__amount:(user__details)=>{
+        let coupon = false
         return new Promise(async(resolve,reject)=>{
+            let cart = await db.get().collection(collection.CART__COLLECTIONS).findOne({user__email:user__details.email})
+            if(cart.coupon){
+                 coupon = await db.get().collection(collection.COUPONS__COLLECTIONS).findOne({name:cart.coupon})
+            }
             let total = await db.get().collection(collection.CART__COLLECTIONS).aggregate([
                 {
                     $match:{user__email:user__details.email}
@@ -168,7 +173,7 @@ module.exports={
                 {
                     $project:{
                         item:'$products.item',
-                        quantity:'$products.quantity'
+                        quantity:'$products.quantity',
                     }
                 },
                 {
@@ -193,12 +198,16 @@ module.exports={
                 }
             ]).toArray()
             try{
+                if(coupon){
+                    let multiplier = Number(Number(100-coupon.discount)/100)
+                    total[0].disTotal = multiplier*total[0].disTotal
+                }
                 console.log(total,'is the result form the get total price promise, and total[0] is :',total[0])
                 console.table(total[0].total)
-                if(total[0].disTotal == 0) total[0].disTotal = total[0].total
+                if(total[0].disTotal == 0) total[0].disTotal = total[0].total // if total.disTotal is 0 then total.total is be there for total.disTotal
                 resolve(total[0])
             }catch(err){
-                console.table(err)
+                print(err,'is the error that occured in the user__helper get total amount function')
                 resolve(0)
             }
         })

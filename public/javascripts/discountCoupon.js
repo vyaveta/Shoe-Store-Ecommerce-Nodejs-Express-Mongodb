@@ -141,6 +141,7 @@ try{
                        total__dis__amount.innerHTML = Math.round(response.total)
                       swal(response.msg)
                       document.getElementById('error_trw').innerHTML=response.msg
+                      document.getElementById('coupon__msg').innerText = 'Coupon Applied'
                       discount__input.disabled = true
                       document.getElementById('coupon__button__add').removeEventListener('click' , applyCoupon )
                       document.getElementById('coupon__button__add').id = 'coupon__button__remove'
@@ -171,16 +172,20 @@ try{
       url:'/users/remove__coupon',
       method:'delete',
       success:(res) => {
-        swal(res)
-        discount__input.disabled = false
-        discount__input.value = ''
-        document.getElementById('coupon__button__remove').removeEventListener('click' , removeCoupon)
-        document.getElementById('coupon__button__remove').id = 'coupon__button__add'
-        document.getElementById('coupon__button__add').innerHTML ='Apply'
-        document.getElementById('coupon__button__add').classList.remove('btn-danger')
-        document.getElementById('coupon__button__add').classList.add('btn-success')
-        document.getElementById('error_trw').innerHTML='Coupon removed!'
-        checkApplyBtn()
+        if(res.status){
+          total__dis__amount.innerHTML = Math.round(res.total)
+          swal(res.msg)
+          discount__input.disabled = false
+          discount__input.value = ''
+          document.getElementById('coupon__button__remove').removeEventListener('click' , removeCoupon)
+          document.getElementById('coupon__button__remove').id = 'coupon__button__add'
+          document.getElementById('coupon__button__add').innerHTML ='Apply'
+          document.getElementById('coupon__button__add').classList.remove('btn-danger')
+          document.getElementById('coupon__button__add').classList.add('btn-success')
+          document.getElementById('error_trw').innerHTML='Coupon removed!'
+          document.getElementById('coupon__msg').innerText = ' Add a discount code (optional)'
+          checkApplyBtn()
+        }
       }
     })
   }
