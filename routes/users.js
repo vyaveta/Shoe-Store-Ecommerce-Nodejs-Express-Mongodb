@@ -335,12 +335,11 @@ router.get('/checkout',auth.usercookieJWTAuth,async(req,res)=>{
     let total = await user__helper.get__total__amount(user__detail)
     let result = await user__helper.get__user__address(user__detail.email)
     let address = result.address
-    console.log(address,'is the address that we got in the get checkout router')
+    console.log(total,'is the total price')
     if(response=='no__cart'){
       res.redirect('/users')
     }
     else
-    total.disTotal = req.query.totalPrice
     console.log(user__details._id,'is the user id ')
     res.render('users/addressPage',{token,username,cart__count,total,user__details,address})
 })
@@ -360,7 +359,6 @@ router.get('/profilePage',auth.usercookieJWTAuth,async(req,res)=>{
 ///////////////////////////////////////////// order placing /////////////////////////////////////////////////
 router.post('/placeOrder',async(req,res)=>{
   try{
-
     console.log('got inside the post method of router')
     user__details = auth.get__user__details(req)
     let order__details = req.body
@@ -369,15 +367,15 @@ router.post('/placeOrder',async(req,res)=>{
     if(products=='no'){
       res.redirect('/')
     }else{
-      total__price = await user__helper.get__total__amount(user__details)
-   user__helper.place__order(order__details,products,req.query.totalprice).then((orderId)=>{
+      total = await user__helper.get__total__amount(user__details)
+   user__helper.place__order(order__details,products,total.disTotal).then((orderId)=>{
     order__id = orderId
     if(req.body['payment-method']=='COD'){
       res.json({codSuccess:true})
     }
     else if(req.body['payment-method']=='razorpay'){
       console.log('now in executing the else case i.e the online payment case above the generate razorpay function call')
-      user__helper.generateRazorpay(orderId,req.query.totalprice).then((response)=>{
+      user__helper.generateRazorpay(orderId,total.disTotal).then((response)=>{
         let signal = {}
         signal.order = response
         signal.flag = 'razorpay'
@@ -385,7 +383,7 @@ router.post('/placeOrder',async(req,res)=>{
       })
     }
     else if(req.body['payment-method']=='wallet'){
-      user__helper.wallet__payment(user__details._id,req.query.totalprice).then((result) => {
+      user__helper.wallet__payment(user__details._id,total.disTotal).then((result) => {
         res.json(result)
       }).catch((err) => {
         res.json(err)
@@ -393,7 +391,7 @@ router.post('/placeOrder',async(req,res)=>{
     }
     else{
       console.log('above the paypal function call')
-      user__helper.paypal(req.query.totalprice,orderId).then((payment)=>{
+      user__helper.paypal(total.disTotal,orderId).then((payment)=>{
         console.log('gonna send the payment to the ajax')
         let signal ={}
         signal.flag = 'paypal'

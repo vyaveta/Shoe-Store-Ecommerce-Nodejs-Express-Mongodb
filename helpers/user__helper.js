@@ -200,7 +200,7 @@ module.exports={
             try{
                 if(coupon){
                     let multiplier = Number(Number(100-coupon.discount)/100)
-                    total[0].disTotal = multiplier*total[0].disTotal
+                    total[0].disTotal = Math.round(multiplier*total[0].disTotal)
                 }
                 console.log(total,'is the result form the get total price promise, and total[0] is :',total[0])
                 console.table(total[0].total)
@@ -213,6 +213,7 @@ module.exports={
         })
     },
     place__order:(order__details,products,total)=>{
+        print('got inside the place__order function in the user__helper.js')
         var today = new Date()
         var order__date = new Date()
         var dd = String(today.getDate()).padStart('2',0)
@@ -249,11 +250,13 @@ module.exports={
                 state:order__details.state
             }
             console.log('before insertion')
-            db.get().collection(collection.ORDER__COLLECTION).insertOne(orderObj).then((response)=>{
-                console.log('inserted the order to db')
-                db.get().collection(collection.CART__COLLECTIONS).deleteOne({user:objectId(order__details.user__id)})
-                console.log(response.insertedId)
-                resolve(response.insertedId)
+
+            db.get().collection(collection.CART__COLLECTIONS).findOneAndDelete({user:objectId(order__details.user__id)}).then(async(data) => {
+                if(data.value.coupon) orderObj.used__coupon = data.value.coupon
+             await db.get().collection(collection.ORDER__COLLECTION).insertOne(orderObj).then((response)=>{
+                    console.log('inserted the order to db')
+                    resolve(response.insertedId)
+                })
             })
             await db.get().collection(collection.USER__COLLECTIONS).updateOne({_id:objectId(order__details.user__id)},{
                 $inc:{total_purchase:1}
@@ -296,7 +299,8 @@ module.exports={
                         item:'$products.item',
                         quantity:'$products.quantity',
                         reviewed:'$products.reviewed',
-                        returned:'$products.returned'
+                        returned:'$products.returned',
+                        coupon:'$coupon'
                     }
                 },
                 {
@@ -309,7 +313,7 @@ module.exports={
                 },
                 {
                     $project:{
-                        item:1,quantity:1,reviewed:1,returned:1,return:1,product:{$arrayElemAt:['$products',0]}
+                        item:1,coupon:1,quantity:1,reviewed:1,returned:1,return:1,product:{$arrayElemAt:['$products',0]}
                     }
                 }
             ]).toArray()

@@ -120,11 +120,10 @@
     <script src="/javascripts/loadAddress.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
      <script>
-        let price = Number(document.getElementById('price').innerHTML)
         $('#checkout-form').submit((e)=>{
             e.preventDefault()
             $.ajax({
-                url:'/users/placeOrder?totalprice='+price,
+                url:'/users/placeOrder', 
                 method:'post',
                 data:$('#checkout-form').serialize(),
                 success:(response)=>{
@@ -142,10 +141,10 @@
                          for(let i = 0;i < response.links.length;i++){
                             console.log(response.links[i].rel)
         if(response.links[i].rel === 'approval_url'){
-           let url = response.links[i].href+'&total__price='+Number(document.getElementById('price').innerHTML)
-           console.log(url,'is the url ')
-           location.href = url
-          //  location.href = response.links[i].href
+         //  let url = response.links[i].href+'&total__price='+Number(document.getElementById('price').innerHTML)
+         //  console.log(url,'is the url ')
+         //  location.href = url
+            location.href = response.links[i].href
         }
       }
                         }catch(err){
