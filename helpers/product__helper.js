@@ -64,9 +64,9 @@ module.exports={
             var product = await db.get().collection(collection__list.PRODUCTS__COLLECTIONS).findOne({_id:objectId(id)})
             db.get().collection(collection__list.PRODUCTS__COLLECTIONS).updateOne({_id:objectId(id)},{$inc:{total__clicks:1}})
             if(product) resolve(product)
-            else reject(false)
+            else throw 'Product not found'
            }catch(err){
-            reject(false)
+            reject(err)
            }
         })
     },update__product:(pId,pDetails)=>{
@@ -177,7 +177,8 @@ module.exports={
                 {
                     $project:{
                         item:'$products.item',
-                        quantity:'$products.quantity'
+                        quantity:'$products.quantity',
+                        coupon:'$coupon'
                     }
                 },
                 {
@@ -190,11 +191,11 @@ module.exports={
                 },
                 {
                     $project:{
-                        item:1,quantity:1,product:{$arrayElemAt:['$product',0]}
+                        item:1,coupon:1,quantity:1,product:{$arrayElemAt:['$product',0]}
                     }
                 }
             ]).toArray()
-            console.log(user__cart)
+            console.log(user__cart,'is the user cart')
             if(!user__cart || user__cart==null || user__cart==''){
 
                 resolve('no__cart')

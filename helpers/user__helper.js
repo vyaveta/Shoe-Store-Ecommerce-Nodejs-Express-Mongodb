@@ -1,8 +1,6 @@
 const db = require('../config/connection');
 const collection = require('../config/collection');
 const bcrypt = require('bcrypt');
-const { resolve, reject } = require('promise');
-const { response } = require('express');
 const objectId = require('mongodb').ObjectId
 const Razorpay = require('razorpay')
 const crypto = require('crypto')

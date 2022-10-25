@@ -8,10 +8,7 @@ try{
   total__amount.innerHTML = parseInt(total__product__price.innerHTML) + 100
   final__amount = total__dis__amount.innerHTML
   try{
-  // }catch(err){
-  //   console.log(err,'form discount coupon.js')
-  // }
-  // try {
+ 
     if (total__dis__amount.innerHTML == total__amount.innerHTML) {
       total__amount.classList.remove('se')
       total__amount.style.visibility = 'hidden'
@@ -108,35 +105,87 @@ try{
   
   var discount__input = document.getElementById('discount_code1')
   
-  discount_code = () => {
-    var dis__div = document.querySelector('.dis__div')
-    if(!discount__input.value) swal('Enter the coupon code')
-    else{
-        $.ajax({
-            url:'/users/apply__coupon?entered__code='+discount__input.value,
-            method:'get',
-            success:(response) => {
-                if(response.status){
-                    log(response)
-                    if(total__dis__amount.innerHTML>response.coupon.min__purchase__amount){
-                        var multiplier = Number(Number(100-response.coupon.discount)/100)
-                        total__amount = multiplier*total__dis__amount.innerHTML
-                        total__dis__amount.innerHTML = total__amount
-                        swal(response.msg)
-                        dis__div.style.display = 'none'
-                    }else if (discount__input.value){
-                        swal('You have already entered the coupon')
-                    }else{
-                        swal('The minimum price amount to use this coupon isnt crossed')
-                    }
-                    // swal(response.coupon.discount,'is the discount and min purchase amount is ',response.coupon.min__purchase__amount)
-                }else{
-                    swal(response.msg)
-                }
-            }
-        })
-    }
+
+
+  if(document.getElementById('coupon__button__remove')){
+    checkCouponBtn()
+  }else if(document.getElementById('coupon__button__add')){
+    checkApplyBtn()
   }
+   
+
+ function checkCouponBtn (){
+    document.getElementById('coupon__button__remove').addEventListener('click' , removeCoupon)
+   }
+
+ function checkApplyBtn(){
+  document.getElementById('coupon__button__add').addEventListener('click' , applyCoupon)
+ }
+
+
+ // apply coupon function
+ function applyCoupon(){
+  //alert(e.target.id)
+  var dis__div = document.querySelector('.dis__div')
+  if(!discount__input.value) document.getElementById('error_trw').innerHTML=`<p style="color:red;">You have not Entered anything!</p>`
+  else{
+    // if(total__dis__amount.innerHTML>response.coupon.min__purchase__amount){
+      $.ajax({
+          url:'/users/apply__coupon?entered__code='+discount__input.value,
+          method:'get',
+          success:(response) => {
+              if(response.status){
+                  log(response)
+                      // var multiplier = Number(Number(100-response.coupon.discount)/100)
+                      // total__amount = multiplier*total__dis__amount.innerHTML
+                       total__dis__amount.innerHTML = Math.round(response.total)
+                      swal(response.msg)
+                      document.getElementById('error_trw').innerHTML=response.msg
+                      discount__input.disabled = true
+                      document.getElementById('coupon__button__add').removeEventListener('click' , applyCoupon )
+                      document.getElementById('coupon__button__add').id = 'coupon__button__remove'
+                      document.getElementById('coupon__button__remove').innerHTML = 'remove'
+                      document.getElementById('coupon__button__remove').classList.remove('btn-success')
+                      document.getElementById('coupon__button__remove').classList.add('btn-danger')
+                      console.log(document.getElementById('coupon__button__remove'))
+                      checkCouponBtn()
+                   //   dis__div.style.display = 'none'// have to change this later!
+                  // swal(response.coupon.discount,'is the discount and min purchase amount is ',response.coupon.min__purchase__amount)
+              }else{
+                document.getElementById('error_trw').innerHTML=response.msg
+                  swal(response.msg)
+              }
+          }
+      })
+  //   }else{
+  //     document.getElementById('error_trw').innerHTML=`<p style="color:red;">The minimum price amount to use this coupon isnt crossed</p>`
+  //     swal('The minimum price amount to use this coupon isnt crossed')
+  // }
+
+  }
+ }
+
+ // Remove coupon function
+ function removeCoupon(){
+    $.ajax({
+      url:'/users/remove__coupon',
+      method:'delete',
+      success:(res) => {
+        swal(res)
+        discount__input.disabled = false
+        discount__input.value = ''
+        document.getElementById('coupon__button__remove').removeEventListener('click' , removeCoupon)
+        document.getElementById('coupon__button__remove').id = 'coupon__button__add'
+        document.getElementById('coupon__button__add').innerHTML ='Apply'
+        document.getElementById('coupon__button__add').classList.remove('btn-danger')
+        document.getElementById('coupon__button__add').classList.add('btn-success')
+        document.getElementById('error_trw').innerHTML='Coupon removed!'
+        checkApplyBtn()
+      }
+    })
+  }
+
+
     checkout = () => {
         console.log('checkout button clickedd')
    location.href='/users/checkout?totalPrice='+total__dis__amount.innerHTML

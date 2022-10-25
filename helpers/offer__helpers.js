@@ -1,15 +1,11 @@
 const db = require('../config/connection')
 const collection__list = require('../config/collection')
-const { response } = require('express')
-const { resolve, reject } = require('promise')
-const collection = require('../config/collection')
-const { on } = require('nodemon')
+const user__helper = require('./user__helper')
 const objectId = require('mongodb').ObjectId
 const print = console.log
 const table = console.table
 
 exports.add__offer__to__category = (category__id,discount)=>{
-    var category__name
     print(category__id)
     var offer = discount*1
     return new Promise (async(resolve,reject)=>{
@@ -75,34 +71,58 @@ exports.delete__coupon = (coupon__id) => {
   })
 }
 
-exports.apply__coupon = (code,user__id) => {
+exports.apply__coupon = (code,user__details) => {
   return new Promise(async(resolve,reject) => {
     try{
-      var user = await db.get().collection(collection__list.USER__COLLECTIONS).findOne({_id:objectId(user__id),used__coupons:{$elemMatch:{coupon__name:code}}})
+      var user = await db.get().collection(collection__list.USER__COLLECTIONS).findOne({_id:objectId(user__details._id),used__coupons:{$elemMatch:{coupon__name:code}}})
       if(user) reject('Coupon already Used ')
       else{
         var coupon = await db.get().collection(collection__list.COUPONS__COLLECTIONS).findOne({name:code})
         print(coupon ,' is what we got from the apply__coupon function in the offer helper.js')
         if(coupon){
-          // await db.get().collection(collection__list.)
-          await db.get().collection(collection__list.USER__COLLECTIONS).findOneAndUpdate({_id:objectId(user__id)},{
-            $push:{
-              used__coupons:{coupon__name:code}
-            }
-          }).then((data) => {
-            var resolveObj = {}
-            resolveObj.msg = 'Hurray!'
-            resolveObj.coupon = coupon
-            resolve(resolveObj)
-          })
+          user__helper.get__total__amount(user__details).then(async(total)=>{
+            if(total.disTotal < coupon.min__purchase__amount)  reject(`This coupon is only available for purchase of ₹${coupon.min__purchase__amount} and above`)
+            else{
+                      let multiplier = Number(Number(100-coupon.discount)/100)
+                      let total__amount = multiplier*total.disTotal
+              await db.get().collection(collection__list.USER__COLLECTIONS).findOneAndUpdate({_id:objectId(user__details._id)},{
+                $push:{
+                  used__coupons:{coupon__name:code}
+                }
+              }).then(async(data) => {
+                await db.get().collection(collection__list.CART__COLLECTIONS).updateOne({user:objectId(data.value._id)},{
+                  $set:{coupon:coupon.name}
+                })
+                resolve({msg:'Hurray Coupon Applied!',coupon:coupon,total:total__amount})
+              })
+            } 
+        })
         }else{
-          print('no such coupon')
           reject('No such Coupon')
         }
       }
     }catch(err){
       print(err,'is the error that occured in the apply__coupon function in the offer helper.js')
-      reject('Oops something went wrong')
+      reject(err)
+    }
+  })
+}
+exports.remove__coupon = (user__id) => {
+  return new Promise (async(resolve,reject) => {
+    try{
+
+      await db.get().collection(collection__list.CART__COLLECTIONS).findOneAndUpdate({user:objectId(user__id)},{
+        $set:{coupon:false}
+      }).then(async(data) => {
+        print(data)
+        await db.get().collection(collection__list.USER__COLLECTIONS).findOneAndUpdate({_id:objectId(user__id)},{
+          $pull:{used__coupons:{coupon__name:data.value.coupon}}
+        })
+      }).then((result) => print(result))
+      resolve('Done')
+    }catch(err){
+      print(err,'is the error that occured in the remove__coupon function in the offer__helper.js')
+      reject(err)
     }
   })
 }

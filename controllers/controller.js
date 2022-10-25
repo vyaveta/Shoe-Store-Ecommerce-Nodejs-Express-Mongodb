@@ -178,11 +178,13 @@ exports.apply__coupon = async(req,res) => {
   try{
     var details = {}
     var user__details =  auth.get__user__details(req)
-    offer__helper.apply__coupon(req.query.entered__code,user__details._id).then((result) => {
-      details.msg = result.msg
-      details.status = true
-      details.coupon = result.coupon
-      res.json(details)
+    offer__helper.apply__coupon(req.query.entered__code,user__details).then((result) => {
+      // details.msg = result.msg
+      // details.status = true
+      // details.coupon = result.coupon
+      // details.total = result.total__amount
+      result.status = true
+      res.json(result)
     }).catch((error) => {
       print(error,'from apply coupon in the controller')
       details.status = false
@@ -193,6 +195,19 @@ exports.apply__coupon = async(req,res) => {
     res.json(err)
   }
 }
+
+exports.remove__coupon = (req,res) => {
+  try{
+    let user__details = auth.get__user__details(req)
+    offer__helper.remove__coupon(user__details._id)
+    res.json('Coupon removed')
+  }catch(err){
+    res.json('Oops error occured in the backend')
+    print(err,'is the error that occured in the remover coupon function in the controller.js')
+  }
+}
+
+
 exports.banner = (req,res) =>{
   try{
     banner__helper.get__all__banners().then((banners)=>{

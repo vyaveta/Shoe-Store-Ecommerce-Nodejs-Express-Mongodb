@@ -192,7 +192,6 @@ await review__helper.get__productreviews(id).then((reviews)=>{
         }
       }
     }
-   
   }
   for(var i = 0; i < reviews.length; i++){
     reviews[i].loop =[]
@@ -202,13 +201,12 @@ await review__helper.get__productreviews(id).then((reviews)=>{
     }
   }
   // console.log(reviews,'is the end result')
-  
   res.render('users/productPage',{data,token,username,cart__count,reviews,user__details,rec__products,user__footer:true})
 })
 
 }).catch((err) => {
   // res.send(err)
-  res.redirect('/error product not found')
+  res.redirect(`/${err}`)
 })
 })
 
@@ -576,7 +574,9 @@ router.get('/home2/:type',controller.user__home2)
 
 router.get('/apply__coupon',controller.apply__coupon)
 
-router.get('/user__chat',controller.user__chat)
+router.delete('/remove__coupon',controller.remove__coupon)
+
+// router.get('/user__chat',controller.user__chat)
 
 router.patch('/return__product',controller.return__product)
 
