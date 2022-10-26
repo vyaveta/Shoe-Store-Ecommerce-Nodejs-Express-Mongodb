@@ -372,3 +372,14 @@ exports.search__product = (req,res) => {
     print(err,'is the error that occured in the search product function in the controller.js')
   }
 }
+
+exports.show__ordered__products = (req,res) => {
+  try{
+    user__helper.get__ordered__products(req.query.order__id,false).then((products) => {
+      print(products,'is the data that we got from the show ordered products function for the admin')
+      res.json(products)
+    })
+  }catch(err){
+    print(err,'is the error that occured in the show ordered products function in the controller.js')
+  }
+}

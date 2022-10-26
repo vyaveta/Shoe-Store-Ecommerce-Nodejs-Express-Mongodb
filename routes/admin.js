@@ -351,6 +351,8 @@ router.get('/sales__report',controller.sales__report)
 
 router.put('/edit__category',controller.edit__category)
 
+router.get('/show__ordered__products',controller.show__ordered__products)
+
 
 ///////Logout Route for the admin/////////
 router.get('/logout',(req,res)=>{

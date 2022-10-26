@@ -272,6 +272,7 @@ module.exports = {
         console.log(orders)
       // let user__name = await db.get().collection(collection__list.USER__COLLECTIONS).find().toArray()
       console.log(orders[0].user__id);
+      console.log(orders,'is the orders that we got from the get__all__orders in the admin module')
       resolve(orders);
     });
   },

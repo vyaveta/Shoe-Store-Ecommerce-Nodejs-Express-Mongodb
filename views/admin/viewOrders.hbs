@@ -6,7 +6,7 @@
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-        <link rel="stylesheet" href="/stylesheets/admin/blockedButton.css">
+    <link rel="stylesheet" href="/stylesheets/admin/blockedButton.css">
     <!--Adding Jquery CDN  -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <!--Adding DataTable CDN-->
@@ -20,15 +20,20 @@
 </head>
 
 <style>
-    .section__1{
-        margin-top: 300px !important;
+    .section__1 {
+        margin-top: 400px !important;
     }
 </style>
+
 <body>
-    <div class="section__1">
+
+
+    <div class="section__1" style="overflow-x:scroll ; margin-top:90px;">
         <p style="color: green ; font-size:22px;font-weight:600;">{{admin__msg}}</p>
         {{#if orders}}
-        <table id="example" class="display" style="width:100%">
+
+
+        <table id="example" class="display" style="width:100vw">
 
             <thead>
                 <tr>
@@ -37,7 +42,9 @@
                     <th>Address</th>
                     <th>Phone</th>
                     <th>price</th>
+                    <th>Coupon</th>
                     <th>payment method</th>
+                    <th></th>
                     <th>status</th>
                     <th>Edit Status</th>
 
@@ -45,24 +52,34 @@
             </thead>
             <tbody>
                 {{# each orders}}
-                <tr>
+                <tr style=" overflow:scroll">
                     <td>{{this.date}}</td>
                     <td>{{this.user__name}}</td>
                     <td>{{this.delivery__details.address}}</td>
                     <td>{{this.delivery__details.mobile}}</td>
                     <td>{{this.total__amount}}</td>
+                    {{#if this.used__coupon}}
+                    <td>{{this.used__coupon}}</td>
+                    {{else}}
+                    <td>Not used</td>
+                    {{/if}}
                     <td>{{this.payment__method}}</td>
-                   <form  method="post"  class="statusForm" id="{{this._id}}">
+                    <td> <button class='btn btn-success'  onclick="getOrderedProducts('{{this._id}}')"
+                                type="button"  data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop">
+                                Products
+                            </button> </td>
+                    <form method="post" class="statusForm" id="{{this._id}}">
                         <td> <select class="select" name="status" id="">
-                            <option value="{{this.status}}">{{this.status}}</option>
-                            <option value="shipped">Shipped</option>
-                            <option value="placed">Placed</option>
-                            <option value="delivered">Delivered</option>
-                            <option value="cancelled">Cancelled</option>
-                        </select> </td>
+                                <option value="{{this.status}}">{{this.status}}</option>
+                                <option value="shipped">Shipped</option>
+                                <option value="placed">Placed</option>
+                                <option value="delivered">Delivered</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select> </td>
                         <td><input type="submit" class="btn btn-primary" value="Save"></td>
-                   </form>
-                    
+                    </form>
+
                 </tr>
                 {{/each}}
             </tbody>
@@ -73,6 +90,27 @@
         </center>
         {{/ if}}
     </div>
+    <!-- Button trigger modal -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Ordered Products</h1>
+                    <button type="button" class="btn-close" onclick="clearModel()" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="the__model">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="clearModel()" data-bs-dismiss="modal">Close</button>
+                    {{!-- <button type="button" class="btn btn-primary">Understood</button> --}}
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="/javascripts/darkMode.js"></script>
@@ -80,29 +118,49 @@
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
         crossorigin="anonymous"></script>
 
-        <script>
-            var form = document.querySelectorAll('.statusForm')
-            for(var i = 0 ; i < form.length ; i++){
-                form[i].addEventListener('submit', (e) => {
-                    e.preventDefault()
-                 //   console.log(e.target.id)
-                    changeOrderStatus(e.target.id)
-                })
-            }
-            changeOrderStatus = (id) => {
-                swal('got inside the ajax')
+    <script>
+        var form = document.querySelectorAll('.statusForm')
+        for (var i = 0; i < form.length; i++) {
+            form[i].addEventListener('submit', (e) => {
+                e.preventDefault()
+                //   console.log(e.target.id)
+                changeOrderStatus(e.target.id)
+            })
+        }
+        changeOrderStatus = (id) => {
+            swal('got inside the ajax')
 
-                $.ajax({
-                    url:'/admin/editOrderStatus/'+id,
-                    data:$('#'+id).serialize(),
-                    method:'post',
-                    success:(response) => {
-                        swal(response)
-                    }
+            $.ajax({
+                url: '/admin/editOrderStatus/' + id,
+                data: $('#' + id).serialize(),
+                method: 'post',
+                success: (response) => {
+                    swal(response)
+                }
+            })
+        }
+
+
+        // Now some script to view the ordered products!
+
+        getOrderedProducts = (id) => {
+           $.ajax({
+            url:`/admin/show__ordered__products?order__id=${id}`,
+            method:'get',
+            success:(res) => {
+                res.forEach( (product) => {
+                  let i = document.createElement('p')
+                    i.innerText = product.product.model
+                    document.getElementById('the__model').appendChild(i)
                 })
+               
+                console.log(res,'is the ordered products!')
             }
-        </script>
+           })
+        }
+        // Now some code to clear the bootstrap model
+        clearModel = () => {
+            document.getElementById('the__model').innerHTML=''
+        }
+    </script>
 </body>
-
-
-
