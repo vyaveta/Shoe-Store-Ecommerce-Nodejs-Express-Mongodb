@@ -160,8 +160,10 @@ module.exports={
         let coupon = false
         return new Promise(async(resolve,reject)=>{
             let cart = await db.get().collection(collection.CART__COLLECTIONS).findOne({user__email:user__details.email})
-            if(cart.coupon){
-                 coupon = await db.get().collection(collection.COUPONS__COLLECTIONS).findOne({name:cart.coupon})
+            if(cart){
+                if(cart.coupon){
+                    coupon = await db.get().collection(collection.COUPONS__COLLECTIONS).findOne({name:cart.coupon})
+               }
             }
             let total = await db.get().collection(collection.CART__COLLECTIONS).aggregate([
                 {
@@ -727,5 +729,16 @@ module.exports={
                 reject(err)
             }
         })
+    },
+    prime__benefits:(prime__user__id,amount) => {
+        try{
+            db.get().collection(collection.USER__COLLECTIONS).updateOne({_id:objectId(prime__user__id)},{
+                $inc:{wallet:amount}
+            }).then((result) => {
+                print(result,'after the prime benefits function called!')
+            })
+        }catch(err){
+            print(err,'is the error that occured in the prime benefits function in the user__helper.js')
+        }
     }
 }

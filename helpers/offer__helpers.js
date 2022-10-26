@@ -118,7 +118,6 @@ exports.remove__coupon = (user__id) => {
           $pull:{used__coupons:{coupon__name:data.value.coupon}}
         }).then(async(result) => {
           let total = await user__helper.get__total__amount(result.value)
-          print(total,' is where we get NaN ')
           resolve(total.disTotal)
         })
       })

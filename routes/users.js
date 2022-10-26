@@ -552,8 +552,16 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
 }
  })
 
- router.get('/orderPlaced',(req,res)=>{
-  res.render('users/orderPlaced',{no__partials:true})
+ router.get('/orderPlaced',async(req,res)=>{
+  let scratch__card = false
+  let user__cookie = auth.get__user__details(req)
+  let user = await user__helper.get__user__details(user__cookie._id)
+  if(user.is_member){
+    scratch__card = Math.floor(Math.random() * 1000) + 1;
+    console.log(scratch__card,'is the scratch card !!')
+    user__helper.prime__benefits(user._id,scratch__card)
+    res.render('users/orderPlacedPrime',{no__partials:true,scratch__card})
+  }else res.render('users/orderPlaced',{no__partials:true}) // here we dont really have to pass scratch__card here
  })
 
 router.get('/cancel', (req, res) => res.send('Cancelled'))
