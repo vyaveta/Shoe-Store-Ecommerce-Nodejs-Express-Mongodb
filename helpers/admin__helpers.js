@@ -129,11 +129,18 @@ module.exports = {
         .collection(collection__list.DELETED__ACCOUNTS)
         .insertOne(deleted__user)
         .then((response) => {
+
+                    var today = new Date()
+                    var dd = String(today.getDate()).padStart('2',0)
+                    var mm = String(today.getMonth()+1).padStart('2',0)
+                    var yyyy = today.getFullYear()
+                    today = mm + '-' + dd + '-' + yyyy
+
           action.action = "Deleted a User Account";
           action.deletedAccountName = deleted__user.name;
           action.details = `deleted the account of ${deleted__user.name}`;
           action.deletedAccountId = deleted__user._id;
-          action.date = new Date();
+          action.date = today;
           db.get()
             .collection(collection__list.ADMIN__ACTIONS)
             .insertOne(action)
@@ -338,4 +345,15 @@ module.exports = {
       }
     });
   },
+  get__users__total__purchase:() => {
+    return new Promise (async(resolve,reject) => {
+     try{
+      let most__purchased__users = await db.get().collection(collection__list.USER__COLLECTIONS).find().sort({total_purchase:-1}).limit(7).toArray()
+      resolve(most__purchased__users)
+     }catch(err){
+      reject('Oops something went wrong!')
+      print(err,'is the error that occured in the get users total pruchase function in the admin helpers.js')
+     }
+    })
+  }
 };

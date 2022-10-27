@@ -559,7 +559,7 @@ router.get('/showOrders',auth.usercookieJWTAuth,async(req,res)=>{
   if(user.is_member){
     scratch__card = Math.floor(Math.random() * 1000) + 1;
     console.log(scratch__card,'is the scratch card !!')
-    user__helper.prime__benefits(user._id,scratch__card)
+    user__helper.prime__benefits(user._id,scratch__card,false)
     res.render('users/orderPlacedPrime',{no__partials:true,scratch__card})
   }else res.render('users/orderPlaced',{no__partials:true}) // here we dont really have to pass scratch__card here
  })

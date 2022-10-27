@@ -730,15 +730,36 @@ module.exports={
             }
         })
     },
-    prime__benefits:(prime__user__id,amount) => {
+    prime__benefits:(prime__user__id,amount,admin__action) => {
         try{
-            db.get().collection(collection.USER__COLLECTIONS).updateOne({_id:objectId(prime__user__id)},{
+            db.get().collection(collection.USER__COLLECTIONS).findOneAndUpdate({_id:objectId(prime__user__id)},{
                 $inc:{wallet:amount}
             }).then((result) => {
+                if(admin__action){
+                    let action = {}
+                    var today = new Date()
+                    var dd = String(today.getDate()).padStart('2',0)
+                    var mm = String(today.getMonth()+1).padStart('2',0)
+                    var yyyy = today.getFullYear()
+                    today = mm + '-' + dd + '-' + yyyy
+
+                    action.action = `Rewarded Wallet money to a User`;
+                    action.details = `Rewarded ${amount} wallet money to ${result.value.name}`;
+                    action.targetAccountId = result.value._id;
+                    action.date = today;
+                    db.get().collection(collection.ADMIN__ACTIONS).insertOne(action)
+                }
                 print(result,'after the prime benefits function called!')
             })
         }catch(err){
             print(err,'is the error that occured in the prime benefits function in the user__helper.js')
         }
-    }
+    },
+    // suprice__wallet:(amount,user__id) => {
+    //     try{
+    //         db.get().collection(collection.USER__COLLECTIONS).updateOne
+    //     }catch(err){
+    //         print(err,'is the error that catched in the suprice wallet fuction in the user__helper.js')
+    //     }
+    // }
 }

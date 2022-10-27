@@ -383,3 +383,15 @@ exports.show__ordered__products = (req,res) => {
     print(err,'is the error that occured in the show ordered products function in the controller.js')
   }
 }
+
+exports.suprice__wallet = (req,res) => {
+  console.log(req.query,'is the query')
+  try{
+    user__helper.prime__benefits(req.query.to,Number(req.query.amount),true)
+    res.json(true)
+    //.suprice__wallet(Number(req.query.amount),req.query.to)
+  }catch(err){
+    res.json(false)
+    print(err,'is the error that occured in the suprice wallet function in the controller.js')
+  }
+}

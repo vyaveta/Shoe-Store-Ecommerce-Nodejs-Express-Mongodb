@@ -123,7 +123,8 @@ h1,h2{
     cursor: pointer !important;
 }
 .admin__logout button,
-.title button{
+.title button,
+.the__button{
     cursor: pointer;
     background: rebeccapurple;
     height: 40px;
@@ -133,6 +134,12 @@ h1,h2{
     border-radius: 10px;
     margin-left: 1vw;
     cursor: pointer !important;
+    box-shadow: 1px 1px 10px 1px #333;
+}
+.admin__logout button,
+.title button,
+.the__button:hover{
+    box-shadow: none;
 }
 .admin__logout button:hover{
     background: rgb(121, 67, 175);

@@ -89,9 +89,11 @@
                     <div class="col-md-6 ">
                         {{this.details}} on {{this.date}}
                     </div>
+                    {{#if this.deletedAccountId}}
                     <div class="col-md-3">
                         <a href="/admin/undoUserDeletion/{{this.deletedAccountId}}"><button class="the__button">undo</button></a>
                     </div>
+                    {{/if}}
                 </div>
                 {{/each}}
                 </ol>

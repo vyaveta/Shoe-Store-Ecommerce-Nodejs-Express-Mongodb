@@ -1,142 +1,218 @@
-
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="/stylesheets/admin/admin__dashboard.css">
+<title>Admin Dashboard</title>
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<link rel="stylesheet" href="/stylesheets/admin/admin__dashboard.css">
 </head>
 <style>
-    .section__1{
-        margin-top: 500px !important;
+    .section__1 {
+        margin-top: 550px !important;
     }
 </style>
-        {{!-- <div class="swift__content "> --}}
-            <div class="section__1">
-                <div class="card__like">
-                    <!--The Customer Card start-->
-                    <a href="/admin/showUsers">
-                        <div class="the__card">
-                        <div class="box">
-                            <h1>{{response.user__count}}</h1>
-                            <h3>Customers</h3>
-                        </div>
-                        <div class="icon__case">
-                            <img src="https://img.icons8.com/external-basicons-line-edtgraphics/50/000000/external-Users-users-basicons-line-edtgraphics-2.png"/>
-                        </div>
-                     </div>
-                    </a>
-                    
-                    <!--The Customer Card ends here-->
-                    <!--The Prime customers-->
-                    <a href="/admin/showPrimeUsers">
-                        <div class="the__card">
-                        <div class="box">
-                            <h1>{{response.prime__users__count}}</h1>
-                            <h3>Premium Users</h3>
-                        </div>
-                        <div class="icon__case">
-                            <img src="https://img.icons8.com/external-sbts2018-solid-sbts2018/58/000000/external-08-premium-membership-ecommerce-3-sbts2018-solid-sbts2018-2.png"/>
-                        </div>
+{{!-- <div class="swift__content "> --}}
+    <div class="section__1">
+        <div class="card__like">
+            <!--The Customer Card start-->
+            <a href="/admin/showUsers">
+                <div class="the__card">
+                    <div class="box">
+                        <h1>{{response.user__count}}</h1>
+                        <h3>Customers</h3>
                     </div>
-                    </a>
-                    
-                    <!--the prime customers ends-->
-                    <!--The Product Card begins here-->
-                    <a href="/admin/showProducts">
-                        <div class="the__card">
-                        <div class="box">
-                            <h1>{{response.products__count}}</h1>
-                            <h3>Products</h3>
-                        </div>
-                        <div class="icon__case">
-                            <img src="https://img.icons8.com/external-line-lima-studio/64/000000/external-shoes-sale-line-lima-studio-2.png"/>
-                        </div>
+                    <div class="icon__case">
+                        <img
+                            src="https://img.icons8.com/external-basicons-line-edtgraphics/50/000000/external-Users-users-basicons-line-edtgraphics-2.png" />
                     </div>
-                    </a>
-                    <!--The Product Card ends here-->
-
-
-                    <div class="the__card" onclick="window.location.href='/admin/showOrders'">
-                        <div class="box">
-                            <h1></h1>
-                            <h3>Orders</h3>
-                        </div>
-                        <div class="icon__case">
-                            <img src="https://img.icons8.com/external-outline-berkahicon/64/000000/external-Resume-interview-outline-berkahicon.png"/>
-                        </div>
-                    </div>
-
-                    <!--The Coupon Card begins here-->
-                    <div class="the__card">
-                        <div class="box">
-                            <h1>5</h1>
-                            <h3>Coupons</h3>
-                        </div>
-                        <div class="icon__case">
-                            <img src="https://img.icons8.com/external-tanah-basah-glyph-tanah-basah/48/000000/external-voucher-ecommerce-tanah-basah-glyph-tanah-basah.png"/>
-                        </div>
-                    </div>
-                    <!--The Coupon Card ends here-->
-                   
-                    <!--The job application card start here-->
-                    <div onclick="window.location.href='/admin/graph'" class="the__card">
-                        <div class="box">
-                            <h1></h1>
-                            <h3>Graph Section</h3>
-                        </div>
-                        <div class="icon__case">
-                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAzUlEQVRIie3UwUpCQRTG8R/uSiINI0tchC/Tm7ixJwyCNiFmC10otgitB7FFJxhuV27XrkRwPzjMcOac73+YgaFWSW0jKlOjSrN/DzjDsKio6A2OIvLMn6P3dl/AMe7wgJMk38ZT9L2gtw+gifvkfBJTtzGN3KrIfBfgFI+R32Ad+ynmsV+gW2SeB2hhHLk1BujHtF+1S1z+xDwLSO/2FddJ3QVmZc2zgGEy4VVObQfnZcyzABj5nLYy1X/R3wPeY93+MnbqBm+HBNT6pg/NHlomUeF1fAAAAABJRU5ErkJggg=="/>
-                        </div>
-                    </div>
-                    <!--The job application card ends here-->
                 </div>
-                <div class="section__1_2">
-                    <div class="recent__payments new__users">
-                       <div class="title">
-                        <h2>Recent Payments</h2>
-                        <a href=""><button>View all</button></a>
-                       </div>
-                       <center>
-                        <table class="content__table">
-                            <tr>
-                              <th>Table h</th>
-                              <th>Table h</th>
-                              <th>Table h</th>
-                              <th>Table h</th>
-                            </tr>
-                            <tr>
-                                <td>table d</td>
-                                <td>table d</td>
-                                <td>table d</td>
-                                <td>table d</td>
-                            </tr>
-                           </table>
-                       </center>
+            </a>
+
+            <!--The Customer Card ends here-->
+            <!--The Prime customers-->
+            <a href="/admin/showPrimeUsers">
+                <div class="the__card">
+                    <div class="box">
+                        <h1>{{response.prime__users__count}}</h1>
+                        <h3>Premium Users</h3>
                     </div>
-                    <div class="new__users">
-                        <div class="title">
-                            <h2>New Users</h2>
-                            <a href=""><button>View all</button></a>
-                        </div>
-                        <center>
-                            <table class="content__table">
-                                <tr>
-                                  <th>Name</th>
-                                  <th>Phone number</th>
-                                  <th>E-mail</th>
-                                  
-                                </tr>
-                                {{#each newUsers}}
-                                <tr>
-                                    <td>{{this.name}}</td>
-                                    <td>{{this.phone__number}}</td>
-                                    <td>{{this.email}}</td>
-                                    
-                                </tr>
-                                {{/each}}
-                               </table>
-                           </center>
+                    <div class="icon__case">
+                        <img
+                            src="https://img.icons8.com/external-sbts2018-solid-sbts2018/58/000000/external-08-premium-membership-ecommerce-3-sbts2018-solid-sbts2018-2.png" />
                     </div>
+                </div>
+            </a>
+
+            <!--the prime customers ends-->
+            <!--The Product Card begins here-->
+            <a href="/admin/showProducts">
+                <div class="the__card">
+                    <div class="box">
+                        <h1>{{response.products__count}}</h1>
+                        <h3>Products</h3>
+                    </div>
+                    <div class="icon__case">
+                        <img
+                            src="https://img.icons8.com/external-line-lima-studio/64/000000/external-shoes-sale-line-lima-studio-2.png" />
+                    </div>
+                </div>
+            </a>
+            <!--The Product Card ends here-->
+
+
+            <div class="the__card" onclick="window.location.href='/admin/showOrders'">
+                <div class="box">
+                    <h1></h1>
+                    <h3>Orders</h3>
+                </div>
+                <div class="icon__case">
+                    <img
+                        src="https://img.icons8.com/external-outline-berkahicon/64/000000/external-Resume-interview-outline-berkahicon.png" />
                 </div>
             </div>
-        {{!-- </div> --}}
-        
+
+            <!--The Coupon Card begins here-->
+            <div class="the__card" onclick="window.location.href='/admin/show__coupons'">
+                <div class="box">
+                    <h1></h1>
+                    <h3>Coupons</h3>
+                </div>
+                <div class="icon__case">
+                    <img
+                        src="https://img.icons8.com/external-tanah-basah-glyph-tanah-basah/48/000000/external-voucher-ecommerce-tanah-basah-glyph-tanah-basah.png" />
+                </div>
+            </div>
+            <!--The Coupon Card ends here-->
+
+            <!--The job application card start here-->
+            <div onclick="window.location.href='/admin/graph'" class="the__card">
+                <div class="box">
+                    <h1></h1>
+                    <h3>Graph Section</h3>
+                </div>
+                <div class="icon__case">
+                    <img
+                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAzUlEQVRIie3UwUpCQRTG8R/uSiINI0tchC/Tm7ixJwyCNiFmC10otgitB7FFJxhuV27XrkRwPzjMcOac73+YgaFWSW0jKlOjSrN/DzjDsKio6A2OIvLMn6P3dl/AMe7wgJMk38ZT9L2gtw+gifvkfBJTtzGN3KrIfBfgFI+R32Ad+ynmsV+gW2SeB2hhHLk1BujHtF+1S1z+xDwLSO/2FddJ3QVmZc2zgGEy4VVObQfnZcyzABj5nLYy1X/R3wPeY93+MnbqBm+HBNT6pg/NHlomUeF1fAAAAABJRU5ErkJggg==" />
+                </div>
+            </div>
+            <!--The job application card ends here-->
+        </div>
+        <div class="section__1_2">
+            {{#if userPurchase}}
+
+            <div class="recent__payments new__users">
+                <div class="title">
+                    <h2>Users with Most purchase count</h2>
+                </div>
+                <center>
+                    <table class="content__table">
+                        <tr>
+                            <th> User name</th>
+                            <th>Total purchse</th>
+                            <th>Total Wallet Money</th>
+                            <th>Give Wallet money</th>
+                        </tr>
+                        {{#each userPurchase}}
+                        <tr>
+                            <td>{{this.name}}</td>
+                            <td>{{this.total_purchase}}</td>
+                            <td id="{{this._id}}">{{this.wallet}}</td>
+                            <td><button class="the__button" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#staticBackdrop" onclick="rewardButton('{{this._id}}','{{this.name}}')">Reward</button></td>
+                        </tr>
+                        {{/each}}
+                    </table>
+                </center>
+            </div>
+            {{/if}}
+            <div class="new__users">
+                <div class="title">
+                    <h2>New Users</h2>
+                    <a href="/admin/showUsers"><button>View all</button></a>
+                </div>
+                <center>
+                    <table class="content__table">
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone number</th>
+                            <th>E-mail</th>
+
+                        </tr>
+                        {{#each newUsers}}
+                        <tr>
+                            <td>{{this.name}}</td>
+                            <td>{{this.phone__number}}</td>
+                            <td>{{this.email}}</td>
+
+                        </tr>
+                        {{/each}}
+                    </table>
+                </center>
+            </div>
+        </div>
+
+        {{!-- Model --}}
+
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog modal-dialog-scrollable">
+                <form id="wallet__money__form">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Sent Wallet Money to User</h1>
+                        <button type="button" class="btn-close" id="close__btn"  data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="the__model">
+                           <input type="text" id="user__id" name="user__id" hidden>
+                            <input type="text" id="user__name" name="user__id" hidden>
+                            <label for="exampleInputEmail1" class="form-label">Enter Amount</label>
+                            <input type="number" class="form-control" id="exampleInputEmail1"
+                                aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">Encourage Your Users to buy more products by giving them Suprice wallet money</div>
+                       
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="the__button" >Sent Suprice</button>
+                        {{!-- <button type="button" class="btn btn-primary">Understood</button> --}}
+                    </div>
+                     </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <script src="/javascripts/darkMode.js"></script>
+    {{!--
+</div> --}}
+
+</div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
+<script src="/javascripts/darkMode.js"></script>
+
+<script>
+    let form = document.getElementById('wallet__money__form')
+    let msg__div = document.getElementById('emailHelp')
+
+    rewardButton = (id,name) => {
+        document.getElementById('user__id').value = id
+        document.getElementById('user__name').value = name
+    }
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault()
+        if(document.getElementById('exampleInputEmail1').value == 0) msg__div.innerHTML = `<P style='color:red;'> How cruel of you to give ${document.getElementById('user__name').value} 0 wallet money, NO this function will not work!!</P`
+        else{
+            $.ajax({
+                url:`/admin/suprice__wallet?amount=${document.getElementById('exampleInputEmail1').value}&to=${document.getElementById('user__id').value}`,
+                method:'patch',
+                success:(res) => {
+                    document.getElementById('close__btn').click()
+                    document.getElementById(document.getElementById('user__id').value).innerText = Number(Number(document.getElementById(document.getElementById('user__id').value).innerText) + Number(document.getElementById('exampleInputEmail1').value))
+                    msg__div.innerHTML='Encourage Your Users to buy more products by giving them Suprice wallet money'
+                    if(res) swal(`Successfully send the wallet money to ${document.getElementById('user__name').value}`)
+                }
+            })
+        }
+    })
+</script>

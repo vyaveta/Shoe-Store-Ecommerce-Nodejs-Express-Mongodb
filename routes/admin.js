@@ -35,7 +35,12 @@ let admin__details
 router.get('/',auth.adminCookieJWTAuth,function(req, res) {
   admin__helpers.get__users('get__everything').then((response)=>{
     admin__helpers.get__new__users().then((newUsers)=>{
-      res.render('admin/dashboard',{response,adminname,newUsers,admin__details,admin__sidemenu:true});
+      admin__helpers.get__users__total__purchase().then((userPurchase) => {
+        console.log(userPurchase)
+        res.render('admin/dashboard',{response,adminname,newUsers,admin__details,admin__sidemenu:true,userPurchase});
+      }).catch((err) => {
+        res.render('admin/dashboard',{response,adminname,newUsers,admin__details,admin__sidemenu:true});
+      })
     })
   })
 });
@@ -352,6 +357,8 @@ router.get('/sales__report',controller.sales__report)
 router.put('/edit__category',controller.edit__category)
 
 router.get('/show__ordered__products',controller.show__ordered__products)
+
+router.patch('/suprice__wallet',controller.suprice__wallet)
 
 
 ///////Logout Route for the admin/////////
